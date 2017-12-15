@@ -1,0 +1,21 @@
+#bossButton {
+    -fx-background-image: url("Admin.png"); 
+}
+
+#userButton {
+    -fx-background-image: url("User.png"); 
+}
+
+#customerButton {
+    -fx-background-image: url("Zakaznik.png"); 
+}
+#parentPane{
+    -fx-background-image: url("PozadieMainScene.jpg");
+    -fx-background-size: cover;
+}
+
+#zakaznikAnchorPane{
+    -fx-backgroung-color: cyan;
+}
+
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vBoxPane" prefHeight="408.0" prefWidth="610.0" stylesheets="camping/styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.MainSceneController">
+  <children>
+    <AnchorPane fx:id="parentPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="461.0" prefWidth="636.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView fitHeight="43.0" fitWidth="97.0" layoutX="502.0" layoutY="350.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="11.0">
+               <image>
+                  <Image url="@../styles/logo-sitename.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="58.0" fitWidth="59.0" layoutX="443.0" layoutY="335.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="108.0">
+               <image>
+                  <Image url="@../styles/logo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="hesloLabel" blendMode="MULTIPLY" layoutX="156.0" layoutY="271.0" text="Heslo" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="384.0" AnchorPane.topAnchor="271.0">
+               <font>
+                  <Font name="System Italic" size="29.0" />
+               </font></Label>
+            <PasswordField fx:id="hesloPouzivatelaPasswordField" layoutX="236.0" layoutY="280.0" prefHeight="25.0" prefWidth="138.0" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="236.0" AnchorPane.topAnchor="280.0" />
+            <Button fx:id="OKButton" blendMode="MULTIPLY" layoutX="265.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="310.0" />
+            <Button fx:id="bossButton" blendMode="SCREEN" layoutX="53.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="53.0" />
+            <Button fx:id="userButton" blendMode="SCREEN" layoutX="242.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.topAnchor="53.0" />
+            <Button fx:id="customerButton" blendMode="SCREEN" layoutX="437.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="53.0" />
+            <Label fx:id="typUseraLabel" layoutX="213.0" layoutY="250.0" prefHeight="21.0" prefWidth="260.0" text=" " textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
