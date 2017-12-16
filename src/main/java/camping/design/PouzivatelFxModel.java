@@ -1,33 +1,32 @@
 package camping.design;
 
+import camping.dao.CampingDaoFactory;
+import camping.dao.PouzivatelDao;
 import camping.entities.Pouzivatel;
+import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class PouzivatelFxModel {
 
-    //id som nedávala
-    private StringProperty pozicia = new SimpleStringProperty();
-    private StringProperty meno = new SimpleStringProperty();
-    private IntegerProperty odrobeneHodiny = new SimpleIntegerProperty();
-    private IntegerProperty vyplata = new SimpleIntegerProperty();
+    private StringProperty pozicia;
+    private StringProperty meno;
+    private IntegerProperty odrobeneHodiny;
+    private IntegerProperty vyplata;
+    private ObservableList<PouzivatelFxModel> pouzivatelia;
 
     public PouzivatelFxModel() {
-   
+        this.pozicia = new SimpleStringProperty();
+        this.meno = new SimpleStringProperty();
+        this.odrobeneHodiny = new SimpleIntegerProperty();
+        this.vyplata = new SimpleIntegerProperty();
+        this.pouzivatelia = FXCollections.observableArrayList();
     }
 
-    public Pouzivatel gePouzivatel() {
-        Pouzivatel pouzivatel = new Pouzivatel();
-        pouzivatel.setPozicia(getPozicia());
-        pouzivatel.setMeno(getMeno());
-        pouzivatel.setPocet_odrobenych_hodin(getOdrobeneHodiny());
-        pouzivatel.setVyplata(getVyplata());
-        return pouzivatel;
-    }
-
-    //getery, setery a property
     public StringProperty poziciaProperty() {
         return pozicia;
     }
@@ -74,6 +73,24 @@ public class PouzivatelFxModel {
 
     public void setVyplata(Integer vyplata) {
         this.vyplata.set(vyplata);
+    }
+
+    public ObservableList<PouzivatelFxModel> getPouzivatelov() {
+        readAll();
+        return pouzivatelia;
+
+    }
+
+    public void setPouzivatelov(ObservableList<PouzivatelFxModel> pouzivatelia) {
+        this.pouzivatelia = pouzivatelia;
+    }
+
+    private void readAll() {
+        PouzivatelDao pouzivatelDao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
+        List<PouzivatelFxModel> listPouzivatelov = pouzivatelDao.getAll();
+        for (PouzivatelFxModel pouzivatel : listPouzivatelov) {
+            listPouzivatelov.add(pouzivatel);
+        }
     }
 
 }

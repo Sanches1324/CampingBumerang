@@ -1,9 +1,13 @@
 package camping.dao;
 
+import camping.design.PouzivatelFxModel;
 import camping.entities.Pouzivatel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -16,26 +20,30 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
     }
 
     @Override
-    public void createPouzivatela(Pouzivatel pouzivatel) {
-        if (pouzivatel.getId() == null) {
+    public void createPouzivatela(PouzivatelFxModel pouzivatel) {
+        if (pouzivatel.getMeno() == null) {
             String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, pocet_odrobenych_hodin, vyplata) VALUES(?, ?, ?, ?)";
-            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getPocet_odrobenych_hodin(), pouzivatel.getVyplata());
+            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Pouzivatel uz existuje", ButtonType.OK);
+            Optional<ButtonType> result = alert.showAndWait();
         }
+
     }
 
     @Override
-    public List<Pouzivatel> getAll() {
+    public List<PouzivatelFxModel> getAll() {
         String pouzivatel_getAll = "SELECT * FROM pouzivatel";
         return jdbcTemplate.query(pouzivatel_getAll, new PouzivatelRowMapper());
     }
 
     @Override
-    public void updatePouzivatela(Pouzivatel pouzivatel) {
+    public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
         String pouzivatel_update = "UPDATE pouzivatel SET meno = ?, pozicia = ?, pocet_odrobenych_hodin = ?, vyplata = ? WHERE id = ?";
-        if (pouzivatel.getId() == null) {
+        if (pouzivatel.getMeno() == null) {
             createPouzivatela(pouzivatel);
         } else {
-            jdbcTemplate.update(pouzivatel_update, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getPocet_odrobenych_hodin(), pouzivatel.getVyplata());
+            jdbcTemplate.update(pouzivatel_update, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
         }
 
     }
@@ -48,35 +56,34 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
     }
 
     @Override
-    public List<Pouzivatel> findById(Long id) {
+    public List<PouzivatelFxModel> findById(Long id) {
         String pouzivatel_findById = "SELECT * FROM pouzivatel "
                 + "WHERE id = " + id;
         return jdbcTemplate.query(pouzivatel_findById, new PouzivatelRowMapper());
     }
 
     @Override
-    public List<Pouzivatel> findByMeno(String meno) {
+    public List<PouzivatelFxModel> findByMeno(String meno) {
         String pouzivatel_findByMeno = "SELECT * FROM pouzivatel "
                 + "WHERE meno = " + meno;
         return jdbcTemplate.query(pouzivatel_findByMeno, new PouzivatelRowMapper());
     }
 
     @Override
-    public List<Pouzivatel> findByPozicia(String pozicia) {
+    public List<PouzivatelFxModel> findByPozicia(String pozicia) {
         String pouzivatel_findByPozicia = "SELECT * FROM pouzivatel "
                 + "WHERE pozicia = " + pozicia;
         return jdbcTemplate.query(pouzivatel_findByPozicia, new PouzivatelRowMapper());
     }
 
-    private class PouzivatelRowMapper implements RowMapper<Pouzivatel> {
+    private class PouzivatelRowMapper implements RowMapper<PouzivatelFxModel> {
 
         @Override
-        public Pouzivatel mapRow(ResultSet rs, int i) throws SQLException {
-            Pouzivatel p = new Pouzivatel();
-            p.setId(rs.getLong(1));
+        public PouzivatelFxModel mapRow(ResultSet rs, int i) throws SQLException {
+            PouzivatelFxModel p = new PouzivatelFxModel();
             p.setMeno(rs.getString(2));
             p.setPozicia(rs.getString(3));
-            p.setPocet_odrobenych_hodin(rs.getInt(4));
+            p.setOdrobeneHodiny(rs.getInt(4));
             p.setVyplata(rs.getInt(5));
             return p;
         }

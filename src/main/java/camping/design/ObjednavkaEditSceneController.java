@@ -65,7 +65,7 @@ public class ObjednavkaEditSceneController {
     private ComboBox<Long> pozemkyComboBox;
 
     @FXML
-    private ComboBox<Long> pouzivatelComboBox;
+    private ComboBox<String> pouzivatelComboBox;
 
     @FXML
     private TextField pocetDniTextField;
@@ -86,11 +86,19 @@ public class ObjednavkaEditSceneController {
     private Button hladatObjednavkuButton;
 
     @FXML
+    private TextField menoZakaznikaTextField;
+
+    @FXML
+    private TextField telCisloTextField;
+
+    @FXML
     private Button vymazatObjednavkuButton;
     private PozemokFxModel pozemokModel = new PozemokFxModel();
+    private PouzivatelFxModel pouzivatelModel = new PouzivatelFxModel();
     private ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
     private ObservableList<ObjednavkaFxModel> objednavky = objednavkaModel.getObjednavky();
     private ObservableList<PozemokFxModel> pozemky = pozemokModel.getPozemky();
+    private ObservableList<PouzivatelFxModel> pouzivatelia = pouzivatelModel.getPouzivatelov();
 
     @FXML
     void hladatObjednavku(ActionEvent event) {
@@ -170,5 +178,11 @@ public class ObjednavkaEditSceneController {
         }
         Collections.sort(idcka);
         pozemkyComboBox.setItems(idcka);
+
+        ObservableList<String> menoPouzivatelov = FXCollections.observableArrayList();
+        for (PouzivatelFxModel pouzivatelFxModel : pouzivatelia) {
+            menoPouzivatelov.add(pouzivatelFxModel.getMeno());
+        }
+        pouzivatelComboBox.setItems(menoPouzivatelov);
     }
 }

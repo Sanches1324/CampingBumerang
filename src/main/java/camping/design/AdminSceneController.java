@@ -307,7 +307,7 @@ public class AdminSceneController {
                         ObservableList<ObjednavkaFxModel> objednavkyPozemku = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(pozemok1.getCisloPozemku()));
                         ObjednavkyPozemkuController controller
                                 = loader.<ObjednavkyPozemkuController>getController();
-                        controller.initData(objednavkyPozemku);
+                        controller.initialize(objednavkyPozemku);
                         stage.show();
                     } catch (Exception ex) {
                         ex.printStackTrace();

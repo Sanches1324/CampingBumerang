@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -47,33 +49,17 @@ public class ObjednavkyPozemkuController {
     private TableColumn<ObjednavkaFxModel, String> telCisloTableColumn;
 
     @FXML
-    private Label cisloPozemkuLabel;
-
-    @FXML
     private DatePicker odDatePicker;
-
-    @FXML
-    private DatePicker doDatePicker;
-
-    @FXML
-    private Button hladatButton;
 
     private ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
     private ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
     private ObservableList<ObjednavkaFxModel> objednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
     private Scene scene;
 
+//   
     @FXML
-    void hladatObjednavku(ActionEvent event) {
-
-    }
-
-    void initData(ObservableList<ObjednavkaFxModel> objednavky) {
+    void initialize(ObservableList<ObjednavkaFxModel> objednavky) {
         objednavkyPozemkuTableView.setItems(objednavky);
-    }
-
-    @FXML
-    void initialize() {
 //        initData(objednavky);
 //        setScene();
 //        Stage stage = (Stage) scene.getWindow();
@@ -106,8 +92,25 @@ public class ObjednavkyPozemkuController {
             }
 
         };
-
         odDatePicker.setConverter(converter);
-        doDatePicker.setConverter(converter);
+        FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
+        System.out.println(filtrovaneObjednavky);
+        odDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filtrovaneObjednavky.setPredicate(datum -> {
+                if (newValue == null) {
+                    return true;
+                }
+
+                if (datum.getDatumPrichodu().equals(newValue)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<ObjednavkaFxModel> sortedData = new SortedList<>(filtrovaneObjednavky);
+        sortedData.comparatorProperty().bind(objednavkyPozemkuTableView.comparatorProperty());
+        objednavkyPozemkuTableView.setItems(sortedData);
+
     }
 }
