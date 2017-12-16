@@ -298,12 +298,16 @@ public class AdminSceneController {
                                 getClass().getResource("objednavkyPozemku.fxml"));
                         Parent parentPane = loader.load();
                         Scene scene = new Scene(parentPane);
-                        
+
                         Stage stage = new Stage();
                         Image logo = new Image("camping\\styles\\logo.png");
                         stage.setScene(scene);
                         stage.setTitle(pozemok1.getCisloPozemku() + "");
                         stage.getIcons().add(logo);
+                        ObservableList<ObjednavkaFxModel> objednavkyPozemku = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(pozemok1.getCisloPozemku()));
+                        ObjednavkyPozemkuController controller
+                                = loader.<ObjednavkyPozemkuController>getController();
+                        controller.initData(objednavkyPozemku);
                         stage.show();
                     } catch (Exception ex) {
                         ex.printStackTrace();

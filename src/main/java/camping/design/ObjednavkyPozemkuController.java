@@ -4,6 +4,7 @@ import camping.dao.CampingDaoFactory;
 import camping.dao.ObjednavkaDao;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class ObjednavkyPozemkuController {
 
@@ -66,8 +68,13 @@ public class ObjednavkyPozemkuController {
 
     }
 
+    void initData(ObservableList<ObjednavkaFxModel> objednavky) {
+        objednavkyPozemkuTableView.setItems(objednavky);
+    }
+
     @FXML
     void initialize() {
+//        initData(objednavky);
 //        setScene();
 //        Stage stage = (Stage) scene.getWindow();
 //        cisloPozemkuLabel.setText(stage.getTitle());
@@ -77,6 +84,30 @@ public class ObjednavkyPozemkuController {
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
         menoZakTableColumn.setCellValueFactory(cellData -> cellData.getValue().menoZakaznikaProperty());
         telCisloTableColumn.setCellValueFactory(cellData -> cellData.getValue().telCisloZakaznikaProperty());
-        objednavkyPozemkuTableView.setItems(objednavky);
+//        objednavkyPozemkuTableView.setItems(objednavky);
+        StringConverter converter = new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter
+                    = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            @Override
+            public String toString(LocalDate localDate) {
+                if (localDate == null) {
+                    return "";
+                }
+                return dateFormatter.format(localDate);
+            }
+
+            @Override
+            public LocalDate fromString(String dateString) {
+                if (dateString == null || dateString.trim().isEmpty()) {
+                    return null;
+                }
+                return LocalDate.parse(dateString, dateFormatter);
+            }
+
+        };
+
+        odDatePicker.setConverter(converter);
+        doDatePicker.setConverter(converter);
     }
 }
