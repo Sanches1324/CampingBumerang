@@ -1,7 +1,7 @@
 package camping.dao;
 
+import camping.design.HesloFxModel;
 import camping.entities.Heslo;
-import camping.entities.Pozemok;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 public class HesloDaoTest {
 
     private HesloDao dao;
+    private HesloFxModel hesloModel = new HesloFxModel();
 
     public HesloDaoTest() {
         dao = CampingDaoFactoryTest.INSTANCE.getMySqlHesloDao();
@@ -34,25 +35,24 @@ public class HesloDaoTest {
     public void tearDown() {
     }
 
-    // vytvorenie hesla
+    // vytvorenie hesla - chcem aby celkovy pocet hesiel bol vacsi o jedna
+    // heslo a meno uzivatela nesmie byť prazdne
     @Test
     public void createTest() {
-        // TODO getAll pre hesla? 
         int velkost = dao.getAll().size();
-        Heslo heslo = new Heslo();
+        HesloFxModel heslo = new HesloFxModel();
         heslo.setHeslo("x");
         heslo.setUzivatel("Jozef");
-        dao.createHeslo(heslo);
-        assertNotNull(heslo.getId());
-        assertNotNull(heslo.getHeslo());
-        assertNotNull(heslo.getUzivatel());
+        dao.createHeslo(hesloModel);
+        assertNotNull(hesloModel.getHeslo());
+        assertNotNull(hesloModel.getUzivatel());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
-    // všetky hesla - bude getAll?
+    // všetky hesla
     @Test
     public void getAllTest() {
-        List<Heslo> list = dao.getAll();
+        List<HesloFxModel> list = dao.getAll();
         assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
@@ -60,13 +60,12 @@ public class HesloDaoTest {
         System.out.println(list);
     }
 
-    // update hesla
+    // TODO: update hesla-ako funguje?  
+    // počet musí byť rovnaký
     @Test
     public void updateHesloTest() {
         int velkost = dao.getAll().size();
-        //Heslo heslo = ;
-        //dao.updateHeslo(heslo);
-        //updateHeslo vracia void - nevie porovnat ci nastala zmena
+        dao.updateHeslo(hesloModel);
         assertEquals(velkost, dao.getAll().size());
     }
 }

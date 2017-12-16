@@ -1,5 +1,6 @@
 package camping.dao;
 
+import camping.design.PozemokFxModel;
 import camping.entities.Pozemok;
 import java.util.List;
 import org.junit.After;
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
 public class PozemokDaoTest {
 
     private PozemokDao dao;
+    private PozemokFxModel pozemokModel = new PozemokFxModel();
 
     public PozemokDaoTest() {
         dao = CampingDaoFactoryTest.INSTANCE.getMySqlPozemokDao();
@@ -33,23 +35,22 @@ public class PozemokDaoTest {
     public void tearDown() {
     }
 
-    // vytvorenie pozemku
+    // vytvorenie pozemku - počet musí byť o 1 vačší
+    // musí obsahovať cislo
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        Pozemok pozemok = new Pozemok();
-        pozemok.setCisloPozemku(1L);
-        pozemok.setObsadenost(false);
-        dao.createPozemok(pozemok);
-        assertNotNull(pozemok.getId());
-        assertNotNull(pozemok.getCisloPozemku());
+        pozemokModel.setCisloPozemku(1L);
+        pozemokModel.setObsadenost(false);
+        dao.createPozemok(pozemokModel);
+        assertNotNull(pozemokModel.getCisloPozemku());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky pozemky
     @Test
     public void getAllTest() {
-        List<Pozemok> list = dao.getAll();
+        List<PozemokFxModel> list = dao.getAll();
         assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
@@ -57,32 +58,29 @@ public class PozemokDaoTest {
         System.out.println(list);
     }
 
-    // mazanie pozemku podla Id pozemku
+    // mazanie pozemku podla Id pozemku - pocet vsetkych musí byť o 1 menší
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        Pozemok pozemok = dao.getAll().get(0);
-        assertTrue(dao.deletePozemokById(pozemok.getId()));
+        //TODO nemá getId, len getKategoriaId
+        //dao.deletePozemokById(pozemokModel.getKategoriaId())
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
-    // mazanie pozemku podla cisla pozemku
+    // mazanie pozemku podla cisla pozemku - pocet vsetkych musí byť o 1 menší
     @Test
     public void deleteByCisloPozemkuTest() {
         int velkost = dao.getAll().size();
-        Pozemok pozemok = dao.getAll().get(0);
-        assertTrue(dao.deletePozemokByCisloPozemku(pozemok.getCisloPozemku()));
+        assertTrue(dao.deletePozemokByCisloPozemku(pozemokModel.getCisloPozemku()));
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
-    // update pozemku
+    // update pozemku - ako funguje?
+    // pocet musí zostať zachovaný
     @Test
     public void updatePozemokTest() {
         int velkost = dao.getAll().size();
-        Pozemok pozemok = new Pozemok();
-        //hádže chybovú hlášku, updatePozemok vracia void - nie Pozemok()
-        //Pozemok pozemokU = dao.updatePozemok(pozemok);
-        //assertNotEquals(pozemok, pozemokU);
+        dao.updatePozemok(pozemokModel);
         assertEquals(velkost, dao.getAll().size());
     }
 }

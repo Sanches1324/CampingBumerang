@@ -50,8 +50,8 @@
          <columns>
             <TableColumn fx:id="cisloPozemkuColumn" prefWidth="121.0" text="Číslo pozemku" />
             <TableColumn fx:id="kategoriaPozemkuColumn" prefWidth="120.0" text="Kategoria" />
-            <TableColumn fx:id="cenaPozemkuColumn" prefWidth="114.0" text="Cena" />
-            <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="147.0" text="Obsadenosť" />
+            <TableColumn fx:id="cenaPozemkuColumn" prefWidth="119.0" text="Cena" />
+            <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="140.0" text="Obsadenosť" />
          </columns>
       </TableView>
       <FlowPane fx:id="pozemkyFlowPane" layoutX="179.0" layoutY="45.0" prefHeight="173.0" prefWidth="505.0" />

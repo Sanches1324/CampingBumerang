@@ -41,6 +41,12 @@ public class ObjednavkaEditSceneController {
     private TableColumn<ObjednavkaFxModel, Long> pouzivatelIdTableColumn;
 
     @FXML
+    private TableColumn<ObjednavkaFxModel, String> menoZakaznikaColumn;
+
+    @FXML
+    private TableColumn<ObjednavkaFxModel, String> telCisloZakaznikaColumn;
+
+    @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumObjednavkyTableColumn;
 
     @FXML
@@ -126,6 +132,8 @@ public class ObjednavkaEditSceneController {
     void initialize() {
         pozemokIdTableColumn.setCellValueFactory(cellData -> cellData.getValue().pozemokIdProperty().asObject());
         pouzivatelIdTableColumn.setCellValueFactory(cellData -> cellData.getValue().pouzivatelIdProperty().asObject());
+        menoZakaznikaColumn.setCellValueFactory(cellData -> cellData.getValue().menoZakaznikaProperty());
+        telCisloZakaznikaColumn.setCellValueFactory(cellData -> cellData.getValue().telCisloZakaznikaProperty());
         datumObjednavkyTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumObjednavkyProperty());
         datumPrichoduTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumPrichoduProperty());
         datumOdchoduTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumOdchoduProperty());

@@ -1,6 +1,6 @@
 package camping.dao;
 
-import camping.entities.Objednavka;
+import camping.design.ObjednavkaFxModel;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.After;
@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 public class ObjednavkaDaoTest {
 
     private ObjednavkaDao dao;
+    private ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
 
     public ObjednavkaDaoTest() {
         dao = CampingDaoFactoryTest.INSTANCE.getMySqlObjednavkaDao();
@@ -34,32 +35,31 @@ public class ObjednavkaDaoTest {
     public void tearDown() {
     }
 
-    // vytvorenie objednávky
+    // vytvorenie objednávky, pocet vsetkych musi byt o 1 vacsi
+    // musi obsahovat datumy a idcka pozemku a pouzivatela
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        Objednavka objednavka = new Objednavka();
-        objednavka.setDatumObjednavky(LocalDate.now());
-        objednavka.setDatumPrichodu(LocalDate.now());
-        objednavka.setDatumOdchodu(LocalDate.now());
-        objednavka.setPocetDni(1L);
-        objednavka.setPozemokId(1L);
-        objednavka.setPouzivatelId(1L);
-        objednavka.setPlatba(false);
-        dao.createObjednavku(objednavka);
-        assertNotNull(objednavka.getId());
-        assertNotNull(objednavka.getDatumObjednavky());
-        assertNotNull(objednavka.getDatumPrichodu());
-        assertNotNull(objednavka.getDatumOdchodu());
-        assertNotNull(objednavka.getPozemokId());
-        assertNotNull(objednavka.getPouzivatelId());
+        objednavkaModel.setDatumObjednavky(LocalDate.now());
+        objednavkaModel.setDatumPrichodu(LocalDate.now());
+        objednavkaModel.setDatumOdchodu(LocalDate.now());
+        objednavkaModel.setPocetDni(1L);
+        objednavkaModel.setPozemokId(1L);
+        objednavkaModel.setPouzivatelId(1L);
+        objednavkaModel.setPlatba(false);
+        dao.createObjednavku(objednavkaModel);
+        assertNotNull(objednavkaModel.getDatumObjednavky());
+        assertNotNull(objednavkaModel.getDatumPrichodu());
+        assertNotNull(objednavkaModel.getDatumOdchodu());
+        assertNotNull(objednavkaModel.getPozemokId());
+        assertNotNull(objednavkaModel.getPouzivatelId());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky objednávky
     @Test
     public void getAllTest() {
-        List<Objednavka> list = dao.getAll();
+        List<ObjednavkaFxModel> list = dao.getAll();
         assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
@@ -67,23 +67,20 @@ public class ObjednavkaDaoTest {
         System.out.println(list);
     }
 
-    // mazanie objednávky podla id
+    // mazanie objednávky podla id, pocet vsetkych musi byt o 1 mensi
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        Objednavka objednavka = dao.getAll().get(0);
-        dao.deleteObjednavku(objednavka.getId());
+        dao.deleteObjednavku(objednavkaModel.getId());
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
-    // update objednávky
+    // update objednávky - ako funguje? 
+    // pocet musí byť rovnaký
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        Objednavka objednavka = new Objednavka();
-        //hádže chybovú hlášku, updateObjednavku vracia void - nie Objednavka()
-        //Objednavka objednavkaU = dao.updateObjednavku(objednavka);
-        //assertNotEquals(objednavka, objednavkaU);
+        dao.updateObjednavku(objednavkaModel);
         assertEquals(velkost, dao.getAll().size());
     }
 }

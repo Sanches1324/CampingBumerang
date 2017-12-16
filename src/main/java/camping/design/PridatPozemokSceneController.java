@@ -11,7 +11,9 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import javax.swing.JOptionPane;
 
 public class PridatPozemokSceneController {
 
@@ -56,85 +59,69 @@ public class PridatPozemokSceneController {
     private KategoriaFxModel kategoriaModel = new KategoriaFxModel();
     private ObservableList<String> kategorie = kategoriaModel.getNazvy();
     private PozemokFxModel pozemokModel = new PozemokFxModel();
+    private ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokModel.getPozemky());
+    private boolean cislo = false;
+    private boolean kategoria = false;
+    private boolean cena = false;
+    private boolean splneneVsetko = false;
 
     @FXML
     void initialize() {
-        
+        int posledny = pozemky.size() + 1;
+        cisloPozemkuTextField.setText(posledny + "");
         kategoriaPozemkuChoiceBox.setItems(kategorie);
         pridatPozemokButton.setDefaultButton(true);
         pridatPozemokButton.setOnAction(eh -> {
             PozemokFxModel pozemok = new PozemokFxModel();
-            pozemok.setCisloPozemku(Long.parseLong(cisloPozemkuTextField.getText()));
-            pozemok.setKategoriaId((long) kategoriaPozemkuChoiceBox.getSelectionModel().getSelectedIndex() + 1);
-            pozemok.setCena(Integer.parseInt(cenaPozemkuTextField.getText()));
+            if (cisloPozemkuTextField.getText().equals("") || Long.parseLong(cisloPozemkuTextField.getText()) < 1 || Long.parseLong(cisloPozemkuTextField.getText()) > 100) {
+                cisloPozemkuTextField.setStyle("-fx-background-color: #FF0000;");
+            } else {
+                pozemok.setCisloPozemku(Long.parseLong(cisloPozemkuTextField.getText()));
+                cislo = true;
+            }
+            if (kategoriaPozemkuChoiceBox.getSelectionModel().getSelectedIndex() == -1) {
+                kategoriaPozemkuChoiceBox.setStyle("-fx-background-color: #FF0000;");
+            } else {
+                pozemok.setKategoriaId((long) kategoriaPozemkuChoiceBox.getSelectionModel().getSelectedIndex() + 1);
+                kategoria = true;
+            }
+            if (cenaPozemkuTextField.getText().equals("")) {
+                cenaPozemkuTextField.setStyle("-fx-background-color: #FF0000;");
+            } else {
+                pozemok.setCena(Integer.parseInt(cenaPozemkuTextField.getText()));
+                cena = true;
+            }
+
             if (obsadenostPozemkuCheckBox.selectedProperty().getValue()) {
                 pozemok.setObsadenost(true);
+                pozemok.setObsadenostBoolean("obsadený");
             } else {
                 pozemok.setObsadenost(false);
+                pozemok.setObsadenostBoolean("voľný");
             }
-            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
-            List<PozemokFxModel> pozemky = pozemokDao.getAll();
-            ObservableList<PozemokFxModel> poz = FXCollections.observableArrayList(pozemky);
-            try {
-                pozemokDao.createPozemok(pozemok);
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Pozemok z takym cislom uz existuje, chcete jeho aktualizovat?", ButtonType.OK, ButtonType.NO);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    pozemokDao.updatePozemok(pozemok);
-                } else {
-                    pridatPozemokButton.getScene().getWindow().hide();
+
+            if (cislo == true && kategoria == true && cena == true) {
+                PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
+                List<PozemokFxModel> pozemky = pozemokDao.getAll();
+                ObservableList<PozemokFxModel> poz = FXCollections.observableArrayList(pozemky);
+                try {
+                    pozemokDao.createPozemok(pozemok);
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Pozemok z takym cislom uz existuje, chcete jeho aktualizovat?", ButtonType.OK, ButtonType.NO);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        pozemokDao.updatePozemok(pozemok);
+                    } else {
+                        pridatPozemokButton.getScene().getWindow().hide();
+                    }
                 }
-            }
-//            for (PozemokFxModel pozemokFxModel : poz) {
-//                if (pozemokFxModel.getCisloPozemku() == Long.parseLong(cisloPozemkuTextField.getText())) {
-//                    Alert alert = new Alert(Alert.AlertType.WARNING, "Pozemok z takym cislom uz existuje, chcete jeho aktualizovat?", ButtonType.OK, ButtonType.NO);
-//                    Optional<ButtonType> result = alert.showAndWait();
-//                    if (result.isPresent() && result.get() == ButtonType.OK) {
-//                        pozemokDao.updatePozemok(pozemok);
-//                        break;
-//                    } else {
-//                        pridatPozemokButton.getScene().getWindow().hide();
-//                        break;
-//                    }
-//                } else {
-//                    pozemokDao.createPozemok(pozemok);
-//                    break;
-//                }
-//            }
+                pridatPozemokButton.getScene().getWindow().hide();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Vyplňte všetky udaje", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
 
-//            for (PozemokFxModel pozemokFxModel : poz) {
-//                if (pozemokFxModel.getCisloPozemku() == Long.parseLong(cisloPozemkuTextField.getText())) {
-//                    Alert alert = new Alert(Alert.AlertType.WARNING, "Pozemok z takym cislom uz existuje, chcete jeho aktualizovat?", ButtonType.OK, ButtonType.NO);
-//                    Optional<ButtonType> result = alert.showAndWait();
-//                    if (result.isPresent() && result.get() == ButtonType.OK) {
-//                        pozemokDao.updatePozemok(pozemok);
-//                        break;
-//                    } else {
-//                        pridatPozemokButton.getScene().getWindow().hide();
-//                        break;
-//                    }
-//                } else {
-//                    pozemokDao.createPozemok(pozemok);
-//                    break;
-//                }
-//            }
-            pridatPozemokButton.getScene().getWindow().hide();
-            try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("AdminScene.fxml"));
-                Parent parentPane = loader.load();
-                Scene scene = new Scene(parentPane);
-
-                Stage stage = new Stage();
-                Image logo = new Image("camping\\styles\\logo.png");
-                stage.setScene(scene);
-                stage.setTitle("Camping Bumerang");
-                stage.getIcons().add(logo);
-                stage.show();
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
-        });
+        }
+        );
     }
 }

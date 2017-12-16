@@ -131,6 +131,9 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
                 o.setPlatba(false);
                 o.setPlatbaString("nezaplatené");
             }
+            o.setMenoZakaznika(rs.getString(9));
+            o.setTelCisloZakaznika(rs.getString(10));
+            
             return o;
         }
 

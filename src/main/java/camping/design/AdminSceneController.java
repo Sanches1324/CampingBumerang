@@ -2,6 +2,7 @@ package camping.design;
 
 import camping.dao.CampingDaoFactory;
 import camping.dao.KategoriaDao;
+import camping.dao.ObjednavkaDao;
 import camping.dao.PozemokDao;
 import camping.entities.Kategoria;
 import camping.entities.Pozemok;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -31,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -91,6 +94,8 @@ public class AdminSceneController {
 
     private PozemokFxModel pozemokModel = new PozemokFxModel();
     private ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokModel.getPozemky());
+    private PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
+    private ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
 
     @FXML
     void prepnutUzivatelaAction(ActionEvent event) {
@@ -147,7 +152,16 @@ public class AdminSceneController {
             stage.getIcons().add(logo);
             stage.show();
             stage.setOnHidden(eh -> {
-                pridajPozemokButton.getScene().getWindow().hide();
+                ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
+                Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
+                    @Override
+                    public int compare(PozemokFxModel lp, PozemokFxModel rp) {
+                        return (int) (lp.getCisloPozemku() - rp.getCisloPozemku());
+                    }
+                });
+                pozemkyFlowPane.getChildren().clear();
+                vytvorPozemok(pozemky);
+                zoradPozemky(pozemky);
             });
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -235,7 +249,7 @@ public class AdminSceneController {
     }
 
     @FXML
-    private void zoradPozemky(ObservableList<PozemokFxModel> pozemky) throws ClassNotFoundException {
+    private void zoradPozemky(ObservableList<PozemokFxModel> pozemky) {
         if (pozemky.size() > 0) {
             pozemkyTableView.setItems(pozemky);
         } else {
@@ -280,23 +294,19 @@ public class AdminSceneController {
                 }
                 button.setOnAction(eh -> {
                     try {
-                        BorderPane root = new BorderPane();
-                        Scene scene = new Scene(root, 400, 210);
-
-                        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-                        Node popupContent = datePickerSkin.getPopupContent();
-
-                        root.setCenter(popupContent);
-
+                        FXMLLoader loader = new FXMLLoader(
+                                getClass().getResource("objednavkyPozemku.fxml"));
+                        Parent parentPane = loader.load();
+                        Scene scene = new Scene(parentPane);
+                        
                         Stage stage = new Stage();
                         Image logo = new Image("camping\\styles\\logo.png");
-                        stage.setTitle("Camping Bumerang");
-                        stage.getIcons().add(logo);
-
                         stage.setScene(scene);
+                        stage.setTitle(pozemok1.getCisloPozemku() + "");
+                        stage.getIcons().add(logo);
                         stage.show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 });
                 pozemkyFlowPane.getChildren().add(button);

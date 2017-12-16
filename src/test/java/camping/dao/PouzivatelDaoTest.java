@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 public class PouzivatelDaoTest {
 
     private PouzivatelDao dao;
+    private Pouzivatel pouzivatel = new Pouzivatel();
 
     public PouzivatelDaoTest() {
         dao = CampingDaoFactoryTest.INSTANCE.getMySqlPouzivatelDao();
@@ -33,16 +34,14 @@ public class PouzivatelDaoTest {
     public void tearDown() {
     }
 
-    // vytvorenie pouzivatela
+    // vytvorenie pouzivatela - pocet vsetkych o 1 vacsi
+    // musi obsahovat poziciu
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        Pouzivatel pouzivatel = new Pouzivatel();
         pouzivatel.setMeno("Zamestnanec1");
         pouzivatel.setPozicia("Zamestnanec");
         dao.createPouzivatela(pouzivatel);
-        assertNotNull(pouzivatel.getId());
-        assertNotNull(pouzivatel.getMeno());
         assertNotNull(pouzivatel.getPozicia());
         assertEquals(velkost + 1, dao.getAll().size());
     }
@@ -58,23 +57,20 @@ public class PouzivatelDaoTest {
         System.out.println(list);
     }
 
-    // mazanie používateľa podla id
+    // mazanie používateľa podla id - pocet vsetkych musi byt o 1 mensi
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        Pouzivatel pouzivatel = dao.getAll().get(0);
         dao.deletePouzivatela(pouzivatel.getId());
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
-    // update používateľa
+    // update používateľa - ako funguje? 
+    // pocet musi byt zachovany
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        Pouzivatel pouzivatel = new Pouzivatel();
-        //hádže chybovú hlášku, updatePouzivatela vracia void - nie Pouzivatel()
-        //Pouzivatel pouzivatelU = dao.updatePouzivatela(pouzivatel);
-        //assertNotEquals(pouzivatel, pouzivatelU);
+        dao.updatePouzivatela(pouzivatel);
         assertEquals(velkost, dao.getAll().size());
     }
 }
