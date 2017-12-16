@@ -78,7 +78,6 @@ public class PouzivatelFxModel {
     public ObservableList<PouzivatelFxModel> getPouzivatelov() {
         readAll();
         return pouzivatelia;
-
     }
 
     public void setPouzivatelov(ObservableList<PouzivatelFxModel> pouzivatelia) {
@@ -89,7 +88,7 @@ public class PouzivatelFxModel {
         PouzivatelDao pouzivatelDao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
         List<PouzivatelFxModel> listPouzivatelov = pouzivatelDao.getAll();
         for (PouzivatelFxModel pouzivatel : listPouzivatelov) {
-            listPouzivatelov.add(pouzivatel);
+            pouzivatelia.add(pouzivatel);
         }
     }
 

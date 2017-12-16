@@ -20,6 +20,7 @@ public class ObjednavkaFxModel {
     private LongProperty id;
     private LongProperty pozemokId;
     private LongProperty pouzivatelId;
+    private StringProperty menoPouzivatela;
     private StringProperty menoZakaznika;
     private StringProperty telCisloZakaznika;
     private ObjectProperty<LocalDate> datumObjednavky;
@@ -34,6 +35,7 @@ public class ObjednavkaFxModel {
         id = new SimpleLongProperty();
         pozemokId = new SimpleLongProperty();
         pouzivatelId = new SimpleLongProperty();
+        menoPouzivatela = new SimpleStringProperty();
         menoZakaznika = new SimpleStringProperty();
         telCisloZakaznika = new SimpleStringProperty();
         datumObjednavky = new SimpleObjectProperty<>(LocalDate.now());
@@ -88,6 +90,18 @@ public class ObjednavkaFxModel {
 
     public void setPouzivatelId(Long pouzivatelId) {
         this.pouzivatelId.set(pouzivatelId);
+    }
+
+    public StringProperty menoPouzivatelaProperty() {
+        return menoPouzivatela;
+    }
+
+    public String getMenoPouzivatela() {
+        return menoPouzivatela.get();
+    }
+
+    public void setMenoPouziatela(String menoPouzivatela) {
+        this.menoPouzivatela.set(menoPouzivatela);
     }
 
     public ObjectProperty<LocalDate> datumObjednavkyProperty() {

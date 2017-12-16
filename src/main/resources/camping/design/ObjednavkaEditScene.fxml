@@ -29,11 +29,11 @@
       <Label layoutX="8.0" layoutY="49.0" text="Použivateľ:" />
       <Label layoutX="6.0" layoutY="85.0" text="Dátum príchodu:" />
       <Label layoutX="293.0" layoutY="85.0" text="Dátum odchodu:" />
-      <Label layoutX="585.0" layoutY="85.0" text="Počet dní:" />
+      <Label layoutX="576.0" layoutY="85.0" text="Počet dní:" />
       <Label layoutX="745.0" layoutY="14.0" text="Platba:" />
-      <ComboBox fx:id="pozemkyComboBox" layoutX="81.0" layoutY="10.0" prefHeight="25.0" prefWidth="52.0" />
-      <ComboBox fx:id="pouzivatelComboBox" layoutX="81.0" layoutY="45.0" prefHeight="25.0" prefWidth="52.0" />
-      <TextField fx:id="pocetDniTextField" layoutX="644.0" layoutY="81.0" prefHeight="25.0" prefWidth="52.0" />
+      <ComboBox fx:id="pozemkyComboBox" layoutX="81.0" layoutY="10.0" prefHeight="25.0" prefWidth="82.0" />
+      <ComboBox fx:id="pouzivatelComboBox" layoutX="81.0" layoutY="45.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="pocetDniTextField" layoutX="636.0" layoutY="81.0" prefHeight="25.0" prefWidth="52.0" />
       <CheckBox fx:id="platbaCheckBox" layoutX="790.0" layoutY="14.0" mnemonicParsing="false" />
       <DatePicker fx:id="datumPrichoduDatePicker" layoutX="104.0" layoutY="81.0" />
       <DatePicker fx:id="datumOdchoduDatePicker" layoutX="391.0" layoutY="81.0" />
@@ -44,5 +44,6 @@
       <TextField fx:id="telCisloTextField" layoutX="570.0" layoutY="10.0" />
       <Label layoutX="173.0" layoutY="14.0" text="Meno zakáznika:" />
       <Label layoutX="478.0" layoutY="14.0" text="Telefonné číslo:" />
+      <Button fx:id="pridatObjednavkuButton" layoutX="700.0" layoutY="81.0" mnemonicParsing="false" onAction="#pridatObjednavku" prefHeight="25.0" prefWidth="115.0" text="Pridať objednávku" />
    </children>
 </AnchorPane>

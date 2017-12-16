@@ -25,7 +25,6 @@ public class PozemokFxModel {
     private BooleanProperty obsadenost;
     private ObservableList<PozemokFxModel> pozemky;
     private StringProperty obsadenostBoolean;
-//    private ObservableList<PozemokFxModel> pozemkyTab = FXCollections.observableArrayList();
 
     public PozemokFxModel() {
         this.cisloPozemku = new SimpleLongProperty();
@@ -36,14 +35,6 @@ public class PozemokFxModel {
         this.pozemky = FXCollections.observableArrayList();
         this.obsadenostBoolean = new SimpleStringProperty();
     }
-//
-//    public KategoriaFxModel getKategoriaModel() {
-//        return kategoriaModel;
-//    }
-//
-//    public void setKategoriaModel(KategoriaFxModel kategoriaModel) {
-//        this.kategoriaModel = kategoriaModel;
-//    }
 
     public StringProperty kategoriaStringProperty() {
         return kategoriaString;
@@ -57,7 +48,6 @@ public class PozemokFxModel {
         this.kategoriaString.set(kategoriaString);
     }
 
-    
     public LongProperty cisloPozemkuProperty() {
         return cisloPozemku;
     }

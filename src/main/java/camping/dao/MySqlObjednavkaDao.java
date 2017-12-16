@@ -19,19 +19,18 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
 
     @Override
     public void createObjednavku(ObjednavkaFxModel objednavka) {
-        if (objednavka.getId() == null) {
-            String objednavka_create = "INSERT INTO objednavky(pozemky_id, pouzivatel_id, datum_objednavky, datum_prichodu, datum_odchodu, pocet_dni, platba) VALUE(?, ?, ?, ?, ?, ?, ?)";
-            if (objednavka.getPlatba()) {
-                jdbcTemplate.update(objednavka_create, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 1);
-            } else {
-                jdbcTemplate.update(objednavka_create, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 0);
-            }
+        String objednavka_create = "INSERT INTO objednavky(pozemky_id, pouzivatel_id, datum_objednavky, datum_prichodu, datum_odchodu, pocet_dni, platba, zakaznik_meno, zakaznik_cislo) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if (objednavka.getPlatba()) {
+            jdbcTemplate.update(objednavka_create, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 1, objednavka.getMenoZakaznika(), objednavka.getTelCisloZakaznika());
+        } else {
+            jdbcTemplate.update(objednavka_create, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 0, objednavka.getMenoZakaznika(), objednavka.getTelCisloZakaznika());
         }
+
     }
 
     @Override
     public List<ObjednavkaFxModel> getAll() {
-        String objednavka_getAll = "SELECT * FROM objednavky";
+        String objednavka_getAll = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id;";
         return jdbcTemplate.query(objednavka_getAll, new ObjednavkaRowMapper());
     }
 
@@ -40,11 +39,11 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
         if (objednavka.getId() == null) {
             createObjednavku(objednavka);
         } else {
-            String objednavka_update = "UPDATE pouzivatel SET pozemok_id = ?, pouzivatel_id = ?, datum_objednavky = ?, datum_prichodu = ?, datum_odchodu = ?, pocet_dni = ?, platba = ? WHERE id = ?";
+            String objednavka_update = "UPDATE pouzivatel SET pozemok_id = ?, pouzivatel_id = ?, datum_objednavky = ?, datum_prichodu = ?, datum_odchodu = ?, pocet_dni = ?, platba = ?, zakaznik_meno = ?, zakaznik_cislo = ? WHERE id = ?";
             if (objednavka.getPlatba()) {
-                jdbcTemplate.update(objednavka_update, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 1);
+                jdbcTemplate.update(objednavka_update, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 1, objednavka.getMenoZakaznika(), objednavka.getTelCisloZakaznika());
             } else {
-                jdbcTemplate.update(objednavka_update, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 0);
+                jdbcTemplate.update(objednavka_update, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 0, objednavka.getMenoZakaznika(), objednavka.getTelCisloZakaznika());
             }
         }
     }
@@ -59,42 +58,42 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
 
     @Override
     public List<ObjednavkaFxModel> findByPozemokId(Long pozemok_id) {
-        String objednavka_findByPozemokId = "SELECT * FROM objednavky "
+        String objednavka_findByPozemokId = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
                 + "WHERE pozemky_id = " + pozemok_id;
         return jdbcTemplate.query(objednavka_findByPozemokId, new ObjednavkaRowMapper());
     }
 
     @Override
     public List<ObjednavkaFxModel> findByPouzivatelId(Long pouzivatel_id) {
-        String objednavka_findByPouzivatelId = "SELECT * FROM objednavky "
+        String objednavka_findByPouzivatelId = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
                 + "WHERE pouzivatel_id = " + pouzivatel_id;
         return jdbcTemplate.query(objednavka_findByPouzivatelId, new ObjednavkaRowMapper());
     }
 
     @Override
     public List<ObjednavkaFxModel> findByDatumObjednavky(LocalDate datumObjednavky) {
-        String objednavka_findByDatumObjednavky = "SELECT * FROM objednavky "
-                + "WHERE datum_objednavky = " + datumObjednavky;
+        String objednavka_findByDatumObjednavky = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
+                + "WHERE datum_objednavky = " + "'" + datumObjednavky + "'";
         return jdbcTemplate.query(objednavka_findByDatumObjednavky, new ObjednavkaRowMapper());
     }
 
     @Override
     public List<ObjednavkaFxModel> findByDatumPrichodu(LocalDate datumPrichodu) {
-        String objednavka_findByDatumPrichodu = "SELECT * FROM objednavky "
-                + "WHERE datum_prichodu = " + datumPrichodu;
+        String objednavka_findByDatumPrichodu = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
+                + "WHERE datum_prichodu = " + "'" + datumPrichodu + "'";
         return jdbcTemplate.query(objednavka_findByDatumPrichodu, new ObjednavkaRowMapper());
     }
 
     @Override
     public List<ObjednavkaFxModel> findByDatumOdchodu(LocalDate datumOdchodu) {
-        String objednavka_findByDatumOdchodu = "SELECT * FROM objednavky "
-                + "WHERE datum_odchodu = " + datumOdchodu;
+        String objednavka_findByDatumOdchodu = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
+                + "WHERE datum_odchodu = " + "'" + datumOdchodu + "'";
         return jdbcTemplate.query(objednavka_findByDatumOdchodu, new ObjednavkaRowMapper());
     }
 
     @Override
     public List<ObjednavkaFxModel> findByPocetDni(int pocetDni) {
-        String objednavka_findByDatumPocetDni = "SELECT * FROM objednavky "
+        String objednavka_findByDatumPocetDni = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
                 + "WHERE pocet_dni = " + pocetDni;
         return jdbcTemplate.query(objednavka_findByDatumPocetDni, new ObjednavkaRowMapper());
     }
@@ -103,10 +102,10 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
     public List<ObjednavkaFxModel> findByPlatba(boolean platba) {
         String objednavka_findByPlatba = "";
         if (platba == true) {
-            objednavka_findByPlatba = "SELECT * FROM objednavky "
+            objednavka_findByPlatba = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
                     + "WHERE platba = " + 1;
         } else {
-            objednavka_findByPlatba = "SELECT * FROM objednavky "
+            objednavka_findByPlatba = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id "
                     + "WHERE platba = " + 0;
         }
         return jdbcTemplate.query(objednavka_findByPlatba, new ObjednavkaRowMapper());
@@ -133,7 +132,8 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
             }
             o.setMenoZakaznika(rs.getString(9));
             o.setTelCisloZakaznika(rs.getString(10));
-            
+            o.setMenoPouziatela(rs.getString(12));
+
             return o;
         }
 
