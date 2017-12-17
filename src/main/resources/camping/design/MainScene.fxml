@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -23,21 +24,34 @@
                   <Image url="@../styles/logo.png" />
                </image>
             </ImageView>
-            <Label fx:id="hesloLabel" blendMode="MULTIPLY" layoutX="156.0" layoutY="271.0" text="Heslo" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="384.0" AnchorPane.topAnchor="271.0">
-               <font>
-                  <Font name="System Italic" size="29.0" />
-               </font></Label>
-            <PasswordField fx:id="hesloPouzivatelaPasswordField" layoutX="236.0" layoutY="280.0" prefHeight="25.0" prefWidth="138.0" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="236.0" AnchorPane.topAnchor="280.0" />
-            <Button fx:id="OKButton" blendMode="MULTIPLY" layoutX="265.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="310.0" />
-            <Button fx:id="bossButton" blendMode="SCREEN" layoutX="53.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="53.0" />
-            <Button fx:id="userButton" blendMode="SCREEN" layoutX="242.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.topAnchor="53.0" />
-            <Button fx:id="customerButton" blendMode="SCREEN" layoutX="437.0" layoutY="53.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="53.0" />
-            <Label fx:id="typUseraLabel" layoutX="213.0" layoutY="250.0" prefHeight="21.0" prefWidth="260.0" text=" " textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" layoutX="257.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
+            <VBox alignment="CENTER" layoutX="46.0" layoutY="46.0" prefHeight="327.0" prefWidth="524.0" spacing="15.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="46.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="127.0" prefWidth="529.0" spacing="40.0">
+                     <children>
+                        <Button fx:id="bossButton" blendMode="SCREEN" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" />
+                        <Button fx:id="userButton" blendMode="SCREEN" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" />
+                        <Button fx:id="customerButton" blendMode="SCREEN" mnemonicParsing="false" prefHeight="127.0" prefWidth="130.0" stylesheets="@../styles/Styles.css" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="typUseraLabel" alignment="CENTER" prefHeight="21.0" prefWidth="260.0" text=" " textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="58.0" prefWidth="246.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="hesloLabel" blendMode="MULTIPLY" text="Heslo">
+                           <font>
+                              <Font name="System Italic" size="29.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="hesloPouzivatelaPasswordField" prefHeight="25.0" prefWidth="138.0" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="OKButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" />
+                  <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
+               </children>
+            </VBox>
       </children>
     </AnchorPane>
   </children>

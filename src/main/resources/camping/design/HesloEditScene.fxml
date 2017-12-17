@@ -5,12 +5,12 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="265.0" style="-fx-background-color: #e0ebeb;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.HesloEditSceneController">
-   <children>
-      <Label fx:id="zadajPovodneHesloLabel" layoutX="36.0" layoutY="27.0" style="-fx-font-size: 12;" text="Pôvodné heslo:" AnchorPane.topAnchor="27.0" />
-      <PasswordField fx:id="povodneHesloPasswordField" layoutX="34.0" layoutY="51.0" prefHeight="25.0" prefWidth="190.0" AnchorPane.topAnchor="51.0" />
-      <Button fx:id="potvrdZmenuHeslaButton" layoutX="101.0" layoutY="170.0" mnemonicParsing="false" text="Potvrď zmenu hesla" AnchorPane.topAnchor="170.0" />
-      <Label fx:id="zadajNoveHesloLabel" layoutX="34.0" layoutY="85.0" style="-fx-font-size: 12;" text="Nové heslo:" />
-      <PasswordField fx:id="noveHesloPasswordField" layoutX="34.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" />
-   </children>
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="265.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.HesloEditSceneController">
+    <children>
+        <Label fx:id="zadajPovodneHesloLabel" layoutX="36.0" layoutY="28.0" style="-fx-font-size: 12;" text="Pôvodné heslo:" AnchorPane.topAnchor="28.0" />
+        <PasswordField fx:id="povodneHesloPasswordField" layoutX="34.0" layoutY="51.0" prefHeight="25.0" prefWidth="190.0" AnchorPane.topAnchor="51.0" />
+        <Button fx:id="potvrdZmenuHeslaButton" layoutX="101.0" layoutY="170.0" mnemonicParsing="false" styleClass="buttonStyle" text="Potvrď zmenu hesla" AnchorPane.topAnchor="170.0" />
+        <Label fx:id="zadajNoveHesloLabel" layoutX="34.0" layoutY="85.0" style="-fx-font-size: 12;" text="Nové heslo:" />
+        <PasswordField fx:id="noveHesloPasswordField" layoutX="34.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" />
+    </children>
 </AnchorPane>

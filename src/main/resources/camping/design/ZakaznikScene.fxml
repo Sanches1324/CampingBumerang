@@ -2,35 +2,35 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="242.0" prefWidth="592.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ZakaznikSceneController">
-   <children>
-      <AnchorPane fx:id="zakaznikAnchorPane" minHeight="-1.0" minWidth="-1.0" prefHeight="233.0" prefWidth="592.0" stylesheets="@../styles/Styles.css">
-         <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="12.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Zákazník" textAlignment="CENTER" wrapText="false">
-               <font>
-                  <Font size="18.0" fx:id="x1" />
-               </font>
-               <textFill>
-                  <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-               </textFill>
-            </Label>
-            <Button fx:id="prepniUzivatelaButton" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Prepnuť užívateľa" />
-            <Label alignment="CENTER" layoutX="158.0" layoutY="12.0" style="&#10;" text="Pozemky" textAlignment="CENTER" wrapText="false">
-               <font>
-                  <Font size="18.0" fx:id="x3" />
-               </font>
-               <textFill>
-                  <Color blue="0.624" green="0.624" red="0.624" fx:id="x4" />
-               </textFill>
-            </Label>
-            <FlowPane fx:id="pozemkyFlowPane" layoutX="158.0" layoutY="43.0" prefHeight="184.0" prefWidth="428.0" />
-         </children>
-      </AnchorPane>
-   </children>
+<VBox prefHeight="242.0" prefWidth="592.0" styleClass="background" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ZakaznikSceneController">
+    <children>
+        <AnchorPane fx:id="zakaznikAnchorPane" minHeight="-1.0" minWidth="-1.0" prefHeight="233.0" prefWidth="592.0" stylesheets="@../styles/Styles.css" VBox.vgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" layoutX="14.0" layoutY="26.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Zákazník" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+                    <font>
+                        <Font size="18.0" fx:id="x1" />
+                    </font>
+                </Label>
+                <Button fx:id="prepniUzivatelaButton" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" styleClass="buttonStyle" text="Prepnuť užívateľa" />
+                <Label alignment="CENTER" layoutX="158.0" layoutY="26.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+                    <font>
+                        <Font size="18.0" fx:id="x3" />
+                    </font>
+                </Label>
+                <FlowPane fx:id="pozemkyFlowPane" layoutX="158.0" layoutY="63.0" prefHeight="164.0" prefWidth="420.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="63.0" />
+                <ImageView fx:id="logoImageView" fitHeight="58.0" fitWidth="112.0" layoutX="14.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+                    <image>
+                        <Image url="@../styles/logo-sitename.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

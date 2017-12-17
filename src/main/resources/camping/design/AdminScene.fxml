@@ -5,51 +5,62 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="453.0" maxWidth="696.0" prefHeight="453.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.AdminSceneController">
-   <children>
-<Label alignment="CENTER" layoutX="180.0" layoutY="15.0" style="&#10;" text="Pozemky" textAlignment="CENTER" wrapText="false">
-         <textFill>
-            <Color blue="0.624" green="0.624" red="0.624" fx:id="x3" />
-         </textFill>
-         <font>
-            <Font size="18.0" fx:id="x4" />
-         </font>
-      </Label>
-      <Button fx:id="pridajPozemokButton" layoutX="15.0" layoutY="106.0" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" text="Pridaj pozemok" />
-<Label alignment="CENTER" layoutX="13.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Admin" textAlignment="CENTER" wrapText="false">
-  <font>
-    <Font size="18.0" fx:id="x1" />
-  </font>
-  <textFill>
-    <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-  </textFill>
-</Label>
-      <Button fx:id="spravujFinancieButton" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Spravuj financie">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
-      <Button fx:id="spravujObjednavkyButton" layoutX="13.0" layoutY="183.0" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" text="Spravuj objednávky">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
-      <Button fx:id="prepniUzivatelaButton" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" text="Prepni užívateľa" />
-      <TableView fx:id="pozemkyTableView" layoutX="180.0" layoutY="272.0" prefHeight="167.0" prefWidth="503.0">
-         <columns>
-            <TableColumn fx:id="cisloPozemkuColumn" prefWidth="121.0" text="Číslo pozemku" />
-            <TableColumn fx:id="kategoriaPozemkuColumn" prefWidth="120.0" text="Kategoria" />
-            <TableColumn fx:id="cenaPozemkuColumn" prefWidth="119.0" text="Cena" />
-            <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="140.0" text="Obsadenosť" />
-         </columns>
-      </TableView>
-      <FlowPane fx:id="pozemkyFlowPane" layoutX="179.0" layoutY="45.0" prefHeight="173.0" prefWidth="505.0" />
-      <TextField fx:id="hladatPozemokTextField" layoutX="179.0" layoutY="234.0" prefHeight="25.0" prefWidth="174.0" />
-      <Button fx:id="vymazatPozemokButton" layoutX="487.0" layoutY="234.0" mnemonicParsing="false" onAction="#vymazPozemok" prefHeight="25.0" prefWidth="195.0" text="Vymazať" />
-   </children>
+<AnchorPane fx:id="mainAnchorPane" maxHeight="453.0" maxWidth="696.0" prefHeight="453.0" prefWidth="697.0" styleClass="background" stylesheets="camping/styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.AdminSceneController">
+    <children>
+        <Label alignment="CENTER" layoutX="180.0" layoutY="15.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+            <font>
+                <Font size="18.0" fx:id="x4" />
+            </font>
+        </Label>
+        <Button fx:id="pridajPozemokButton" layoutX="13.0" layoutY="108.0" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridaj pozemok" />
+        <Label alignment="CENTER" layoutX="13.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Admin" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+            <font>
+                <Font size="18.0" fx:id="x1" />
+            </font>
+        </Label>
+        <Button fx:id="spravujFinancieButton" layoutX="13.0" layoutY="143.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj financie">
+            <font>
+                <Font size="11.0" />
+            </font>
+        </Button>
+        <Button fx:id="spravujObjednavkyButton" layoutX="13.0" layoutY="184.0" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky">
+            <font>
+                <Font size="11.0" />
+            </font>
+        </Button>
+        <Button fx:id="prepniUzivatelaButton" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" />
+        <ImageView fx:id="logoImageView" fitHeight="72.0" fitWidth="118.0" layoutX="13.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="13.0">
+            <image>
+                <Image url="@../styles/logo-sitename.png" />
+            </image>
+        </ImageView>
+      <VBox alignment="CENTER" layoutX="171.0" layoutY="227.0" prefHeight="363.0" prefWidth="505.0" spacing="10.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="69.0">
+         <children>
+              <FlowPane fx:id="pozemkyFlowPane" prefHeight="206.0" prefWidth="505.0" VBox.vgrow="ALWAYS" />
+            <HBox prefHeight="27.0" prefWidth="503.0" spacing="33.5">
+               <children>
+                  <Label text="Pozemok №:" />
+                    <TextField fx:id="hladatPozemokTextField" prefHeight="25.0" prefWidth="58.0" />
+                    <Button fx:id="vymazatPozemokButton" mnemonicParsing="false" onAction="#vymazPozemok" styleClass="buttonStyle" text="Vymazať" />
+               </children>
+            </HBox>
+              <TableView fx:id="pozemkyTableView" prefHeight="314.0" prefWidth="505.0" VBox.vgrow="ALWAYS">
+                  <columns>
+                      <TableColumn fx:id="cisloPozemkuColumn" prefWidth="121.0" text="Číslo pozemku" />
+                      <TableColumn fx:id="kategoriaPozemkuColumn" prefWidth="120.0" text="Kategoria" />
+                      <TableColumn fx:id="cenaPozemkuColumn" prefWidth="119.0" text="Cena" />
+                      <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="140.0" text="Obsadenosť" />
+                  </columns>
+              </TableView>
+         </children>
+      </VBox>      
+    </children>
 </AnchorPane>

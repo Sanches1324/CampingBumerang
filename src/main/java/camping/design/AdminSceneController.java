@@ -258,7 +258,7 @@ public class AdminSceneController {
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
-        hladatPozemokTextField.setText("Zadajte číslo pozemku");
+        hladatPozemokTextField.setText("0");
         FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
         hladatPozemokTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrovanePozemky.setPredicate(pozemok -> {
@@ -272,6 +272,7 @@ public class AdminSceneController {
                 }
             });
         });
+
         SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
         sortovanePozemky.comparatorProperty().bind(pozemkyTableView.comparatorProperty());
         pozemkyTableView.setItems(sortovanePozemky);

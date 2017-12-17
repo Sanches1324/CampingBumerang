@@ -29,86 +29,86 @@ import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 
 public class ObjednavkaEditSceneController {
-
+    
     @FXML
     private ResourceBundle resources;
-
+    
     @FXML
     private URL location;
-
+    
     @FXML
     private TableView<ObjednavkaFxModel> objednavkyTableView;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, Long> pozemokIdTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, String> pouzivatelIdTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, String> menoZakaznikaColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, String> telCisloZakaznikaColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumObjednavkyTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumPrichoduTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumOdchoduTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, Long> pocetDniTableColumn;
-
+    
     @FXML
     private TableColumn<ObjednavkaFxModel, String> platbaTableColumn;
-
+    
     @FXML
     private ComboBox<Long> pozemkyComboBox;
-
+    
     @FXML
     private ComboBox<String> pouzivatelComboBox;
-
+    
     @FXML
     private TextField pocetDniTextField;
-
+    
     @FXML
     private CheckBox platbaCheckBox;
-
+    
     @FXML
     private DatePicker datumPrichoduDatePicker;
-
+    
     @FXML
     private DatePicker datumOdchoduDatePicker;
-
+    
     @FXML
     private TextField pozemokIdTextField;
-
+    
     @FXML
     private Button hladatObjednavkuButton;
-
+    
     @FXML
     private TextField menoZakaznikaTextField;
-
+    
     @FXML
     private TextField telCisloTextField;
-
+    
     @FXML
     private Button pridatObjednavkuButton;
-
+    
     @FXML
     private Button vymazatObjednavkuButton;
-
+    
     private PozemokFxModel pozemokModel = new PozemokFxModel();
     private PouzivatelFxModel pouzivatelModel = new PouzivatelFxModel();
     private ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
     private ObservableList<ObjednavkaFxModel> objednavky = objednavkaModel.getObjednavky();
     private ObservableList<PozemokFxModel> pozemky = pozemokModel.getPozemky();
     private ObservableList<PouzivatelFxModel> pouzivatelia = pouzivatelModel.getPouzivatelov();
-
+    
     @FXML
     void pridatObjednavku(ActionEvent event) {
         boolean pozemokID = false;
@@ -118,7 +118,7 @@ public class ObjednavkaEditSceneController {
         boolean pocetDni = false;
         boolean menoZak = false;
         boolean telZak = false;
-
+        
         ObjednavkaFxModel objednavka = new ObjednavkaFxModel();
         if (pozemkyComboBox.getValue() == null) {
             pozemkyComboBox.setStyle("-fx-background-color: #FF0000;");
@@ -178,7 +178,15 @@ public class ObjednavkaEditSceneController {
             pocetDniTextField.setStyle("-fx-background-color: #FDFDFD;");
             menoZakaznikaTextField.setStyle("-fx-background-color: #FDFDFD;");
             telCisloTextField.setStyle("-fx-background-color: #FDFDFD;");
-
+            
+            pozemkyComboBox.getSelectionModel().clearSelection();
+            pouzivatelComboBox.getSelectionModel().clearSelection();
+            datumOdchoduDatePicker.setValue(null);
+            datumPrichoduDatePicker.setValue(null);
+            pocetDniTextField.setText("");
+            menoZakaznikaTextField.setText("");
+            telCisloTextField.setText("");
+            
             ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
             objednavkaDao.createObjednavku(objednavka);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
@@ -189,29 +197,28 @@ public class ObjednavkaEditSceneController {
         }
     }
 
-    @FXML
-    void hladatObjednavku(ActionEvent event
-    ) {
-        try {
-            if (pozemokIdTextField.getText().equals("")) {
-                objednavkyTableView.setItems(objednavky);
-            } else {
-                ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
-                ObservableList<ObjednavkaFxModel> najdeneObjednavky = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(Long.parseLong(pozemokIdTextField.getText())));
-
-                if (najdeneObjednavky.size() < 1) {
-                    objednavkyTableView.setItems(objednavky);
-                    JOptionPane.showMessageDialog(null, "Objednavka neexistuje");
-                } else {
-                    objednavkyTableView.setItems(najdeneObjednavky);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Chyba nacitania z DB" + e);
-            e.printStackTrace();
-        }
-    }
-
+//    @FXML
+//    void hladatObjednavku(ActionEvent event
+//    ) {
+//        try {
+//            if (pozemokIdTextField.getText().equals("")) {
+//                objednavkyTableView.setItems(objednavky);
+//            } else {
+//                ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
+//                ObservableList<ObjednavkaFxModel> najdeneObjednavky = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(Long.parseLong(pozemokIdTextField.getText())));
+//
+//                if (najdeneObjednavky.size() < 1) {
+//                    objednavkyTableView.setItems(objednavky);
+//                    JOptionPane.showMessageDialog(null, "Objednavka neexistuje");
+//                } else {
+//                    objednavkyTableView.setItems(najdeneObjednavky);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Chyba nacitania z DB" + e);
+//            e.printStackTrace();
+//        }
+//    }
     @FXML
     void vymazatObjednavku(ActionEvent event
     ) {
@@ -222,13 +229,13 @@ public class ObjednavkaEditSceneController {
             objednavkaDao.deleteObjednavku(vymazat);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
             objednavkyTableView.setItems(noveObjednavky);
-
+            
         } catch (Exception e) {
             System.out.println("Chyba nacitania z DB" + e);
             e.printStackTrace();
         }
     }
-
+    
     @FXML
     void initialize() {
         pozemokIdTableColumn.setCellValueFactory(cellData -> cellData.getValue().pozemokIdProperty().asObject());
@@ -241,11 +248,11 @@ public class ObjednavkaEditSceneController {
         pocetDniTableColumn.setCellValueFactory(cellData -> cellData.getValue().pocetDniProperty().asObject());
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
         objednavkyTableView.setItems(objednavky);
-
+        
         StringConverter converter = new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter
                     = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+            
             @Override
             public String toString(LocalDate localDate) {
                 if (localDate == null) {
@@ -253,7 +260,7 @@ public class ObjednavkaEditSceneController {
                 }
                 return dateFormatter.format(localDate);
             }
-
+            
             @Override
             public LocalDate fromString(String dateString) {
                 if (dateString == null || dateString.trim().isEmpty()) {
@@ -271,16 +278,16 @@ public class ObjednavkaEditSceneController {
         }
         Collections.sort(idcka);
         pozemkyComboBox.setItems(idcka);
-
+        
         ObservableList<String> menoPouzivatelov = FXCollections.observableArrayList();
         for (PouzivatelFxModel pouzivatelFxModel : pouzivatelia) {
             menoPouzivatelov.add(pouzivatelFxModel.getMeno());
         }
         pouzivatelComboBox.setItems(menoPouzivatelov);
-        pozemokIdTextField.setText("Zadajte číslo pozemku");
+        pozemokIdTextField.setText("0");
         pozemokIdTextField.setOnAction(eh -> {
             pozemokIdTextField.setText("");
-        } );
+        });
         FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
         pozemokIdTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrovaneObjednavky.setPredicate(objednavka -> {
@@ -297,5 +304,6 @@ public class ObjednavkaEditSceneController {
         SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
         sortovanePozemky.comparatorProperty().bind(objednavkyTableView.comparatorProperty());
         objednavkyTableView.setItems(sortovanePozemky);
+        objednavkyTableView.sort();
     }
 }
