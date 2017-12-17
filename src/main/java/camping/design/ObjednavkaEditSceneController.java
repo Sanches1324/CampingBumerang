@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -209,7 +211,6 @@ public class ObjednavkaEditSceneController {
             e.printStackTrace();
         }
     }
-// DOROBIT OBNOVOVANIE OKNA
 
     @FXML
     void vymazatObjednavku(ActionEvent event
@@ -276,5 +277,25 @@ public class ObjednavkaEditSceneController {
             menoPouzivatelov.add(pouzivatelFxModel.getMeno());
         }
         pouzivatelComboBox.setItems(menoPouzivatelov);
+        pozemokIdTextField.setText("Zadajte číslo pozemku");
+        pozemokIdTextField.setOnAction(eh -> {
+            pozemokIdTextField.setText("");
+        } );
+        FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
+        pozemokIdTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrovaneObjednavky.setPredicate(objednavka -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                if (objednavka.getPozemokId() == Long.parseLong(newValue)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
+        sortovanePozemky.comparatorProperty().bind(objednavkyTableView.comparatorProperty());
+        objednavkyTableView.setItems(sortovanePozemky);
     }
 }

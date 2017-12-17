@@ -31,10 +31,10 @@ public class MySqlHesloDao implements HesloDao {
 
     @Override
     public void updateHeslo(HesloFxModel heslo) {
-        String heslo_update = "UPDATE hesla SET heslo = ?, sol = ? WHERE uzivatel = " + "'" + "?" + "'";
+        String heslo_update = "UPDATE hesla SET heslo = ?, sol = ? WHERE uzivatel = " + "'" + heslo.getUzivatel() + "';";
         String sol = BCrypt.gensalt();
         String hash = BCrypt.hashpw(heslo.getHeslo(), sol);
-        jdbcTemplate.update(heslo_update, hash, sol, heslo.getUzivatel());
+        jdbcTemplate.update(heslo_update, hash, sol);
 
     }
 
@@ -57,7 +57,7 @@ public class MySqlHesloDao implements HesloDao {
                 k.setHeslo(rs.getString(3));
                 k.setSol(rs.getString(4));
             }
-            
+
             return k;
         });
     }

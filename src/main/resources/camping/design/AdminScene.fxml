@@ -39,11 +39,6 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="zrusObjednavkuButton" layoutX="15.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Zruš objednávku">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
       <Button fx:id="prepniUzivatelaButton" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" text="Prepni užívateľa" />
       <TableView fx:id="pozemkyTableView" layoutX="180.0" layoutY="272.0" prefHeight="167.0" prefWidth="503.0">
          <columns>
@@ -54,8 +49,7 @@
          </columns>
       </TableView>
       <FlowPane fx:id="pozemkyFlowPane" layoutX="179.0" layoutY="45.0" prefHeight="173.0" prefWidth="505.0" />
-      <TextField fx:id="hladatPozemokTextField" layoutX="179.0" layoutY="234.0" prefHeight="25.0" prefWidth="60.0" />
-      <Button fx:id="hladatPozemokButton" layoutX="252.0" layoutY="234.0" mnemonicParsing="false" onAction="#vyhladajPozemok" text="Hľadať" />
-      <Button fx:id="vymazatPozemokButton" layoutX="317.0" layoutY="234.0" mnemonicParsing="false" onAction="#vymazPozemok" text="Vymazať" />
+      <TextField fx:id="hladatPozemokTextField" layoutX="179.0" layoutY="234.0" prefHeight="25.0" prefWidth="174.0" />
+      <Button fx:id="vymazatPozemokButton" layoutX="487.0" layoutY="234.0" mnemonicParsing="false" onAction="#vymazPozemok" prefHeight="25.0" prefWidth="195.0" text="Vymazať" />
    </children>
 </AnchorPane>

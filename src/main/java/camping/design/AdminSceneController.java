@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,18 +55,16 @@ public class AdminSceneController {
     @FXML
     private Button spravujObjednavkyButton;
 
-    @FXML
-    private Button zrusObjednavkuButton;
-
+//    @FXML
+//    private Button zrusObjednavkuButton;
     @FXML
     private Button prepniUzivatelaButton;
 
     @FXML
     private Button pridajPozemokButton;
 
-    @FXML
-    private Button vyhladajPozemokButton;
-
+//    @FXML
+//    private Button vyhladajPozemokButton;
     @FXML
     private TableView<PozemokFxModel> pozemkyTableView;
 
@@ -237,18 +237,6 @@ public class AdminSceneController {
     }
 
     @FXML
-    private void hladajPozemky(ActionEvent actionEvent) {
-        try {
-            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
-            ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
-            zoradPozemky(pozemky);
-        } catch (Exception e) {
-            System.out.println("Error occurred while getting pozemky information from DB.\n" + e);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     private void zoradPozemky(ObservableList<PozemokFxModel> pozemky) {
         if (pozemky.size() > 0) {
             pozemkyTableView.setItems(pozemky);
@@ -270,7 +258,23 @@ public class AdminSceneController {
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
-
+        hladatPozemokTextField.setText("Zadajte číslo pozemku");
+        FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
+        hladatPozemokTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrovanePozemky.setPredicate(pozemok -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                if (pozemok.getCisloPozemku() == Long.parseLong(newValue)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
+        sortovanePozemky.comparatorProperty().bind(pozemkyTableView.comparatorProperty());
+        pozemkyTableView.setItems(sortovanePozemky);
     }
 
     private void vytvorPozemok(List<PozemokFxModel> pozemok) {

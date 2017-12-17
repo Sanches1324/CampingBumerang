@@ -56,21 +56,15 @@ public class ObjednavkyPozemkuController {
     private ObservableList<ObjednavkaFxModel> objednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
     private Scene scene;
 
-//   
     @FXML
     void initialize(ObservableList<ObjednavkaFxModel> objednavky) {
         objednavkyPozemkuTableView.setItems(objednavky);
-//        initData(objednavky);
-//        setScene();
-//        Stage stage = (Stage) scene.getWindow();
-//        cisloPozemkuLabel.setText(stage.getTitle());
         odTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumPrichoduProperty());
         doTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumOdchoduProperty());
         pocetDniTableColumn.setCellValueFactory(cellData -> cellData.getValue().pocetDniProperty().asObject());
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
         menoZakTableColumn.setCellValueFactory(cellData -> cellData.getValue().menoZakaznikaProperty());
         telCisloTableColumn.setCellValueFactory(cellData -> cellData.getValue().telCisloZakaznikaProperty());
-//        objednavkyPozemkuTableView.setItems(objednavky);
         StringConverter converter = new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter
                     = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -94,7 +88,6 @@ public class ObjednavkyPozemkuController {
         };
         odDatePicker.setConverter(converter);
         FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
-        System.out.println(filtrovaneObjednavky);
         odDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             filtrovaneObjednavky.setPredicate(datum -> {
                 if (newValue == null) {

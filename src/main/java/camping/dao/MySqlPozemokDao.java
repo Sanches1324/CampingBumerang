@@ -6,6 +6,7 @@ import camping.entities.Kategoria;
 import camping.entities.Pozemok;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,7 +32,7 @@ public class MySqlPozemokDao implements PozemokDao {
 
     @Override
     public List<PozemokFxModel> getAll() {
-        String pozemok_getAll = "SELECT * FROM campingsql.pozemky p LEFT JOIN kategoria k on k.id = p.kategoria_id";
+        String pozemok_getAll = "SELECT * FROM campingsql.pozemky p LEFT JOIN kategoria k on k.id = p.kategoria_id ";
         return jdbcTemplate.query(pozemok_getAll, new PozemokRowMapper());
     }
 
@@ -115,7 +116,6 @@ public class MySqlPozemokDao implements PozemokDao {
         });
     }
 
-    // PREROBIT, NOVA TRIEDA KATEGORIА
     @Override
     public List<PozemokFxModel> findByCena(int cena
     ) {
@@ -154,6 +154,14 @@ public class MySqlPozemokDao implements PozemokDao {
                 p.setObsadenost(false);
                 p.setObsadenostBoolean("voľný");
             }
+//            Object object = rs.getObject(12);
+//            if (object != null) {
+//                p.setDatumPrichodu((LocalDate) rs.getDate(12).toLocalDate());
+//            }
+//            Object object2 = rs.getObject(13);
+//            if (object2 != null) {
+//                p.setDatumOdchodu((LocalDate) rs.getDate(13).toLocalDate());
+//            }
 
             return p;
         }

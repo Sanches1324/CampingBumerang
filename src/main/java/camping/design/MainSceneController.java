@@ -4,18 +4,25 @@ import camping.dao.CampingDaoFactory;
 import camping.dao.HesloDao;
 import camping.entities.Heslo;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -54,6 +61,9 @@ public class MainSceneController {
 
     @FXML
     private Label typUseraLabel;
+
+    @FXML
+    private Button zmenitHesloButton;
 
     private String uzivatel;
     private HesloFxModel hesloModel;
@@ -94,10 +104,8 @@ public class MainSceneController {
                 hesloModel = hesloDao.findByUzivatel("Administrator");
 
                 hash = hesloModel.getHeslo();
-                sol = hesloModel.getSol();
                 String heslo = hesloPouzivatelaPasswordField.getText();
-                String hash2 = BCrypt.hashpw(heslo, sol);
-                if (hash.equals(hash2)) {
+                if (BCrypt.checkpw(heslo, hash)) {
                     try {
                         FXMLLoader loader = new FXMLLoader(
                                 getClass().getResource("AdminScene.fxml"));
@@ -115,16 +123,15 @@ public class MainSceneController {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nespravne heslo!");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Zlé zadané heslo!", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
                 }
             } else if (zamestnanec) {
                 HesloDao hesloDao = CampingDaoFactory.INSTANCE.getMySqlHesloDao();
                 hesloModel = hesloDao.findByUzivatel("Zamestnanec");
                 hash = hesloModel.getHeslo();
-                sol = hesloModel.getSol();
                 String heslo = hesloPouzivatelaPasswordField.getText();
-                String hash2 = BCrypt.hashpw(heslo, sol);
-                if (hash.equals(hash2)) {
+                if (BCrypt.checkpw(heslo, hash)) {
                     try {
                         FXMLLoader loader = new FXMLLoader(
                                 getClass().getResource("ZamestnanecScene.fxml"));
@@ -142,7 +149,8 @@ public class MainSceneController {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nespravne heslo!");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Zlé zadané heslo!", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
                 }
             }
 
@@ -167,5 +175,38 @@ public class MainSceneController {
                 ex.printStackTrace();
             }
         });
+        zmenitHesloButton.setOnAction(eh -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("HesloEditScene.fxml"));
+                Parent parentPane = loader.load();
+                Scene scene = new Scene(parentPane);
+
+                Stage stage = new Stage();
+                Image logo = new Image("camping\\styles\\logo.png");
+                stage.setScene(scene);
+                stage.setTitle("Camping Bumerang");
+                stage.getIcons().add(logo);
+                HesloEditSceneController controller = loader.<HesloEditSceneController>getController();
+                if (administrator) {
+                    controller.initialize("Administrator");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
+                } else if (zamestnanec) {
+                    controller.initialize("Zamestnanec");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Vyberte použivateľa, ktorému chcete zmeniť heslo", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        });
+
     }
 }

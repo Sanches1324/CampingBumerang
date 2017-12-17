@@ -37,6 +37,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
+            <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" layoutX="257.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
       </children>
     </AnchorPane>
   </children>
