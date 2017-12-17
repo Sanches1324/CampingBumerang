@@ -71,7 +71,7 @@ public class ObjednavkaDaoTest {
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteObjednavku(objednavkaModel.getId());
+        dao.deleteObjednavku((long) dao.getAll().size() - 1);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
@@ -80,7 +80,20 @@ public class ObjednavkaDaoTest {
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        dao.updateObjednavku(objednavkaModel);
+        ObjednavkaFxModel nova = new ObjednavkaFxModel();
+        nova.setId((long) dao.getAll().size() - 1);
+        nova.setDatumObjednavky(LocalDate.now());
+        nova.setDatumPrichodu(LocalDate.now());
+        nova.setDatumOdchodu(LocalDate.now());
+        nova.setPouzivatelId(1L);
+        nova.setMenoPouziatela("Kristi");
+        nova.setMenoZakaznika("Jozko");
+        nova.setPlatba(false);
+        nova.setPocetDni(7L);
+        nova.setPozemokId(1L);
+        nova.setTelCisloZakaznika("+421944144144");
+
+        dao.updateObjednavku(nova);
         assertEquals(velkost, dao.getAll().size());
     }
 }

@@ -37,17 +37,21 @@ public class PouzivatelDaoTest {
 
     // vytvorenie pouzivatela - pocet vsetkych o 1 vacsi
     // musi obsahovat poziciu
+    //NEPRESLO - realne ho v db vytvori
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        pouzivatel.setMeno("Zamestnanec1");
-        pouzivatel.setPozicia("Zamestnanec");
-        dao.createPouzivatela(pouzivatel);
-        assertNotNull(pouzivatel.getPozicia());
+        PouzivatelFxModel novy = new PouzivatelFxModel();
+        novy.setMeno("Zamestnanec2");
+        novy.setPozicia("Zamestnanec");
+        novy.setVyplata(60);
+        novy.setOdrobeneHodiny(7);
+        dao.createPouzivatela(novy);
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetci používatelia
+    //PRESLO
     @Test
     public void getAllTest() {
         List<PouzivatelFxModel> list = dao.getAll();
@@ -58,19 +62,25 @@ public class PouzivatelDaoTest {
         System.out.println(list);
     }
 
-    // mazanie používateľa podla id - pocet vsetkych musi byt o 1 mensi
-//    @Test
-//    public void deleteByIdTest() {
-//        int velkost = dao.getAll().size();
-//        dao.deletePouzivatela(pouzivatel.getId());
-//        assertEquals(velkost - 1, dao.getAll().size());
-//    }
+    /*// mazanie používateľa podla id - pocet vsetkych musi byt o 1 mensi
+    @Test
+    public void deleteByIdTest() {
+        int velkost = dao.getAll().size();
+        dao.deletePouzivatela(pouzivatel);
+        assertEquals(velkost - 1, dao.getAll().size());
+    }*/
     // update používateľa - ako funguje? 
     // pocet musi byt zachovany
+    //NEPRESLO
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        dao.updatePouzivatela(pouzivatel);
+        PouzivatelFxModel novy = new PouzivatelFxModel();
+        novy.setMeno("Kris");
+        novy.setPozicia("boss");
+        novy.setVyplata(60);
+        novy.setOdrobeneHodiny(7);
+        dao.updatePouzivatela(novy);
         assertEquals(velkost, dao.getAll().size());
     }
 }

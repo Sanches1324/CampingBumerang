@@ -37,28 +37,28 @@ public class KategoriaDaoTest {
 
     // vytvorenie kategorie, pocet vsetkych ma byt o 1 vacsi
     // musi obsahovat nazov
+    //NEPRESLO
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        kategoriaModel.setNazov("A");
+        kategoriaModel.setNazov("IIII");
         dao.createKategoria(kategoriaModel);
-        assertNotNull(kategoriaModel.getNazov());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky kategorie
+    //PRESLO
     @Test
     public void getAllTest() {
         List<KategoriaFxModel> list = dao.getAll();
-        assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
         }
-        System.out.println(list);
-    }
+   }
     
     // update kategorie - ako funguje? 
     // pocet musí byť rovnaký
+    //PRESLO
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
@@ -67,10 +67,11 @@ public class KategoriaDaoTest {
     }
 
     // mazanie kategorie podla id, pocet vsetkych musi byt mensi o 1
+    //PRESLO
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteKategoriaById(kategoriaModel.getId());
+        dao.deleteKategoriaById(dao.getAll().size() - 1);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 }

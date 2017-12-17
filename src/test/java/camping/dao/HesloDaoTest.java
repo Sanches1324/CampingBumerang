@@ -37,35 +37,39 @@ public class HesloDaoTest {
 
     // vytvorenie hesla - chcem aby celkovy pocet hesiel bol vacsi o jedna
     // heslo a meno uzivatela nesmie byť prazdne
+    //PRESLO
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        HesloFxModel heslo = new HesloFxModel();
-        heslo.setHeslo("x");
-        heslo.setUzivatel("Jozef");
+        hesloModel = new HesloFxModel();
+        hesloModel.setUzivatel("Jozef");
+        hesloModel.setHeslo("heslo");
         dao.createHeslo(hesloModel);
-        assertNotNull(hesloModel.getHeslo());
         assertNotNull(hesloModel.getUzivatel());
+        assertNotNull(hesloModel.getHeslo());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky hesla
+    //PRESLO
     @Test
     public void getAllTest() {
         List<HesloFxModel> list = dao.getAll();
-        assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
         }
-        System.out.println(list);
     }
 
     // TODO: update hesla-ako funguje?  
     // počet musí byť rovnaký
+    //NEPRESLO
     @Test
     public void updateHesloTest() {
         int velkost = dao.getAll().size();
-        dao.updateHeslo(hesloModel);
+        HesloFxModel noveHeslo = new HesloFxModel();
+        noveHeslo.setUzivatel(hesloModel.getUzivatel());
+        noveHeslo.setHeslo("noveHeslo");
+        dao.updateHeslo(noveHeslo);
         assertEquals(velkost, dao.getAll().size());
     }
 }

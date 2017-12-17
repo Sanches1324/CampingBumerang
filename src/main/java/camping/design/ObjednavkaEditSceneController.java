@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -25,90 +26,91 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 
 public class ObjednavkaEditSceneController {
-    
+
     @FXML
     private ResourceBundle resources;
-    
+
     @FXML
     private URL location;
-    
+
     @FXML
     private TableView<ObjednavkaFxModel> objednavkyTableView;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, Long> pozemokIdTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, String> pouzivatelIdTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, String> menoZakaznikaColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, String> telCisloZakaznikaColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumObjednavkyTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumPrichoduTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, LocalDate> datumOdchoduTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, Long> pocetDniTableColumn;
-    
+
     @FXML
     private TableColumn<ObjednavkaFxModel, String> platbaTableColumn;
-    
+
     @FXML
     private ComboBox<Long> pozemkyComboBox;
-    
+
     @FXML
     private ComboBox<String> pouzivatelComboBox;
-    
+
     @FXML
     private TextField pocetDniTextField;
-    
+
     @FXML
     private CheckBox platbaCheckBox;
-    
+
     @FXML
     private DatePicker datumPrichoduDatePicker;
-    
+
     @FXML
     private DatePicker datumOdchoduDatePicker;
-    
+
     @FXML
     private TextField pozemokIdTextField;
-    
+
     @FXML
     private Button hladatObjednavkuButton;
-    
+
     @FXML
     private TextField menoZakaznikaTextField;
-    
+
     @FXML
     private TextField telCisloTextField;
-    
+
     @FXML
     private Button pridatObjednavkuButton;
-    
+
     @FXML
     private Button vymazatObjednavkuButton;
-    
+
     private PozemokFxModel pozemokModel = new PozemokFxModel();
     private PouzivatelFxModel pouzivatelModel = new PouzivatelFxModel();
     private ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
     private ObservableList<ObjednavkaFxModel> objednavky = objednavkaModel.getObjednavky();
     private ObservableList<PozemokFxModel> pozemky = pozemokModel.getPozemky();
     private ObservableList<PouzivatelFxModel> pouzivatelia = pouzivatelModel.getPouzivatelov();
-    
+
     @FXML
     void pridatObjednavku(ActionEvent event) {
         boolean pozemokID = false;
@@ -118,7 +120,7 @@ public class ObjednavkaEditSceneController {
         boolean pocetDni = false;
         boolean menoZak = false;
         boolean telZak = false;
-        
+
         ObjednavkaFxModel objednavka = new ObjednavkaFxModel();
         if (pozemkyComboBox.getValue() == null) {
             pozemkyComboBox.setStyle("-fx-background-color: #FF0000;");
@@ -145,6 +147,14 @@ public class ObjednavkaEditSceneController {
             objednavka.setDatumPrichodu(datumPrichoduDatePicker.getValue());
             datumPrichodu = true;
         }
+        pocetDniTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
+        });
         if (pocetDniTextField.getText().equals("")) {
             pocetDniTextField.setStyle("-fx-background-color: #FF0000;");
         } else {
@@ -178,7 +188,7 @@ public class ObjednavkaEditSceneController {
             pocetDniTextField.setStyle("-fx-background-color: #FDFDFD;");
             menoZakaznikaTextField.setStyle("-fx-background-color: #FDFDFD;");
             telCisloTextField.setStyle("-fx-background-color: #FDFDFD;");
-            
+
             pozemkyComboBox.getSelectionModel().clearSelection();
             pouzivatelComboBox.getSelectionModel().clearSelection();
             datumOdchoduDatePicker.setValue(null);
@@ -186,7 +196,7 @@ public class ObjednavkaEditSceneController {
             pocetDniTextField.setText("");
             menoZakaznikaTextField.setText("");
             telCisloTextField.setText("");
-            
+
             ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
             objednavkaDao.createObjednavku(objednavka);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
@@ -229,13 +239,13 @@ public class ObjednavkaEditSceneController {
             objednavkaDao.deleteObjednavku(vymazat);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
             objednavkyTableView.setItems(noveObjednavky);
-            
+
         } catch (Exception e) {
             System.out.println("Chyba nacitania z DB" + e);
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     void initialize() {
         pozemokIdTableColumn.setCellValueFactory(cellData -> cellData.getValue().pozemokIdProperty().asObject());
@@ -248,11 +258,11 @@ public class ObjednavkaEditSceneController {
         pocetDniTableColumn.setCellValueFactory(cellData -> cellData.getValue().pocetDniProperty().asObject());
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
         objednavkyTableView.setItems(objednavky);
-        
+
         StringConverter converter = new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter
                     = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            
+
             @Override
             public String toString(LocalDate localDate) {
                 if (localDate == null) {
@@ -260,7 +270,7 @@ public class ObjednavkaEditSceneController {
                 }
                 return dateFormatter.format(localDate);
             }
-            
+
             @Override
             public LocalDate fromString(String dateString) {
                 if (dateString == null || dateString.trim().isEmpty()) {
@@ -278,15 +288,20 @@ public class ObjednavkaEditSceneController {
         }
         Collections.sort(idcka);
         pozemkyComboBox.setItems(idcka);
-        
+
         ObservableList<String> menoPouzivatelov = FXCollections.observableArrayList();
         for (PouzivatelFxModel pouzivatelFxModel : pouzivatelia) {
             menoPouzivatelov.add(pouzivatelFxModel.getMeno());
         }
         pouzivatelComboBox.setItems(menoPouzivatelov);
         pozemokIdTextField.setText("0");
-        pozemokIdTextField.setOnAction(eh -> {
-            pozemokIdTextField.setText("");
+        pozemokIdTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
         });
         FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
         pozemokIdTextField.textProperty().addListener((observable, oldValue, newValue) -> {

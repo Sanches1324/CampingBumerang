@@ -35,12 +35,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -131,7 +133,9 @@ public class AdminSceneController {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -150,7 +154,7 @@ public class AdminSceneController {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
-            stage.show();
+
             stage.setOnHidden(eh -> {
                 ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
                 Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
@@ -163,9 +167,13 @@ public class AdminSceneController {
                 vytvorPozemok(pozemky);
                 zoradPozemky(pozemky);
             });
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
     @FXML
@@ -259,6 +267,14 @@ public class AdminSceneController {
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
         hladatPozemokTextField.setText("0");
+        hladatPozemokTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
+        });
         FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
         hladatPozemokTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrovanePozemky.setPredicate(pozemok -> {

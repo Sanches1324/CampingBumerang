@@ -21,13 +21,8 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void createPouzivatela(PouzivatelFxModel pouzivatel) {
-        if (pouzivatel.getMeno() == null) {
-            String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, pocet_odrobenych_hodin, vyplata) VALUES(?, ?, ?, ?)";
-            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Pouzivatel uz existuje", ButtonType.OK);
-            Optional<ButtonType> result = alert.showAndWait();
-        }
+        String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, pocet_odrobenych_hodin, vyplata) VALUES(?, ?, ?, ?)";
+        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
 
     }
 
@@ -39,11 +34,11 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_update = "UPDATE pouzivatel SET meno = ?, pozicia = ?, pocet_odrobenych_hodin = ?, vyplata = ? WHERE id = ?";
+        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, pocet_odrobenych_hodin = ?, vyplata = ? WHERE meno = '?'";
         if (pouzivatel.getMeno() == null) {
             createPouzivatela(pouzivatel);
         } else {
-            jdbcTemplate.update(pouzivatel_update, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
+            jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata(), pouzivatel.getMeno());
         }
 
     }
