@@ -49,10 +49,10 @@
                <children>
                   <Label text="Pozemok №:" />
                   <TextField fx:id="hladatPozemokTextField" prefHeight="25.0" prefWidth="60.0" />
-                  <Button fx:id="hladatPozemokButton" mnemonicParsing="false" onAction="#vyhladajPozemok" styleClass="buttonStyle" text="Hľadať" />
+                  <Button fx:id="vymazatPozemokButton" disable="true" mnemonicParsing="false" onAction="#vymazPozemok" styleClass="buttonStyle" text="Vymazať" />
                </children>
             </HBox>
-            <TableView fx:id="pozemkyTableView" prefHeight="281.0" prefWidth="497.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="pozemkyTableView" prefHeight="281.0" prefWidth="505.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="cisloPozemkuColumn" prefWidth="121.0" text="Číslo pozemku" />
                   <TableColumn fx:id="kategoriaPozemkuColumn" prefWidth="120.0" text="Kategoria" />

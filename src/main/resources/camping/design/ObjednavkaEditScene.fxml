@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="825.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ObjednavkaEditSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="842.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ObjednavkaEditSceneController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="13.0" layoutY="10.0" prefHeight="500.0" prefWidth="800.0" spacing="7.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
             <children>
@@ -61,7 +61,7 @@
                 <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="786.0" spacing="15.0" VBox.vgrow="NEVER">
                     <children>
                   <Label text="Pozemok №:" />
-                        <TextField fx:id="pozemokIdTextField" prefHeight="25.0" prefWidth="107.0" />
+                        <TextField fx:id="pozemokIdTextField" onKeyPressed="#vyhladatTextField" prefHeight="25.0" prefWidth="107.0" />
                         <Button fx:id="vymazatObjednavkuButton" mnemonicParsing="false" onAction="#vymazatObjednavku" styleClass="buttonStyle" text="Vymazať" />
                     </children>
                 </HBox>

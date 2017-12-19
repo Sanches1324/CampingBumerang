@@ -50,7 +50,7 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
 
     @Override
     public boolean deleteObjednavku(Long id) {
-        String objednavka_delete = "DELETE FROM objednavky WHERE id = " + id;
+        String objednavka_delete = "DELETE FROM objednavky WHERE pozemky_id = " + id;
         int zmazanych = jdbcTemplate.update(objednavka_delete);
         return zmazanych == 1;
 

@@ -48,7 +48,7 @@
             <HBox prefHeight="27.0" prefWidth="503.0" spacing="33.5">
                <children>
                   <Label text="Pozemok №:" />
-                    <TextField fx:id="hladatPozemokTextField" prefHeight="25.0" prefWidth="58.0" />
+                    <TextField fx:id="hladatPozemokTextField" onKeyPressed="#vyhladatTextField" prefHeight="25.0" prefWidth="58.0" />
                     <Button fx:id="vymazatPozemokButton" mnemonicParsing="false" onAction="#vymazPozemok" styleClass="buttonStyle" text="Vymazať" />
                </children>
             </HBox>

@@ -176,51 +176,50 @@ public class AdminSceneController {
 
     }
 
-    @FXML
-    void vyhladajPodlaObjednavky(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("VyhladatPozemokPodlaKriteriaScene.fxml"));
-            Parent parentPane = loader.load();
-            Scene scene = new Scene(parentPane);
-
-            Stage stage = new Stage();
-            Image logo = new Image("camping\\styles\\logo.png");
-            stage.setScene(scene);
-            stage.setTitle("Camping Bumerang");
-            stage.getIcons().add(logo);
-            stage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    void vyhladajPozemok(ActionEvent event) {
-        try {
-            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
-            if (hladatPozemokTextField.getText().equals("")) {
-                pozemkyTableView.setItems(pozemky);
-            } else {
-                PozemokFxModel pozemok = pozemokDao.findByCisloPozemku(Long.parseLong(hladatPozemokTextField.getText()));
-                ObservableList<PozemokFxModel> najdenePozemky = FXCollections.observableArrayList();
-                if (pozemok.getCisloPozemku() != 0) {
-                    najdenePozemky.add(pozemok);
-                }
-
-                if (najdenePozemky.size() < 1) {
-                    pozemkyTableView.setItems(pozemky);
-                    JOptionPane.showMessageDialog(null, "Pozemok z číslom " + Long.parseLong(hladatPozemokTextField.getText()) + " neexistuje");
-                } else {
-                    pozemkyTableView.setItems(najdenePozemky);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Chyba nacitania z DB" + e);
-            e.printStackTrace();
-        }
-    }
-
+//    @FXML
+//    void vyhladajPodlaObjednavky(ActionEvent event) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(
+//                    getClass().getResource("VyhladatPozemokPodlaKriteriaScene.fxml"));
+//            Parent parentPane = loader.load();
+//            Scene scene = new Scene(parentPane);
+//
+//            Stage stage = new Stage();
+//            Image logo = new Image("camping\\styles\\logo.png");
+//            stage.setScene(scene);
+//            stage.setTitle("Camping Bumerang");
+//            stage.getIcons().add(logo);
+//            stage.show();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+//
+//    @FXML
+//    void vyhladajPozemok(ActionEvent event) {
+//        try {
+//            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
+//            if (hladatPozemokTextField.getText().equals("")) {
+//                pozemkyTableView.setItems(pozemky);
+//            } else {
+//                PozemokFxModel pozemok = pozemokDao.findByCisloPozemku(Long.parseLong(hladatPozemokTextField.getText()));
+//                ObservableList<PozemokFxModel> najdenePozemky = FXCollections.observableArrayList();
+//                if (pozemok.getCisloPozemku() != 0) {
+//                    najdenePozemky.add(pozemok);
+//                }
+//
+//                if (najdenePozemky.size() < 1) {
+//                    pozemkyTableView.setItems(pozemky);
+//                    JOptionPane.showMessageDialog(null, "Pozemok z číslom " + Long.parseLong(hladatPozemokTextField.getText()) + " neexistuje");
+//                } else {
+//                    pozemkyTableView.setItems(najdenePozemky);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Chyba nacitania z DB" + e);
+//            e.printStackTrace();
+//        }
+//    }
     @FXML
     void vymazPozemok(ActionEvent event) {
         try {
@@ -255,6 +254,48 @@ public class AdminSceneController {
     }
 
     @FXML
+    void vyhladatTextField(KeyEvent event) {
+        hladatPozemokTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
+        });
+        PozemokFxModel pozemokModel = new PozemokFxModel();
+        ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokModel.getPozemky());
+        Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
+            @Override
+            public int compare(PozemokFxModel lp, PozemokFxModel rp) {
+                return (int) (lp.getCisloPozemku() - rp.getCisloPozemku());
+            }
+        });
+        FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
+
+        hladatPozemokTextField.textProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    filtrovanePozemky.setPredicate(pozemok -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        if (pozemok.getCisloPozemku() == Long.parseLong(newValue)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                }
+                );
+
+        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
+
+        sortovanePozemky.comparatorProperty()
+                .bind(pozemkyTableView.comparatorProperty());
+        pozemkyTableView.setItems(sortovanePozemky);
+    }
+
+    @FXML
     void initialize() {
         cisloPozemkuColumn.setCellValueFactory(cellData -> cellData.getValue().cisloPozemkuProperty().asObject());
         kategoriaPozemkuColumn.setCellValueFactory(cellData -> cellData.getValue().kategoriaStringProperty());
@@ -266,32 +307,7 @@ public class AdminSceneController {
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
-        hladatPozemokTextField.setText("0");
-        hladatPozemokTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (!"0123456789".contains(keyEvent.getCharacter())) {
-                    keyEvent.consume();
-                }
-            }
-        });
-        FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
-        hladatPozemokTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtrovanePozemky.setPredicate(pozemok -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                if (pozemok.getCisloPozemku() == Long.parseLong(newValue)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
 
-        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
-        sortovanePozemky.comparatorProperty().bind(pozemkyTableView.comparatorProperty());
-        pozemkyTableView.setItems(sortovanePozemky);
     }
 
     private void vytvorPozemok(List<PozemokFxModel> pozemok) {

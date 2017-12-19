@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -200,6 +201,12 @@ public class ObjednavkaEditSceneController {
             ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
             objednavkaDao.createObjednavku(objednavka);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
+            Collections.sort(noveObjednavky, new Comparator<ObjednavkaFxModel>() {
+                @Override
+                public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
+                    return (int) (lp.getPozemokId() - rp.getPozemokId());
+                }
+            });
             objednavkyTableView.setItems(noveObjednavky);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Vyplňte všetky udaje", ButtonType.OK);
@@ -207,28 +214,6 @@ public class ObjednavkaEditSceneController {
         }
     }
 
-//    @FXML
-//    void hladatObjednavku(ActionEvent event
-//    ) {
-//        try {
-//            if (pozemokIdTextField.getText().equals("")) {
-//                objednavkyTableView.setItems(objednavky);
-//            } else {
-//                ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
-//                ObservableList<ObjednavkaFxModel> najdeneObjednavky = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(Long.parseLong(pozemokIdTextField.getText())));
-//
-//                if (najdeneObjednavky.size() < 1) {
-//                    objednavkyTableView.setItems(objednavky);
-//                    JOptionPane.showMessageDialog(null, "Objednavka neexistuje");
-//                } else {
-//                    objednavkyTableView.setItems(najdeneObjednavky);
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Chyba nacitania z DB" + e);
-//            e.printStackTrace();
-//        }
-//    }
     @FXML
     void vymazatObjednavku(ActionEvent event
     ) {
@@ -238,12 +223,61 @@ public class ObjednavkaEditSceneController {
             ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
             objednavkaDao.deleteObjednavku(vymazat);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
+            Collections.sort(noveObjednavky, new Comparator<ObjednavkaFxModel>() {
+                @Override
+                public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
+                    return (int) (lp.getPozemokId() - rp.getPozemokId());
+                }
+            });
+
             objednavkyTableView.setItems(noveObjednavky);
 
         } catch (Exception e) {
             System.out.println("Chyba nacitania z DB" + e);
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void vyhladatTextField(KeyEvent event) {
+        pozemokIdTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
+        });
+        ObjednavkaFxModel objednavkaModel = new ObjednavkaFxModel();
+        ObservableList<ObjednavkaFxModel> objednavky = objednavkaModel.getObjednavky();
+        Collections.sort(objednavky, new Comparator<ObjednavkaFxModel>() {
+            @Override
+            public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
+                return (int) (lp.getPozemokId() - rp.getPozemokId());
+            }
+        });
+        FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
+
+        pozemokIdTextField.textProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    filtrovaneObjednavky.setPredicate(objednavka -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        if (objednavka.getPozemokId() == Long.parseLong(newValue)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                }
+                );
+        SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
+        sortovanePozemky.comparatorProperty()
+                .bind(objednavkyTableView.comparatorProperty());
+        objednavkyTableView.setItems(sortovanePozemky);
+
+        objednavkyTableView.sort();
     }
 
     @FXML
@@ -257,6 +291,12 @@ public class ObjednavkaEditSceneController {
         datumOdchoduTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumOdchoduProperty());
         pocetDniTableColumn.setCellValueFactory(cellData -> cellData.getValue().pocetDniProperty().asObject());
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
+        Collections.sort(objednavky, new Comparator<ObjednavkaFxModel>() {
+            @Override
+            public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
+                return (int) (lp.getPozemokId() - rp.getPozemokId());
+            }
+        });
         objednavkyTableView.setItems(objednavky);
 
         StringConverter converter = new StringConverter<LocalDate>() {
@@ -294,31 +334,6 @@ public class ObjednavkaEditSceneController {
             menoPouzivatelov.add(pouzivatelFxModel.getMeno());
         }
         pouzivatelComboBox.setItems(menoPouzivatelov);
-        pozemokIdTextField.setText("0");
-        pozemokIdTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (!"0123456789".contains(keyEvent.getCharacter())) {
-                    keyEvent.consume();
-                }
-            }
-        });
-        FilteredList<ObjednavkaFxModel> filtrovaneObjednavky = new FilteredList<>(objednavky, p -> true);
-        pozemokIdTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtrovaneObjednavky.setPredicate(objednavka -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                if (objednavka.getPozemokId() == Long.parseLong(newValue)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-        SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
-        sortovanePozemky.comparatorProperty().bind(objednavkyTableView.comparatorProperty());
-        objednavkyTableView.setItems(sortovanePozemky);
-        objednavkyTableView.sort();
+
     }
 }
