@@ -37,17 +37,17 @@ public class PozemokDaoTest {
 
     // vytvorenie pozemku - počet musí byť o 1 vačší
     // musí obsahovať cislo
-    //NEPRESLO - do db ho prida
+    //PRESLO
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        pozemokModel.setCisloPozemku(2L);
-        pozemokModel.setKategoriaId(1L);
+        pozemokModel.setCisloPozemku(1L);
+        pozemokModel.setKategoriaId(3L);
         pozemokModel.setCena(20);
         pozemokModel.setObsadenost(false);
         dao.createPozemok(pozemokModel);
         assertNotNull(pozemokModel.getCisloPozemku());
-        assertEquals(velkost, dao.getAll().size());
+        assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky pozemky
@@ -63,19 +63,20 @@ public class PozemokDaoTest {
     }
 
     // mazanie pozemku podla Id pozemku - pocet vsetkych musí byť o 1 menší
-    //NEPRESLO
+    //PRESLO - nemusí byť, nevyuživame to, pozri id v db!!! 
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deletePozemokById(dao.getAll().size() - 2);
-        assertEquals(velkost, dao.getAll().size());
+        dao.deletePozemokById(26L);
+        assertEquals(velkost - 1, dao.getAll().size());
     }
 
     // mazanie pozemku podla cisla pozemku - pocet vsetkych musí byť o 1 menší
-    //NEPRESLO
+    //PRESLO - pozri cislo v db!!!
+    @Test
     public void deleteByCisloPozemkuTest() {
         int velkost = dao.getAll().size();
-        assertTrue(dao.deletePozemokByCisloPozemku(2L));
+        assertTrue(dao.deletePozemokByCisloPozemku(3L));
         assertEquals(velkost - 1, dao.getAll().size());
     }
 

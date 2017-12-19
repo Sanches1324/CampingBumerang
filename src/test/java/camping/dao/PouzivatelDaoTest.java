@@ -1,7 +1,6 @@
 package camping.dao;
 
 import camping.design.PouzivatelFxModel;
-import camping.entities.Pouzivatel;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -37,16 +36,15 @@ public class PouzivatelDaoTest {
 
     // vytvorenie pouzivatela - pocet vsetkych o 1 vacsi
     // musi obsahovat poziciu
-    //NEPRESLO - realne ho v db vytvori
+    //PRESLO
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        PouzivatelFxModel novy = new PouzivatelFxModel();
-        novy.setMeno("Zamestnanec2");
-        novy.setPozicia("Zamestnanec");
-        novy.setVyplata(60);
-        novy.setOdrobeneHodiny(7);
-        dao.createPouzivatela(novy);
+        pouzivatel.setMeno("Igor");
+        pouzivatel.setPozicia("Zamestnanec");
+        pouzivatel.setVyplata(60);
+        pouzivatel.setOdrobeneHodiny(7);
+        dao.createPouzivatela(pouzivatel);
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
@@ -62,25 +60,26 @@ public class PouzivatelDaoTest {
         System.out.println(list);
     }
 
-    /*// mazanie používateľa podla id - pocet vsetkych musi byt o 1 mensi
+    // mazanie používateľa podla mena- pocet vsetkych musi byt o 1 mensi
+    //PRESLO
     @Test
-    public void deleteByIdTest() {
+    public void deleteByNameTest() {
         int velkost = dao.getAll().size();
-        dao.deletePouzivatela(pouzivatel);
+        dao.deletePouzivatela("Igor");
         assertEquals(velkost - 1, dao.getAll().size());
-    }*/
+    }
+
     // update používateľa - ako funguje? 
     // pocet musi byt zachovany
-    //NEPRESLO
+    //NEPRESLO - nemusí byť kedže update ani nikde v app nerobíme
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        PouzivatelFxModel novy = new PouzivatelFxModel();
-        novy.setMeno("Kris");
-        novy.setPozicia("boss");
-        novy.setVyplata(60);
-        novy.setOdrobeneHodiny(7);
-        dao.updatePouzivatela(novy);
+        pouzivatel.setMeno("Igor");
+        pouzivatel.setPozicia("Zamestnanec");
+        pouzivatel.setVyplata(70);
+        pouzivatel.setOdrobeneHodiny(7);
+        dao.updatePouzivatela(pouzivatel);
         assertEquals(velkost, dao.getAll().size());
     }
 }

@@ -37,30 +37,29 @@ public class ObjednavkaDaoTest {
 
     // vytvorenie objednávky, pocet vsetkych musi byt o 1 vacsi
     // musi obsahovat datumy a idcka pozemku a pouzivatela
+    //PRESLO
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
         objednavkaModel.setDatumObjednavky(LocalDate.now());
-        objednavkaModel.setDatumPrichodu(LocalDate.now());
         objednavkaModel.setDatumOdchodu(LocalDate.now());
+        objednavkaModel.setDatumPrichodu(LocalDate.now());
         objednavkaModel.setPocetDni(1L);
-        objednavkaModel.setPozemokId(1L);
-        objednavkaModel.setPouzivatelId(1L);
+        objednavkaModel.setMenoPouziatela("Kyblik");
+        objednavkaModel.setMenoZakaznika("Anton Hlavička");
         objednavkaModel.setPlatba(false);
+        objednavkaModel.setTelCisloZakaznika("0941654522");
+        objednavkaModel.setPozemokId(8L);
+        objednavkaModel.setPouzivatelId(5L);
         dao.createObjednavku(objednavkaModel);
-        assertNotNull(objednavkaModel.getDatumObjednavky());
-        assertNotNull(objednavkaModel.getDatumPrichodu());
-        assertNotNull(objednavkaModel.getDatumOdchodu());
-        assertNotNull(objednavkaModel.getPozemokId());
-        assertNotNull(objednavkaModel.getPouzivatelId());
         assertEquals(velkost + 1, dao.getAll().size());
     }
 
     // všetky objednávky
+    //PRESLO
     @Test
     public void getAllTest() {
         List<ObjednavkaFxModel> list = dao.getAll();
-        assertNotNull(list);
         if (list != null) {
             assertTrue(list.size() > 0);
         }
@@ -68,32 +67,21 @@ public class ObjednavkaDaoTest {
     }
 
     // mazanie objednávky podla id, pocet vsetkych musi byt o 1 mensi
+    //PRESLO - pozri ake id mas este v db, ak tam nie je bude chybne!!!
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteObjednavku((long) dao.getAll().size() - 1);
+        dao.deleteObjednavku(8L);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
     // update objednávky - ako funguje? 
     // pocet musí byť rovnaký
+    //NEPRESLO
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        ObjednavkaFxModel nova = new ObjednavkaFxModel();
-        nova.setId((long) dao.getAll().size() - 1);
-        nova.setDatumObjednavky(LocalDate.now());
-        nova.setDatumPrichodu(LocalDate.now());
-        nova.setDatumOdchodu(LocalDate.now());
-        nova.setPouzivatelId(1L);
-        nova.setMenoPouziatela("Kristi");
-        nova.setMenoZakaznika("Jozko");
-        nova.setPlatba(false);
-        nova.setPocetDni(7L);
-        nova.setPozemokId(1L);
-        nova.setTelCisloZakaznika("+421944144144");
-
-        dao.updateObjednavku(nova);
+        dao.updateObjednavku(objednavkaModel);
         assertEquals(velkost, dao.getAll().size());
     }
 }

@@ -37,11 +37,11 @@ public class KategoriaDaoTest {
 
     // vytvorenie kategorie, pocet vsetkych ma byt o 1 vacsi
     // musi obsahovat nazov
-    //NEPRESLO
+    //PRESLO - nesmie byt rovnaka kategoria aku uz mas v db!!! inak je chybne
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        kategoriaModel.setNazov("IIII");
+        kategoriaModel.setNazov("VI");
         dao.createKategoria(kategoriaModel);
         assertEquals(velkost + 1, dao.getAll().size());
     }
@@ -54,8 +54,8 @@ public class KategoriaDaoTest {
         if (list != null) {
             assertTrue(list.size() > 0);
         }
-   }
-    
+    }
+
     // update kategorie - ako funguje? 
     // pocet musí byť rovnaký
     //PRESLO
@@ -67,11 +67,11 @@ public class KategoriaDaoTest {
     }
 
     // mazanie kategorie podla id, pocet vsetkych musi byt mensi o 1
-    //PRESLO
+    //PRESLO - musis mat id v db - inak nezbehne! 
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteKategoriaById(dao.getAll().size() - 1);
+        dao.deleteKategoriaById(8L);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 }

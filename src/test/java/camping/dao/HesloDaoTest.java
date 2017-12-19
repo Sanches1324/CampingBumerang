@@ -42,7 +42,7 @@ public class HesloDaoTest {
     public void createTest() {
         int velkost = dao.getAll().size();
         hesloModel = new HesloFxModel();
-        hesloModel.setUzivatel("Jozef");
+        hesloModel.setUzivatel("Igor");
         hesloModel.setHeslo("heslo");
         dao.createHeslo(hesloModel);
         assertNotNull(hesloModel.getUzivatel());
@@ -62,7 +62,7 @@ public class HesloDaoTest {
 
     // TODO: update hesla-ako funguje?  
     // počet musí byť rovnaký
-    //NEPRESLO
+    //PRESLO
     @Test
     public void updateHesloTest() {
         int velkost = dao.getAll().size();
