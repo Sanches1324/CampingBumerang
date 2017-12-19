@@ -57,16 +57,12 @@ public class AdminSceneController {
     @FXML
     private Button spravujObjednavkyButton;
 
-//    @FXML
-//    private Button zrusObjednavkuButton;
     @FXML
     private Button prepniUzivatelaButton;
 
     @FXML
     private Button pridajPozemokButton;
 
-//    @FXML
-//    private Button vyhladajPozemokButton;
     @FXML
     private TableView<PozemokFxModel> pozemkyTableView;
 
@@ -94,10 +90,35 @@ public class AdminSceneController {
     @FXML
     private Button vymazatPozemokButton;
 
+    @FXML
+    private Button pridatPouzivatelaButton;
+
     private PozemokFxModel pozemokModel = new PozemokFxModel();
     private ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokModel.getPozemky());
     private PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
     private ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
+
+    @FXML
+    void pridatPouzivatela(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("ZamestnanecEditScene.fxml"));
+            Parent parentPane = loader.load();
+            Scene scene = new Scene(parentPane);
+
+            Stage stage = new Stage();
+            Image logo = new Image("camping\\styles\\logo.png");
+            stage.setScene(scene);
+            stage.setTitle("Camping Bumerang");
+            stage.getIcons().add(logo);
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ZakaznikSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
     void prepnutUzivatelaAction(ActionEvent event) {
@@ -112,6 +133,8 @@ public class AdminSceneController {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
+            stage.setMinHeight(450);
+            stage.setMinWidth(690);
             prepniUzivatelaButton.getScene().getWindow().hide();
             stage.show();
 
@@ -133,6 +156,9 @@ public class AdminSceneController {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
+            stage.setMinHeight(500);
+            stage.setMinWidth(820);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
@@ -154,7 +180,9 @@ public class AdminSceneController {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
-
+            stage.setMinHeight(90);
+            stage.setMinWidth(540);
+            stage.setResizable(false);
             stage.setOnHidden(eh -> {
                 ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
                 Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
@@ -176,50 +204,6 @@ public class AdminSceneController {
 
     }
 
-//    @FXML
-//    void vyhladajPodlaObjednavky(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(
-//                    getClass().getResource("VyhladatPozemokPodlaKriteriaScene.fxml"));
-//            Parent parentPane = loader.load();
-//            Scene scene = new Scene(parentPane);
-//
-//            Stage stage = new Stage();
-//            Image logo = new Image("camping\\styles\\logo.png");
-//            stage.setScene(scene);
-//            stage.setTitle("Camping Bumerang");
-//            stage.getIcons().add(logo);
-//            stage.show();
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-//
-//    @FXML
-//    void vyhladajPozemok(ActionEvent event) {
-//        try {
-//            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
-//            if (hladatPozemokTextField.getText().equals("")) {
-//                pozemkyTableView.setItems(pozemky);
-//            } else {
-//                PozemokFxModel pozemok = pozemokDao.findByCisloPozemku(Long.parseLong(hladatPozemokTextField.getText()));
-//                ObservableList<PozemokFxModel> najdenePozemky = FXCollections.observableArrayList();
-//                if (pozemok.getCisloPozemku() != 0) {
-//                    najdenePozemky.add(pozemok);
-//                }
-//
-//                if (najdenePozemky.size() < 1) {
-//                    pozemkyTableView.setItems(pozemky);
-//                    JOptionPane.showMessageDialog(null, "Pozemok z číslom " + Long.parseLong(hladatPozemokTextField.getText()) + " neexistuje");
-//                } else {
-//                    pozemkyTableView.setItems(najdenePozemky);
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Chyba nacitania z DB" + e);
-//            e.printStackTrace();
-//        }
-//    }
     @FXML
     void vymazPozemok(ActionEvent event) {
         try {
@@ -341,6 +325,8 @@ public class AdminSceneController {
                         stage.setScene(scene);
                         stage.setTitle(pozemok1.getCisloPozemku() + "");
                         stage.getIcons().add(logo);
+                        stage.setMinHeight(350);
+                        stage.setMinWidth(560);
                         ObservableList<ObjednavkaFxModel> objednavkyPozemku = FXCollections.observableArrayList(objednavkaDao.findByPozemokId(pozemok1.getCisloPozemku()));
                         ObjednavkyPozemkuController controller
                                 = loader.<ObjednavkyPozemkuController>getController();

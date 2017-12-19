@@ -2,19 +2,25 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="zamestnanecEditAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="472.0" style="-fx-background-color: #f0f5f5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="524.0" style="-fx-background-color: #e0ebeb;" stylesheets="camping/styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ZamestnanecEditSceneController">
    <children>
-      <Button fx:id="potvrdPridanieZamestnancaButton" layoutX="348.0" layoutY="61.0" mnemonicParsing="false" text="Potvrď pridanie" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="61.0" />
-      <TextField fx:id="menoZamestnancaTextField" layoutX="143.0" layoutY="27.0" prefHeight="25.0" prefWidth="186.0" AnchorPane.rightAnchor="143.0" AnchorPane.topAnchor="27.0" />
-      <PasswordField fx:id="hesloZamestnancaTextField" layoutX="143.0" layoutY="61.0" prefHeight="25.0" prefWidth="186.0" AnchorPane.rightAnchor="143.0" AnchorPane.topAnchor="61.0" />
-      <Label fx:id="menoZamestnancaLabel" layoutX="24.0" layoutY="31.0" text="Meno zamestnanca" AnchorPane.rightAnchor="345.0" AnchorPane.topAnchor="31.0" />
-      <Label fx:id="hesloZamestnancaLabel" layoutX="25.0" layoutY="65.0" text="Heslo zamestnanca" AnchorPane.rightAnchor="345.0" AnchorPane.topAnchor="65.0" />
-      <ListView fx:id="zoznamZamestnancovListView" layoutX="27.0" layoutY="95.0" prefHeight="265.0" prefWidth="420.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="95.0" />
-      <Button fx:id="OdstranVybratehoButton" layoutX="327.0" layoutY="370.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Odstráň vybratého" AnchorPane.bottomAnchor="29.0" AnchorPane.rightAnchor="25.0" />
+      <TableView fx:id="zamestnanecTableView" layoutX="10.0" layoutY="61.0" prefHeight="154.0" prefWidth="509.0">
+        <columns>
+          <TableColumn fx:id="menoTableColumn" prefWidth="508.0" text="Meno" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="41.0" prefWidth="502.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <Label text="Meno" />
+            <TextField fx:id="menoTextField" />
+            <Button fx:id="pridatButton" defaultButton="true" mnemonicParsing="false" onAction="#pridat" styleClass="buttonStyle" text="Pridať" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

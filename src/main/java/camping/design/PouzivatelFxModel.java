@@ -92,4 +92,9 @@ public class PouzivatelFxModel {
         }
     }
 
+    @Override
+    public String toString() {
+        return meno + ""; //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

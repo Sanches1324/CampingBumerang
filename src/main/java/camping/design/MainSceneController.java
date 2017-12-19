@@ -117,6 +117,8 @@ public class MainSceneController {
                         stage.setScene(scene);
                         stage.setTitle("Camping Bumerang");
                         stage.getIcons().add(logo);
+                        stage.setMinHeight(450);
+                        stage.setMinWidth(690);
                         customerButton.getScene().getWindow().hide();
                         stage.show();
                     } catch (Exception ex) {
@@ -143,6 +145,8 @@ public class MainSceneController {
                         stage.setScene(scene);
                         stage.setTitle("Camping Bumerang");
                         stage.getIcons().add(logo);
+                        stage.setMinHeight(450);
+                        stage.setMinWidth(690);
                         customerButton.getScene().getWindow().hide();
                         stage.show();
                     } catch (Exception ex) {
@@ -168,6 +172,8 @@ public class MainSceneController {
                 stage.setScene(scene);
                 stage.setTitle("Camping Bumerang");
                 stage.getIcons().add(logo);
+                stage.setMinHeight(450);
+                stage.setMinWidth(690);
                 customerButton.getScene().getWindow().hide();
                 stage.show();
 
@@ -187,6 +193,8 @@ public class MainSceneController {
                 stage.setScene(scene);
                 stage.setTitle("Camping Bumerang");
                 stage.getIcons().add(logo);
+                stage.setMinHeight(240);
+                stage.setMinWidth(260);
                 HesloEditSceneController controller = loader.<HesloEditSceneController>getController();
                 if (administrator) {
                     controller.initialize("Administrator");

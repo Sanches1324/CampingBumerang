@@ -15,28 +15,16 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="453.0" maxWidth="696.0" prefHeight="453.0" prefWidth="697.0" styleClass="background" stylesheets="camping/styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.AdminSceneController">
    <children>
-      <Label alignment="CENTER" layoutX="180.0" layoutY="15.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="180.0" layoutY="29.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="18.0" fx:id="x4" />
          </font>
       </Label>
-      <Button fx:id="pridajPozemokButton" disable="true" layoutX="15.0" layoutY="106.0" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridaj pozemok" />
-      <Label alignment="CENTER" layoutX="13.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Zamestnanec" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="21.0" layoutY="29.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Zamestnanec" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="18.0" fx:id="x1" />
          </font>
       </Label>
-      <Button fx:id="spravujFinancieButton" disable="true" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj financie">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
-      <Button fx:id="spravujObjednavkyButton" layoutX="15.0" layoutY="183.0" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
-      <Button fx:id="prepniUzivatelaButton" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" />
       <ImageView fx:id="logoImageView" fitHeight="72.0" fitWidth="118.0" layoutX="15.0" layoutY="387.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.459770202636719" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../styles/logo-sitename.png" />
@@ -48,7 +36,7 @@
             <HBox prefHeight="30.0" prefWidth="112.0" spacing="25.0">
                <children>
                   <Label text="Pozemok №:" />
-                  <TextField fx:id="hladatPozemokTextField" prefHeight="25.0" prefWidth="60.0" />
+                  <TextField fx:id="hladatPozemokTextField" onKeyPressed="#vyhladatTextField" prefHeight="25.0" prefWidth="60.0" />
                   <Button fx:id="vymazatPozemokButton" disable="true" mnemonicParsing="false" onAction="#vymazPozemok" styleClass="buttonStyle" text="Vymazať" />
                </children>
             </HBox>
@@ -60,6 +48,18 @@
                   <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="147.0" text="Obsadenosť" />
                </columns>
             </TableView>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="21.0" layoutY="68.0" prefHeight="200.0" prefWidth="118.0" spacing="15.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="68.0">
+         <children>
+            <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" />
+            <Button fx:id="pridajPozemokButton" disable="true" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridaj pozemok" />
+            <Button fx:id="pridatPouzivatelaButton" disable="true" mnemonicParsing="false" onAction="#pridatPouzivatela" prefHeight="25.0" prefWidth="167.0" styleClass="buttonStyle" text="Pridať použivateľa" />
+            <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>

@@ -30,7 +30,7 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
 
     @Override
     public List<ObjednavkaFxModel> getAll() {
-        String objednavka_getAll = "SELECT * FROM campingsql.objednavky o left join pouzivatel p on o.pouzivatel_id = p.id;";
+        String objednavka_getAll = "SELECT * FROM objednavky o left join pouzivatel p on o.pouzivatel_id = p.id;";
         return jdbcTemplate.query(objednavka_getAll, new ObjednavkaRowMapper());
     }
 
@@ -50,7 +50,7 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
 
     @Override
     public boolean deleteObjednavku(Long id) {
-        String objednavka_delete = "DELETE FROM objednavky WHERE pozemky_id = " + id;
+        String objednavka_delete = "DELETE FROM objednavky WHERE id = " + id;
         int zmazanych = jdbcTemplate.update(objednavka_delete);
         return zmazanych == 1;
 

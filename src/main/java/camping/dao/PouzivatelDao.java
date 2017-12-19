@@ -12,7 +12,7 @@ public interface PouzivatelDao {
 
     public void updatePouzivatela(PouzivatelFxModel pouzivatel);
 
-    public boolean deletePouzivatela(Long id);
+    public boolean deletePouzivatela(String meno);
 
     public List<PouzivatelFxModel> findById(Long id);
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="842.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ObjednavkaEditSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="846.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ObjednavkaEditSceneController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="13.0" layoutY="10.0" prefHeight="500.0" prefWidth="800.0" spacing="7.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
             <children>
@@ -45,17 +45,18 @@
                         <Button fx:id="pridatObjednavkuButton" mnemonicParsing="false" onAction="#pridatObjednavku" prefHeight="25.0" prefWidth="115.0" styleClass="buttonStyle" text="Pridať objednávku" textAlignment="CENTER" />
                     </children>
                 </HBox>
-                <TableView fx:id="objednavkyTableView" prefHeight="328.0" prefWidth="799.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="objednavkyTableView" prefHeight="336.0" prefWidth="816.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="pozemokIdTableColumn" prefWidth="75.0" text="Pozemok" />
-                        <TableColumn fx:id="pouzivatelIdTableColumn" prefWidth="75.0" text="Používateľ" />
-                        <TableColumn fx:id="datumObjednavkyTableColumn" prefWidth="122.0" text="Dátum objednávky" />
-                        <TableColumn fx:id="datumPrichoduTableColumn" prefWidth="100.0" text="Dátum príchodu" />
-                        <TableColumn fx:id="datumOdchoduTableColumn" prefWidth="100.0" text="Dátum odchodu" />
-                        <TableColumn fx:id="pocetDniTableColumn" prefWidth="65.0" text="Počet dní" />
-                        <TableColumn fx:id="menoZakaznikaColumn" prefWidth="82.0" text="Meno " />
-                        <TableColumn fx:id="telCisloZakaznikaColumn" prefWidth="112.0" text="Tel. číslo" />
-                        <TableColumn fx:id="platbaTableColumn" prefWidth="84.0" text="Platba" />
+                  <TableColumn fx:id="idTableColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" resizable="false" text="Column X" visible="false" />
+                        <TableColumn fx:id="pozemokIdTableColumn" prefWidth="61.0" text="Pozemok" />
+                        <TableColumn fx:id="pouzivatelIdTableColumn" prefWidth="99.0" text="Používateľ" />
+                        <TableColumn fx:id="datumObjednavkyTableColumn" prefWidth="118.0" text="Dátum objednávky" />
+                        <TableColumn fx:id="datumPrichoduTableColumn" prefWidth="108.0" text="Dátum príchodu" />
+                        <TableColumn fx:id="datumOdchoduTableColumn" prefWidth="103.0" text="Dátum odchodu" />
+                        <TableColumn fx:id="pocetDniTableColumn" prefWidth="69.0" text="Počet dní" />
+                        <TableColumn fx:id="menoZakaznikaColumn" prefWidth="103.0" text="Meno " />
+                        <TableColumn fx:id="telCisloZakaznikaColumn" minWidth="0.0" prefWidth="85.0" text="Tel. číslo" />
+                        <TableColumn fx:id="platbaTableColumn" prefWidth="73.0" text="Platba" />
                     </columns>
                 </TableView>
                 <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="786.0" spacing="15.0" VBox.vgrow="NEVER">

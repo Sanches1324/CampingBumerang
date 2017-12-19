@@ -21,6 +21,8 @@ public class CampingBumerangApp extends Application {
             stage.setScene(scene);
             stage.setTitle("Camping Bumerang");
             stage.getIcons().add(logo);
+            stage.setMinHeight(450);
+            stage.setMinWidth(690);
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();

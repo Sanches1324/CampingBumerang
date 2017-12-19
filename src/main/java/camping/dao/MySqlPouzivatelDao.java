@@ -44,8 +44,8 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
     }
 
     @Override
-    public boolean deletePouzivatela(Long id) {
-        String pouzivatel_delete = "DELETE FROM pouzivatel WHERE id = " + id;
+    public boolean deletePouzivatela(String meno) {
+        String pouzivatel_delete = "DELETE FROM pouzivatel WHERE meno = " + "'" + meno + "'";
         int zmazanych = jdbcTemplate.update(pouzivatel_delete);
         return zmazanych == 1;
     }

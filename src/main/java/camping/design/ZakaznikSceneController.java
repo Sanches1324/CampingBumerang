@@ -59,6 +59,8 @@ public class ZakaznikSceneController {
                 stage.setScene(scene);
                 stage.setTitle("Camping Bumerang");
                 stage.getIcons().add(logo);
+                stage.setMinHeight(450);
+                stage.setMinWidth(690);
                 prepniUzivatelaButton.getScene().getWindow().hide();
                 stage.show();
 
@@ -67,7 +69,7 @@ public class ZakaznikSceneController {
             }
 
         });
-        
+
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
@@ -107,6 +109,8 @@ public class ZakaznikSceneController {
                         stage.getIcons().add(logo);
                         stage.setMaxHeight(700);
                         stage.setMaxWidth(900);
+                        stage.setMinHeight(400);
+                        stage.setMinWidth(600);
                         stage.centerOnScreen();
                         stage.show();
                     } catch (Exception e) {

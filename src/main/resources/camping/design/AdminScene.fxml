@@ -15,28 +15,16 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="453.0" maxWidth="696.0" prefHeight="453.0" prefWidth="697.0" styleClass="background" stylesheets="camping/styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.AdminSceneController">
     <children>
-        <Label alignment="CENTER" layoutX="180.0" layoutY="15.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+        <Label alignment="CENTER" layoutX="171.0" layoutY="22.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false" AnchorPane.topAnchor="22.0">
             <font>
                 <Font size="18.0" fx:id="x4" />
             </font>
         </Label>
-        <Button fx:id="pridajPozemokButton" layoutX="13.0" layoutY="108.0" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridaj pozemok" />
-        <Label alignment="CENTER" layoutX="13.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Admin" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+        <Label alignment="CENTER" layoutX="28.0" layoutY="22.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Admin" textAlignment="CENTER" textFill="WHITE" wrapText="false" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="22.0">
             <font>
                 <Font size="18.0" fx:id="x1" />
             </font>
         </Label>
-        <Button fx:id="spravujFinancieButton" layoutX="13.0" layoutY="143.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj financie">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Button>
-        <Button fx:id="spravujObjednavkyButton" layoutX="13.0" layoutY="184.0" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Button>
-        <Button fx:id="prepniUzivatelaButton" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" />
         <ImageView fx:id="logoImageView" fitHeight="72.0" fitWidth="118.0" layoutX="13.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="13.0">
             <image>
                 <Image url="@../styles/logo-sitename.png" />
@@ -60,6 +48,18 @@
                       <TableColumn fx:id="obsadenostPozemkuColumn" prefWidth="140.0" text="Obsadenosť" />
                   </columns>
               </TableView>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="28.0" layoutY="69.0" prefHeight="200.0" prefWidth="118.0" spacing="15.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="69.0">
+         <children>
+              <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" VBox.vgrow="ALWAYS" />
+              <Button fx:id="pridajPozemokButton" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridať pozemok" VBox.vgrow="ALWAYS" />
+            <Button fx:id="pridatPouzivatelaButton" mnemonicParsing="false" onAction="#pridatPouzivatela" prefHeight="25.0" prefWidth="167.0" styleClass="buttonStyle" text="Pridať použivateľa" />
+              <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky" VBox.vgrow="ALWAYS">
+                  <font>
+                      <Font size="11.0" />
+                  </font>
+              </Button>
          </children>
       </VBox>      
     </children>

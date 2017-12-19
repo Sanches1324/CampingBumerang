@@ -40,7 +40,7 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="58.0" prefWidth="246.0" spacing="20.0">
                      <children>
-                        <Label fx:id="hesloLabel" blendMode="MULTIPLY" text="Heslo">
+                        <Label fx:id="hesloLabel" text="Heslo" textFill="WHITE">
                            <font>
                               <Font name="System Italic" size="29.0" />
                            </font>
