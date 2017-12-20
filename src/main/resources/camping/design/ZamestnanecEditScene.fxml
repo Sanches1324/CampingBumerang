@@ -20,6 +20,7 @@
             <Label text="Meno" />
             <TextField fx:id="menoTextField" />
             <Button fx:id="pridatButton" defaultButton="true" mnemonicParsing="false" onAction="#pridat" styleClass="buttonStyle" text="Pridať" />
+            <Button fx:id="vymazatButton" mnemonicParsing="false" onAction="#vymazatPouzivatela" styleClass="buttonStyle" text="Výmazať" />
          </children>
       </HBox>
    </children>

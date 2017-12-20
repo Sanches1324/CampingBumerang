@@ -216,20 +216,24 @@ public class ObjednavkaEditSceneController {
     void vymazatObjednavku(ActionEvent event
     ) {
         try {
-            int index = objednavkyTableView.getSelectionModel().getSelectedIndex();
-            Long vymazat = idTableColumn.getCellData(index);
-            ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
-            objednavkaDao.deleteObjednavku(vymazat);
-            ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
-            Collections.sort(noveObjednavky, new Comparator<ObjednavkaFxModel>() {
-                @Override
-                public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
-                    return (int) (lp.getPozemokId() - rp.getPozemokId());
-                }
-            });
+            if (objednavkyTableView.getSelectionModel().getSelectedIndex() == -1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Nie je vybratý žiadná objednavka", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+            } else {
+                int index = objednavkyTableView.getSelectionModel().getSelectedIndex();
+                Long vymazat = idTableColumn.getCellData(index);
+                ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
+                objednavkaDao.deleteObjednavku(vymazat);
+                ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
+                Collections.sort(noveObjednavky, new Comparator<ObjednavkaFxModel>() {
+                    @Override
+                    public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
+                        return (int) (lp.getPozemokId() - rp.getPozemokId());
+                    }
+                });
 
-            objednavkyTableView.setItems(noveObjednavky);
-
+                objednavkyTableView.setItems(noveObjednavky);
+            }
         } catch (Exception e) {
             System.out.println("Chyba nacitania z DB" + e);
             e.printStackTrace();
@@ -237,7 +241,8 @@ public class ObjednavkaEditSceneController {
     }
 
     @FXML
-    void vyhladatTextField(KeyEvent event) {
+    void vyhladatTextField(KeyEvent event
+    ) {
         pozemokIdTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

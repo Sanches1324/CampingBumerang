@@ -2,8 +2,11 @@ package camping.design;
 
 import camping.dao.CampingDaoFactory;
 import camping.dao.PouzivatelDao;
+import camping.dao.PozemokDao;
 import camping.design.PouzivatelFxModel;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -38,9 +41,29 @@ public class ZamestnanecEditSceneController {
     private Button pridatButton;
 
     @FXML
-    private Button odstranitButton;
+    private Button vymazatButton;
+
     private PouzivatelFxModel pouzivatelModel = new PouzivatelFxModel();
     private ObservableList<PouzivatelFxModel> pouzivatelia = pouzivatelModel.getPouzivatelov();
+
+    @FXML
+    void vymazatPouzivatela(ActionEvent event) {
+        try {
+            if (zamestnanecTableView.getSelectionModel().getSelectedIndex() == -1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Nie je vybratý žiadný zamestnanec", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+            } else {
+                int index = zamestnanecTableView.getSelectionModel().getSelectedIndex();
+                String vymazat = menoTableColumn.getCellData(index);
+                PouzivatelDao pouzivatelDao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
+                pouzivatelDao.deletePouzivatela(vymazat);
+                ObservableList<PouzivatelFxModel> pouzivatelia = FXCollections.observableArrayList(pouzivatelDao.getAll());
+                zamestnanecTableView.setItems(pouzivatelia);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void pridat(ActionEvent event) {

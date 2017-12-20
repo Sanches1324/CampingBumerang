@@ -52,10 +52,10 @@
       </VBox>
       <VBox alignment="TOP_CENTER" layoutX="21.0" layoutY="68.0" prefHeight="200.0" prefWidth="118.0" spacing="15.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="68.0">
          <children>
-            <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" />
-            <Button fx:id="pridajPozemokButton" disable="true" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridaj pozemok" />
+            <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepnuť užívateľa" />
+            <Button fx:id="pridajPozemokButton" disable="true" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridať pozemok" />
             <Button fx:id="pridatPouzivatelaButton" disable="true" mnemonicParsing="false" onAction="#pridatPouzivatela" prefHeight="25.0" prefWidth="167.0" styleClass="buttonStyle" text="Pridať použivateľa" />
-            <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky">
+            <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Sprava objednávok">
                <font>
                   <Font size="11.0" />
                </font>

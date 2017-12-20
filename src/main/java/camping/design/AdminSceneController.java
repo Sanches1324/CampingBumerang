@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -28,7 +29,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -207,22 +210,26 @@ public class AdminSceneController {
     @FXML
     void vymazPozemok(ActionEvent event) {
         try {
-            int index = pozemkyTableView.getSelectionModel().getSelectedIndex();
-            Long vymazat = cisloPozemkuColumn.getCellData(index);
-            PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
-            pozemokDao.deletePozemokByCisloPozemku(vymazat);
-            ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
-            Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
-                @Override
-                public int compare(PozemokFxModel lp, PozemokFxModel rp) {
-                    return (int) (lp.getCisloPozemku() - rp.getCisloPozemku());
-                }
-            });
-            pozemkyFlowPane.getChildren().clear();
-            vytvorPozemok(pozemky);
-            zoradPozemky(pozemky);
+            if (pozemkyTableView.getSelectionModel().getSelectedIndex() == -1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Nie je vybratý žiadný pozemok", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+            } else {
+                int index = pozemkyTableView.getSelectionModel().getSelectedIndex();
+                Long vymazat = cisloPozemkuColumn.getCellData(index);
+                PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
+                pozemokDao.deletePozemokByCisloPozemku(vymazat);
+                ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokDao.getAll());
+                Collections.sort(pozemky, new Comparator<PozemokFxModel>() {
+                    @Override
+                    public int compare(PozemokFxModel lp, PozemokFxModel rp) {
+                        return (int) (lp.getCisloPozemku() - rp.getCisloPozemku());
+                    }
+                });
+                pozemkyFlowPane.getChildren().clear();
+                vytvorPozemok(pozemky);
+                zoradPozemky(pozemky);
+            }
         } catch (Exception e) {
-            System.out.println("Error occurred while getting pozemky information from DB.\n" + e);
             e.printStackTrace();
         }
     }

@@ -52,10 +52,10 @@
       </VBox>
       <VBox alignment="TOP_CENTER" layoutX="28.0" layoutY="69.0" prefHeight="200.0" prefWidth="118.0" spacing="15.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="69.0">
          <children>
-              <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepni užívateľa" VBox.vgrow="ALWAYS" />
+              <Button fx:id="prepniUzivatelaButton" mnemonicParsing="false" onAction="#prepnutUzivatelaAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Prepnuť užívateľa" VBox.vgrow="ALWAYS" />
               <Button fx:id="pridajPozemokButton" mnemonicParsing="false" onAction="#pridatPozemokAction" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Pridať pozemok" VBox.vgrow="ALWAYS" />
             <Button fx:id="pridatPouzivatelaButton" mnemonicParsing="false" onAction="#pridatPouzivatela" prefHeight="25.0" prefWidth="167.0" styleClass="buttonStyle" text="Pridať použivateľa" />
-              <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="118.0" styleClass="buttonStyle" text="Spravuj objednávky" VBox.vgrow="ALWAYS">
+              <Button fx:id="spravujObjednavkyButton" mnemonicParsing="false" onAction="#otvoritObjednavky" prefHeight="25.0" prefWidth="127.0" styleClass="buttonStyle" text="Sprava objednávok" VBox.vgrow="ALWAYS">
                   <font>
                       <Font size="11.0" />
                   </font>
