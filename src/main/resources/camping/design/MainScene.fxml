@@ -48,8 +48,8 @@
                         <PasswordField fx:id="hesloPouzivatelaPasswordField" prefHeight="25.0" prefWidth="138.0" />
                      </children>
                   </HBox>
-                  <Button fx:id="OKButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" />
-                  <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
+                  <Button fx:id="OKButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" />
+                  <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
                </children>
             </VBox>
       </children>
