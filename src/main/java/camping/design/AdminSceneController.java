@@ -306,7 +306,7 @@ public class AdminSceneController {
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
-        
+        // menu
         JFXDrawer adminDrawer = new JFXDrawer();
         prepniUzivatelaButton.setButtonType(JFXButton.ButtonType.RAISED);
         pridajPozemokButton.setButtonType(JFXButton.ButtonType.RAISED);

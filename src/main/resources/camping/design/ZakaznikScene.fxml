@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="242.0" prefWidth="592.0" styleClass="background" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ZakaznikSceneController">
+<VBox prefHeight="242.0" prefWidth="592.0" styleClass="background" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ZakaznikSceneController">
     <children>
         <AnchorPane fx:id="zakaznikAnchorPane" minHeight="-1.0" minWidth="-1.0" prefHeight="233.0" prefWidth="592.0" stylesheets="@../styles/Styles.css" VBox.vgrow="ALWAYS">
             <children>
@@ -18,7 +19,6 @@
                         <Font size="18.0" fx:id="x1" />
                     </font>
                 </Label>
-                <Button fx:id="prepniUzivatelaButton" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" styleClass="buttonStyle" text="Prepnuť užívateľa" />
                 <Label alignment="CENTER" layoutX="158.0" layoutY="26.0" style="&#10;" text="Pozemky" textAlignment="CENTER" textFill="WHITE" wrapText="false">
                     <font>
                         <Font size="18.0" fx:id="x3" />
@@ -30,6 +30,11 @@
                         <Image url="@../styles/logo-sitename.png" />
                     </image>
                 </ImageView>
+            <JFXButton fx:id="prepniUzivatelaButton" buttonType="RAISED" layoutY="53.0" prefHeight="34.0" prefWidth="131.0" text="Prepnuť použivateľa">
+               <effect>
+                  <Shadow />
+               </effect>
+            </JFXButton>
             </children>
         </AnchorPane>
     </children>
