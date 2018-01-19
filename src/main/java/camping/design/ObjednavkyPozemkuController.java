@@ -101,9 +101,9 @@ public class ObjednavkyPozemkuController {
                 }
             });
         });
-        SortedList<ObjednavkaFxModel> sortedData = new SortedList<>(filtrovaneObjednavky);
-        sortedData.comparatorProperty().bind(objednavkyPozemkuTableView.comparatorProperty());
-        objednavkyPozemkuTableView.setItems(sortedData);
+//        SortedList<ObjednavkaFxModel> sortedData = new SortedList<>(filtrovaneObjednavky);
+//        sortedData.comparatorProperty().bind(objednavkyPozemkuTableView.comparatorProperty());
+        objednavkyPozemkuTableView.setItems(filtrovaneObjednavky);
 
     }
 }

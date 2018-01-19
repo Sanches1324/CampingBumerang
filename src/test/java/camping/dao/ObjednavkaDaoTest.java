@@ -49,7 +49,7 @@ public class ObjednavkaDaoTest {
         objednavkaModel.setMenoZakaznika("Anton Hlavička");
         objednavkaModel.setPlatba(false);
         objednavkaModel.setTelCisloZakaznika("0941654522");
-        objednavkaModel.setPozemokId(8L);
+        objednavkaModel.setPozemokId(9L);
         objednavkaModel.setPouzivatelId(5L);
         dao.createObjednavku(objednavkaModel);
         assertEquals(velkost + 1, dao.getAll().size());
@@ -71,7 +71,7 @@ public class ObjednavkaDaoTest {
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteObjednavku(8L);
+        dao.deleteObjednavku(4L);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
@@ -81,6 +81,17 @@ public class ObjednavkaDaoTest {
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
+        objednavkaModel.setId(2L);
+        objednavkaModel.setDatumObjednavky(LocalDate.now());
+        objednavkaModel.setDatumOdchodu(LocalDate.now());
+        objednavkaModel.setDatumPrichodu(LocalDate.now());
+        objednavkaModel.setPocetDni(2L);
+        objednavkaModel.setMenoPouziatela("Kyblik");
+        objednavkaModel.setMenoZakaznika("Anton Hlavička");
+        objednavkaModel.setPlatba(false);
+        objednavkaModel.setTelCisloZakaznika("0941654522");
+        objednavkaModel.setPozemokId(9L);
+        objednavkaModel.setPouzivatelId(5L);
         dao.updateObjednavku(objednavkaModel);
         assertEquals(velkost, dao.getAll().size());
     }

@@ -40,7 +40,7 @@ public class PouzivatelDaoTest {
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        pouzivatel.setMeno("Igor");
+        pouzivatel.setMeno("Zamestnanec2");
         pouzivatel.setPozicia("Zamestnanec");
         pouzivatel.setVyplata(60);
         pouzivatel.setOdrobeneHodiny(7);
@@ -65,7 +65,7 @@ public class PouzivatelDaoTest {
     @Test
     public void deleteByNameTest() {
         int velkost = dao.getAll().size();
-        dao.deletePouzivatela("Igor");
+        dao.deletePouzivatela("Zamestnanec2");
         assertEquals(velkost - 1, dao.getAll().size());
     }
 
@@ -75,7 +75,7 @@ public class PouzivatelDaoTest {
     @Test
     public void updateTest() {
         int velkost = dao.getAll().size();
-        pouzivatel.setMeno("Igor");
+        pouzivatel.setMeno("Zamestnanec2");
         pouzivatel.setPozicia("Zamestnanec");
         pouzivatel.setVyplata(70);
         pouzivatel.setOdrobeneHodiny(7);

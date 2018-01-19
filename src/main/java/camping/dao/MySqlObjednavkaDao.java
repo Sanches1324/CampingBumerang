@@ -39,7 +39,7 @@ public class MySqlObjednavkaDao implements ObjednavkaDao {
         if (objednavka.getId() == null) {
             createObjednavku(objednavka);
         } else {
-            String objednavka_update = "UPDATE pouzivatel SET pozemok_id = ?, pouzivatel_id = ?, datum_objednavky = ?, datum_prichodu = ?, datum_odchodu = ?, pocet_dni = ?, platba = ?, zakaznik_meno = ?, zakaznik_cislo = ? WHERE id = ?";
+            String objednavka_update = "UPDATE objednavky SET pozemky_id = ?, pouzivatel_id = ?, datum_objednavky = ?, datum_prichodu = ?, datum_odchodu = ?, pocet_dni = ?, platba = ?, zakaznik_meno = ?, zakaznik_cislo = ? WHERE id = " + objednavka.getId();
             if (objednavka.getPlatba()) {
                 jdbcTemplate.update(objednavka_update, objednavka.getPozemokId(), objednavka.getPouzivatelId(), objednavka.getDatumObjednavky(), objednavka.getDatumPrichodu(), objednavka.getDatumOdchodu(), objednavka.getPocetDni(), 1, objednavka.getMenoZakaznika(), objednavka.getTelCisloZakaznika());
             } else {

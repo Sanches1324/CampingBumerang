@@ -32,7 +32,7 @@ public class MySqlPozemokDao implements PozemokDao {
 
     @Override
     public List<PozemokFxModel> getAll() {
-        String pozemok_getAll = "SELECT * FROM campingsql.pozemky p LEFT JOIN kategoria k on k.id = p.kategoria_id ";
+        String pozemok_getAll = "SELECT * FROM pozemky p LEFT JOIN kategoria k on k.id = p.kategoria_id ";
         return jdbcTemplate.query(pozemok_getAll, new PozemokRowMapper());
     }
 

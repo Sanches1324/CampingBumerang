@@ -275,12 +275,12 @@ public class ObjednavkaEditSceneController {
                     });
                 }
                 );
-        SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
-        sortovanePozemky.comparatorProperty()
-                .bind(objednavkyTableView.comparatorProperty());
-        objednavkyTableView.setItems(sortovanePozemky);
+//        SortedList<ObjednavkaFxModel> sortovanePozemky = new SortedList<>(filtrovaneObjednavky);
+//        sortovanePozemky.comparatorProperty()
+//                .bind(objednavkyTableView.comparatorProperty());
+        objednavkyTableView.setItems(filtrovaneObjednavky);
 
-        objednavkyTableView.sort();
+//        objednavkyTableView.sort();
     }
 
     @FXML

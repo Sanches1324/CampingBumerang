@@ -41,7 +41,6 @@ public class MySqlHesloDao implements HesloDao {
     @Override
     public List<HesloFxModel> getAll() {
         String heslo_get = "SELECT * FROM hesla";
-
         return jdbcTemplate.query(heslo_get, new HesloRowMapper());
     }
 

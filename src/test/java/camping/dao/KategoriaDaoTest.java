@@ -41,7 +41,7 @@ public class KategoriaDaoTest {
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        kategoriaModel.setNazov("VI");
+        kategoriaModel.setNazov("VII");
         dao.createKategoria(kategoriaModel);
         assertEquals(velkost + 1, dao.getAll().size());
     }
@@ -71,7 +71,7 @@ public class KategoriaDaoTest {
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deleteKategoriaById(8L);
+        dao.deleteKategoriaById(7L);
         assertEquals(velkost - 1, dao.getAll().size());
     }
 }

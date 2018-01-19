@@ -1,15 +1,17 @@
 package camping.design;
 
 import camping.dao.CampingDaoFactory;
-import camping.dao.KategoriaDao;
 import camping.dao.ObjednavkaDao;
 import camping.dao.PozemokDao;
-import camping.entities.Kategoria;
-import camping.entities.Pozemok;
-import com.mysql.cj.api.xdevapi.Collection;
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,15 +27,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -41,13 +40,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 public class AdminSceneController {
 
@@ -55,16 +54,16 @@ public class AdminSceneController {
     private AnchorPane mainAnchorPane;
 
     @FXML
-    private Button spravujFinancieButton;
+    private JFXButton spravujFinancieButton;
 
     @FXML
-    private Button spravujObjednavkyButton;
+    private JFXButton spravujObjednavkyButton;
 
     @FXML
-    private Button prepniUzivatelaButton;
+    private JFXButton prepniUzivatelaButton;
 
     @FXML
-    private Button pridajPozemokButton;
+    private JFXButton pridajPozemokButton;
 
     @FXML
     private TableView<PozemokFxModel> pozemkyTableView;
@@ -82,20 +81,30 @@ public class AdminSceneController {
     private TableColumn<PozemokFxModel, String> obsadenostPozemkuColumn;
 
     @FXML
+    private VBox allVBox;
+
+    @FXML
     private FlowPane pozemkyFlowPane;
 
     @FXML
-    private TextField hladatPozemokTextField;
+    private JFXTextField hladatPozemokTextField;
 
     @FXML
-    private Button hladatPozemokButton;
+    private JFXButton vymazatPozemokButton;
 
     @FXML
-    private Button vymazatPozemokButton;
+    private JFXButton pridatPouzivatelaButton;
 
     @FXML
-    private Button pridatPouzivatelaButton;
+    private JFXHamburger adminHamburger;
 
+//    @FXML
+//    private JFXDrawer adminDrawer;
+    @FXML
+    private JFXDrawersStack adminDrawersStack;
+
+//    @FXML
+//    private StackPane adminStackPane;
     private PozemokFxModel pozemokModel = new PozemokFxModel();
     private ObservableList<PozemokFxModel> pozemky = FXCollections.observableArrayList(pozemokModel.getPozemky());
     private PozemokDao pozemokDao = CampingDaoFactory.INSTANCE.getMySqlPozemokDao();
@@ -279,11 +288,10 @@ public class AdminSceneController {
                 }
                 );
 
-        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
-
-        sortovanePozemky.comparatorProperty()
-                .bind(pozemkyTableView.comparatorProperty());
-        pozemkyTableView.setItems(sortovanePozemky);
+//        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
+//        sortovanePozemky.comparatorProperty()
+//                .bind(pozemkyTableView.comparatorProperty());
+        pozemkyTableView.setItems(filtrovanePozemky);
     }
 
     @FXML
@@ -298,6 +306,47 @@ public class AdminSceneController {
         pozemkyFlowPane.setVgap(8);
         pozemkyFlowPane.setHgap(4);
         vytvorPozemok(pozemky);
+        
+        JFXDrawer adminDrawer = new JFXDrawer();
+        prepniUzivatelaButton.setButtonType(JFXButton.ButtonType.RAISED);
+        pridajPozemokButton.setButtonType(JFXButton.ButtonType.RAISED);
+        pridatPouzivatelaButton.setButtonType(JFXButton.ButtonType.RAISED);
+        spravujObjednavkyButton.setButtonType(JFXButton.ButtonType.RAISED);
+
+        prepniUzivatelaButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.USERS));
+        pridajPozemokButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.PLUS_SQUARE_ALT));
+        pridatPouzivatelaButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.USER_PLUS));
+        spravujObjednavkyButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.BOOK));
+
+        HBox box = new HBox(20, prepniUzivatelaButton, spravujObjednavkyButton, pridajPozemokButton, pridatPouzivatelaButton);
+        StackPane adminDrawerPane = new StackPane(box);
+        box.setAlignment(Pos.CENTER);
+        adminDrawerPane.setStyle("-fx-background-color: #99b3ff");
+        adminDrawer.setDirection(JFXDrawer.DrawerDirection.BOTTOM);
+        adminDrawer.setDefaultDrawerSize(200);
+        adminDrawer.setSidePane(adminDrawerPane);
+        adminDrawer.setResizeContent(true);
+        adminDrawer.setOverLayVisible(false);
+        adminDrawer.setResizableOnDrag(true);
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(adminHamburger);
+        transition.setRate(-1);
+        mainAnchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, eh -> {
+            if (adminDrawer.isShown()) {
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                adminDrawersStack.toggle(adminDrawer, false);
+            }
+        });
+        adminHamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, eh -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (adminDrawer.isShown()) {
+                adminDrawersStack.toggle(adminDrawer, false);
+            } else {
+                adminDrawersStack.toggle(adminDrawer, true);
+            }
+
+        });
 
     }
 
@@ -311,14 +360,16 @@ public class AdminSceneController {
             });
             for (PozemokFxModel pozemok1 : pozemok) {
                 String cislo = Objects.toString(pozemok1.getCisloPozemku(), null);
-                Button button = new Button(cislo);
+                JFXButton button = new JFXButton(cislo);
+                button.setButtonType(JFXButton.ButtonType.RAISED);
+                button.setRipplerFill(Paint.valueOf("#66e0ff"));
                 button.setMinWidth(30);
                 button.setMinHeight(10);
                 button.setId("id" + pozemok1.getCisloPozemku() + "Button");
                 if (pozemok1.getObsadenostBoolean().equals("voľný")) {
-                    button.setStyle("-fx-background-color: #04B404;");
+                    button.setStyle("-fx-background-color: #66ff66;");
                 } else {
-                    button.setStyle("-fx-background-color: #FF0000;");
+                    button.setStyle("-fx-background-color: #ff6666;");
                 }
                 button.setOnAction(eh -> {
                     try {
@@ -338,7 +389,10 @@ public class AdminSceneController {
                         ObjednavkyPozemkuController controller
                                 = loader.<ObjednavkyPozemkuController>getController();
                         controller.initialize(objednavkyPozemku);
-                        stage.show();
+
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

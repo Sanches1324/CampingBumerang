@@ -41,7 +41,7 @@ public class PozemokDaoTest {
     @Test
     public void createTest() {
         int velkost = dao.getAll().size();
-        pozemokModel.setCisloPozemku(1L);
+        pozemokModel.setCisloPozemku(3L);
         pozemokModel.setKategoriaId(3L);
         pozemokModel.setCena(20);
         pozemokModel.setObsadenost(false);
@@ -67,8 +67,8 @@ public class PozemokDaoTest {
     @Test
     public void deleteByIdTest() {
         int velkost = dao.getAll().size();
-        dao.deletePozemokById(26L);
-        assertEquals(velkost - 1, dao.getAll().size());
+        dao.deletePozemokById(11L);
+        assertEquals(velkost -1, dao.getAll().size());
     }
 
     // mazanie pozemku podla cisla pozemku - pocet vsetkych musí byť o 1 menší
