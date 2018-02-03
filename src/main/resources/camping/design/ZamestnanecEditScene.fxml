@@ -15,9 +15,9 @@
             <TableColumn fx:id="datNarColumn" prefWidth="113.0" text="Dátum narodenia" />
             <TableColumn fx:id="adresaColumn" prefWidth="131.0" text="Adresa" />
             <TableColumn fx:id="telCisloColumn" prefWidth="109.0" text="Telefonné číslo" />
-            <TableColumn fx:id="eMailColumn" prefWidth="107.0" text="E-mail" />
+            <TableColumn fx:id="eMailColumn" prefWidth="104.0" text="E-mail" />
             <TableColumn fx:id="idColumn" minWidth="0.0" prefWidth="0.0" text="id" />
-            <TableColumn prefWidth="84.0" text="Prihl. meno" />
+            <TableColumn fx:id="prihlMenoColumn" prefWidth="87.0" text="Prihl. meno" />
         </columns>
       </TableView>
       <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="41.0" prefWidth="502.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">

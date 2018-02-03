@@ -24,7 +24,7 @@
       <Label layoutX="46.0" layoutY="139.0" text="Adresa:" />
       <Label layoutX="47.0" layoutY="253.0" text="Heslo:" />
       <Label layoutX="21.0" layoutY="294.0" text="Podtvrdiť heslo:" />
-      <JFXPasswordField layoutX="126.0" layoutY="249.0" />
-      <JFXPasswordField layoutX="126.0" layoutY="290.0" />
+      <JFXPasswordField fx:id="hesloPasswordField" layoutX="126.0" layoutY="249.0" />
+      <JFXPasswordField fx:id="ptvHesloPasswordField" layoutX="126.0" layoutY="290.0" />
    </children>
 </AnchorPane>

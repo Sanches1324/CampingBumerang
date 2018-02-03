@@ -1,16 +1,13 @@
 package camping.dao;
 
 import camping.design.PouzivatelFxModel;
-import camping.entities.Pouzivatel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class MySqlPouzivatelDao implements PouzivatelDao {
 
@@ -22,8 +19,10 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void createPouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail) VALUES(?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail());
+        String pouzivatel_create = "INSERT INTO pouzivatel(meno, prihlasovacie_meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail, heslo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sol = BCrypt.gensalt();
+        String hash = BCrypt.hashpw(pouzivatel.getHeslo(), sol);
+        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash);
 
     }
 
@@ -75,11 +74,12 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
             PouzivatelFxModel p = new PouzivatelFxModel();
             p.setId(rs.getLong(1));
             p.setMeno(rs.getString(2));
-            p.setPozicia(rs.getString(3));
-            p.setDatumNarodenia((LocalDate) rs.getDate(4).toLocalDate());
-            p.setAdresa(rs.getString(5));
-            p.setTel_cislo(rs.getString(6));
-            p.setE_mail(rs.getString(7));
+            p.setPrihl_Meno(rs.getString(3));
+            p.setPozicia(rs.getString(4));
+            p.setDatumNarodenia((LocalDate) rs.getDate(5).toLocalDate());
+            p.setAdresa(rs.getString(6));
+            p.setTel_cislo(rs.getString(7));
+            p.setE_mail(rs.getString(8));
             return p;
         }
 

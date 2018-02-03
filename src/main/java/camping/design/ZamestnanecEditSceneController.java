@@ -63,6 +63,9 @@ public class ZamestnanecEditSceneController {
     private TableColumn<PouzivatelFxModel, Long> idColumn;
 
     @FXML
+    private TableColumn<PouzivatelFxModel, String> prihlMenoColumn;
+
+    @FXML
     private Button pridatButton;
 
     @FXML
@@ -130,6 +133,7 @@ public class ZamestnanecEditSceneController {
         telCisloColumn.setCellValueFactory(cellData -> cellData.getValue().tel_cisloProperty());
         eMailColumn.setCellValueFactory(cellData -> cellData.getValue().e_mailProperty());
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        prihlMenoColumn.setCellValueFactory(cellData -> cellData.getValue().prihl_menoProperty());
         zamestnanecTableView.setItems(pouzivatelia);
     }
 }
