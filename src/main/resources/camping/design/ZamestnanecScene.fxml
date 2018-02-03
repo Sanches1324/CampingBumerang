@@ -45,7 +45,7 @@
                <children>
                   <Label text="Pozemok №:" />
                   <JFXTextField fx:id="hladatPozemokTextField" onKeyPressed="#vyhladatTextField" prefHeight="25.0" prefWidth="84.0" />
-                  <JFXButton fx:id="vymazatPozemokButton" buttonType="RAISED" onAction="#vymazPozemok" text="Vymazať" />
+                  <JFXButton fx:id="vymazatPozemokButton" buttonType="RAISED" disable="true" onAction="#vymazPozemok" text="Vymazať" />
                </children>
             </HBox>
             <TableView fx:id="pozemkyTableView" prefHeight="314.0" prefWidth="671.0" VBox.vgrow="ALWAYS">

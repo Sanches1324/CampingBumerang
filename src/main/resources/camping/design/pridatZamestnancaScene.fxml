@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="279.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.PridatZamestnancaSceneController">
+   <children>
+      <JFXTextField fx:id="menoTextField" layoutX="126.0" layoutY="6.0" />
+      <JFXTextField fx:id="eMailTextField" layoutX="126.0" layoutY="211.0" />
+      <JFXTextField fx:id="poziciaTextField" layoutX="126.0" layoutY="45.0" />
+      <JFXTextField fx:id="adresaTextField" layoutX="126.0" layoutY="135.0" />
+      <JFXTextField fx:id="telCisloTextField" layoutX="126.0" layoutY="169.0" />
+      <JFXDatePicker fx:id="datumNarDatePicker" layoutX="126.0" layoutY="97.0" prefHeight="25.0" prefWidth="135.0" />
+      <JFXButton fx:id="pridatButton" defaultButton="true" layoutX="115.0" layoutY="343.0" onAction="#pridat" styleClass="buttonStyle" text="Pridať" />
+      <Label layoutX="47.0" layoutY="10.0" text="Meno:" />
+      <Label layoutX="48.0" layoutY="215.0" text="E-mail:" />
+      <Label layoutX="42.0" layoutY="173.0" text="Tel. číslo:" />
+      <Label layoutX="19.0" layoutY="101.0" text="Dátum narodenia:" />
+      <Label layoutX="46.0" layoutY="49.0" text="Pozicia:" />
+      <Label layoutX="46.0" layoutY="139.0" text="Adresa:" />
+      <Label layoutX="47.0" layoutY="253.0" text="Heslo:" />
+      <Label layoutX="21.0" layoutY="294.0" text="Podtvrdiť heslo:" />
+      <JFXPasswordField layoutX="126.0" layoutY="249.0" />
+      <JFXPasswordField layoutX="126.0" layoutY="290.0" />
+   </children>
+</AnchorPane>

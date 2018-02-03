@@ -3,12 +3,15 @@ package camping.design;
 import camping.dao.CampingDaoFactory;
 import camping.dao.HesloDao;
 import camping.entities.Heslo;
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,6 +68,29 @@ public class MainSceneController {
     @FXML
     private Button zmenitHesloButton;
 
+    @FXML
+    private JFXButton registraciaButton;
+
+    @FXML
+    void registrovat(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("pridatZamestnancaScene.fxml"));
+            Parent parentPane = loader.load();
+            Scene scene = new Scene(parentPane);
+
+            Stage stage = new Stage();
+            Image logo = new Image("camping\\styles\\logo.png");
+            stage.setScene(scene);
+            stage.setTitle("Camping Bumerang");
+            stage.getIcons().add(logo);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     private String uzivatel;
     private HesloFxModel hesloModel;
     private boolean administrator = false;

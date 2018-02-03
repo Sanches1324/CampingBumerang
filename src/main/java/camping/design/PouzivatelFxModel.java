@@ -3,9 +3,14 @@ package camping.design;
 import camping.dao.CampingDaoFactory;
 import camping.dao.PouzivatelDao;
 import camping.entities.Pouzivatel;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -13,18 +18,41 @@ import javafx.collections.ObservableList;
 
 public class PouzivatelFxModel {
 
+    private LongProperty id;
     private StringProperty pozicia;
     private StringProperty meno;
-    private IntegerProperty odrobeneHodiny;
-    private IntegerProperty vyplata;
+    private StringProperty prihl_meno;
+    private ObjectProperty<LocalDate> datumNarodenia;
+    private StringProperty adresa;
+    private StringProperty tel_cislo;
+    private StringProperty e_mail;
     private ObservableList<PouzivatelFxModel> pouzivatelia;
+    private StringProperty heslo;
 
     public PouzivatelFxModel() {
+        this.id = new SimpleLongProperty();
         this.pozicia = new SimpleStringProperty();
         this.meno = new SimpleStringProperty();
-        this.odrobeneHodiny = new SimpleIntegerProperty();
-        this.vyplata = new SimpleIntegerProperty();
+        this.prihl_meno = new SimpleStringProperty();
+        this.datumNarodenia = new SimpleObjectProperty<>();
+        this.adresa = new SimpleStringProperty();
+        this.tel_cislo = new SimpleStringProperty();
+        this.e_mail = new SimpleStringProperty();
         this.pouzivatelia = FXCollections.observableArrayList();
+        this.heslo = new SimpleStringProperty();
+
+    }
+
+    public LongProperty idProperty() {
+        return id;
+    }
+
+    public Long getId() {
+        return id.get();
+    }
+
+    public void setId(Long id) {
+        this.id.set(id);
     }
 
     public StringProperty poziciaProperty() {
@@ -51,28 +79,64 @@ public class PouzivatelFxModel {
         this.meno.set(meno);
     }
 
-    public IntegerProperty odrobeneHodinyProperty() {
-        return odrobeneHodiny;
+    public StringProperty prihl_menoProperty() {
+        return prihl_meno;
     }
 
-    public Integer getOdrobeneHodiny() {
-        return odrobeneHodiny.get();
+    public String getPrihl_Meno() {
+        return prihl_meno.get();
     }
 
-    public void setOdrobeneHodiny(Integer odrobeneHodiny) {
-        this.odrobeneHodiny.set(odrobeneHodiny);
+    public void setPrihl_Meno(String prihl_meno) {
+        this.prihl_meno.set(prihl_meno);
     }
 
-    public IntegerProperty vyplataProperty() {
-        return vyplata;
+    public ObjectProperty<LocalDate> datumNarodeniaProperty() {
+        return datumNarodenia;
     }
 
-    public Integer getVyplata() {
-        return vyplata.get();
+    public LocalDate getDatumNarodenia() {
+        return datumNarodenia.get();
     }
 
-    public void setVyplata(Integer vyplata) {
-        this.vyplata.set(vyplata);
+    public void setDatumNarodenia(LocalDate datumNarodenia) {
+        this.datumNarodenia.set(datumNarodenia);
+    }
+
+    public StringProperty adresaProperty() {
+        return adresa;
+    }
+
+    public String getAdresa() {
+        return adresa.get();
+    }
+
+    public void setAdresa(String adresa) {
+        this.adresa.set(adresa);
+    }
+
+    public StringProperty tel_cisloProperty() {
+        return tel_cislo;
+    }
+
+    public String getTel_cislo() {
+        return tel_cislo.get();
+    }
+
+    public void setTel_cislo(String tel_cislo) {
+        this.tel_cislo.set(tel_cislo);
+    }
+
+    public StringProperty e_mailProperty() {
+        return e_mail;
+    }
+
+    public String getE_mail() {
+        return e_mail.get();
+    }
+
+    public void setE_mail(String e_mail) {
+        this.e_mail.set(e_mail);
     }
 
     public ObservableList<PouzivatelFxModel> getPouzivatelov() {
@@ -82,6 +146,18 @@ public class PouzivatelFxModel {
 
     public void setPouzivatelov(ObservableList<PouzivatelFxModel> pouzivatelia) {
         this.pouzivatelia = pouzivatelia;
+    }
+
+    public StringProperty hesloProperty() {
+        return heslo;
+    }
+
+    public String getHeslo() {
+        return heslo.get();
+    }
+
+    public void setHeslo(String heslo) {
+        this.heslo.set(heslo);
     }
 
     private void readAll() {

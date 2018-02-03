@@ -173,7 +173,6 @@ public class AdminSceneController {
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -321,7 +320,7 @@ public class AdminSceneController {
         HBox box = new HBox(20, prepniUzivatelaButton, spravujObjednavkyButton, pridajPozemokButton, pridatPouzivatelaButton);
         StackPane adminDrawerPane = new StackPane(box);
         box.setAlignment(Pos.CENTER);
-        adminDrawerPane.setStyle("-fx-background-color: #99b3ff");
+        adminDrawerPane.setStyle("-fx-background-color: #cccccc");
         adminDrawer.setDirection(JFXDrawer.DrawerDirection.BOTTOM);
         adminDrawer.setDefaultDrawerSize(200);
         adminDrawer.setSidePane(adminDrawerPane);

@@ -4,6 +4,7 @@ import camping.design.PouzivatelFxModel;
 import camping.entities.Pouzivatel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import javafx.scene.control.Alert;
@@ -21,8 +22,8 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void createPouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, pocet_odrobenych_hodin, vyplata) VALUES(?, ?, ?, ?)";
-        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
+        String pouzivatel_create = "INSERT INTO pouzivatel(meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail) VALUES(?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail());
 
     }
 
@@ -34,14 +35,14 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, pocet_odrobenych_hodin = ?, vyplata = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
-        jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getOdrobeneHodiny(), pouzivatel.getVyplata());
+        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
+        jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail());
 
     }
 
     @Override
-    public boolean deletePouzivatela(String meno) {
-        String pouzivatel_delete = "DELETE FROM pouzivatel WHERE meno = " + "'" + meno + "'";
+    public boolean deletePouzivatela(Long id) {
+        String pouzivatel_delete = "DELETE FROM pouzivatel WHERE id = " + id;
         int zmazanych = jdbcTemplate.update(pouzivatel_delete);
         return zmazanych == 1;
     }
@@ -72,10 +73,13 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
         @Override
         public PouzivatelFxModel mapRow(ResultSet rs, int i) throws SQLException {
             PouzivatelFxModel p = new PouzivatelFxModel();
+            p.setId(rs.getLong(1));
             p.setMeno(rs.getString(2));
             p.setPozicia(rs.getString(3));
-            p.setOdrobeneHodiny(rs.getInt(4));
-            p.setVyplata(rs.getInt(5));
+            p.setDatumNarodenia((LocalDate) rs.getDate(4).toLocalDate());
+            p.setAdresa(rs.getString(5));
+            p.setTel_cislo(rs.getString(6));
+            p.setE_mail(rs.getString(7));
             return p;
         }
 
