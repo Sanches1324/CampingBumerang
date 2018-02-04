@@ -56,7 +56,7 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
     @Override
     public List<PouzivatelFxModel> findByMeno(String meno) {
         String pouzivatel_findByMeno = "SELECT * FROM pouzivatel "
-                + "WHERE meno = " + meno;
+                + "WHERE prihlasovacie_meno = " + "'" + meno + "'";
         return jdbcTemplate.query(pouzivatel_findByMeno, new PouzivatelRowMapper());
     }
 
@@ -80,6 +80,7 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
             p.setAdresa(rs.getString(6));
             p.setTel_cislo(rs.getString(7));
             p.setE_mail(rs.getString(8));
+            p.setHeslo(rs.getString(9));
             return p;
         }
 

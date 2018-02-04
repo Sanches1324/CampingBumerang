@@ -272,20 +272,19 @@ public class AdminSceneController {
         });
         FilteredList<PozemokFxModel> filtrovanePozemky = new FilteredList<>(pozemky, p -> true);
 
-        hladatPozemokTextField.textProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    filtrovanePozemky.setPredicate(pozemok -> {
-                        if (newValue == null || newValue.isEmpty()) {
-                            return true;
-                        }
-                        if (pozemok.getCisloPozemku() == Long.parseLong(newValue)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
+        hladatPozemokTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrovanePozemky.setPredicate(pozemok -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
                 }
-                );
+                if (pozemok.getCisloPozemku() == Long.parseLong(newValue)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
+        );
 
 //        SortedList<PozemokFxModel> sortovanePozemky = new SortedList<>(filtrovanePozemky);
 //        sortovanePozemky.comparatorProperty()

@@ -135,5 +135,6 @@ public class ZamestnanecEditSceneController {
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         prihlMenoColumn.setCellValueFactory(cellData -> cellData.getValue().prihl_menoProperty());
         zamestnanecTableView.setItems(pouzivatelia);
+        zamestnanecTableView.setEditable(true);
     }
 }

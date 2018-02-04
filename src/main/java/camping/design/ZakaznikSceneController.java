@@ -1,5 +1,6 @@
 package camping.design;
 
+import com.jfoenix.controls.JFXButton;
 import com.sun.javafx.iio.ImageLoader;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -86,14 +88,16 @@ public class ZakaznikSceneController {
             });
             for (PozemokFxModel pozemok1 : pozemok) {
                 String cislo = Objects.toString(pozemok1.getCisloPozemku(), null);
-                Button button = new Button(cislo);
+                JFXButton button = new JFXButton(cislo);
+                button.setButtonType(JFXButton.ButtonType.RAISED);
+                button.setRipplerFill(Paint.valueOf("#66e0ff"));
                 button.setMinWidth(30);
                 button.setMinHeight(10);
                 button.setId("id" + pozemok1.getCisloPozemku() + "Button");
                 if (pozemok1.getObsadenostBoolean().equals("voľný")) {
-                    button.setStyle("-fx-background-color: #04B404;");
+                    button.setStyle("-fx-background-color: #66ff66;");
                 } else {
-                    button.setStyle("-fx-background-color: #FF0000;");
+                    button.setStyle("-fx-background-color: #ff6666;");
                 }
                 button.setOnAction(eh -> {
                     try {
