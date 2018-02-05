@@ -19,10 +19,14 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void createPouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_create = "INSERT INTO pouzivatel(meno, prihlasovacie_meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail, heslo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String pouzivatel_create = "INSERT INTO pouzivatel(meno, prihlasovacie_meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail, heslo, povolenie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String sol = BCrypt.gensalt();
         String hash = BCrypt.hashpw(pouzivatel.getHeslo(), sol);
-        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash);
+        if (pouzivatel.getPovoleny().equals("povolený")) {
+            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash, 1);
+        } else {
+            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash, 0);
+        }
 
     }
 
@@ -34,9 +38,12 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
-        jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail());
-
+        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ?, povolenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
+        if (pouzivatel.getPovoleny().equals("povolený")) {
+            jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), 1);
+        } else {
+            jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), 0);
+        }
     }
 
     @Override
@@ -61,6 +68,13 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
     }
 
     @Override
+    public List<PouzivatelFxModel> findByMeno2(String meno) {
+        String pouzivatel_findByMeno = "SELECT * FROM pouzivatel "
+                + "WHERE meno = " + "'" + meno + "'";
+        return jdbcTemplate.query(pouzivatel_findByMeno, new PouzivatelRowMapper());
+    }
+
+    @Override
     public List<PouzivatelFxModel> findByPozicia(String pozicia) {
         String pouzivatel_findByPozicia = "SELECT * FROM pouzivatel "
                 + "WHERE pozicia = " + pozicia;
@@ -81,6 +95,11 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
             p.setTel_cislo(rs.getString(7));
             p.setE_mail(rs.getString(8));
             p.setHeslo(rs.getString(9));
+            if (rs.getInt(10) == 0) {
+                p.setPovoleny("nepovolený");
+            } else {
+                p.setPovoleny("povolený");
+            }
             return p;
         }
 

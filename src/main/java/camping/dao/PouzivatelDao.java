@@ -20,4 +20,6 @@ public interface PouzivatelDao {
 
     public List<PouzivatelFxModel> findByMeno(String meno);
 
+    public List<PouzivatelFxModel> findByMeno2(String meno);
+
 }

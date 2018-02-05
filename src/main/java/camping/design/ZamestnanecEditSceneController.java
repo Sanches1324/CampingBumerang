@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -64,6 +65,9 @@ public class ZamestnanecEditSceneController {
 
     @FXML
     private TableColumn<PouzivatelFxModel, String> prihlMenoColumn;
+
+    @FXML
+    private TableColumn<PouzivatelFxModel, String> povolenyTableColumn;
 
     @FXML
     private Button pridatButton;
@@ -134,7 +138,41 @@ public class ZamestnanecEditSceneController {
         eMailColumn.setCellValueFactory(cellData -> cellData.getValue().e_mailProperty());
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         prihlMenoColumn.setCellValueFactory(cellData -> cellData.getValue().prihl_menoProperty());
+        povolenyTableColumn.setCellValueFactory(cellData -> cellData.getValue().povolenyProperty());
         zamestnanecTableView.setItems(pouzivatelia);
         zamestnanecTableView.setEditable(true);
+
+        zamestnanecTableView.setRowFactory(tv -> {
+            TableRow<PouzivatelFxModel> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("PoziciaScene.fxml"));
+                    Parent parentPane = loader.load();
+                    Scene scene = new Scene(parentPane);
+
+                    Stage stage = new Stage();
+                    Image logo = new Image("camping\\styles\\logo.png");
+                    stage.setScene(scene);
+                    stage.setTitle("Camping Bumerang");
+                    ObservableList<PouzivatelFxModel> pouzivatel = FXCollections.observableArrayList(pouzivatelDao.findByMeno2(menoTableColumn.getCellData(row.getIndex())));
+                    PoziciaSceneController controller
+                            = loader.<PoziciaSceneController>getController();
+                    controller.initialize(pouzivatel);
+                    stage.setOnHidden(eh -> {
+                        ObservableList<PouzivatelFxModel> nove = FXCollections.observableArrayList(pouzivatelDao.getAll());
+                        zamestnanecTableView.getItems().clear();
+                        zamestnanecTableView.setItems(nove);
+                    });
+                    stage.getIcons().add(logo);
+                    stage.show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            });
+            return row;
+        });
+
     }
 }

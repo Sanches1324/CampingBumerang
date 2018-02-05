@@ -29,7 +29,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class MainSceneController1 {
 
-
     @FXML
     private VBox vBoxPane;
 
@@ -96,9 +95,10 @@ public class MainSceneController1 {
             String heslo = hesloPouzivatelaPasswordField.getText();
             PouzivatelDao pouzivatelDao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
             List<PouzivatelFxModel> pouzivatel = pouzivatelDao.findByMeno(menoPouzivatela);
-            String pozicia = pouzivatel.get(0).getPozicia();
+            String pozicia = "";
 
             if (pouzivatel.size() > 0) {
+                pozicia = pouzivatel.get(0).getPozicia();
                 if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo())) {
                     if (pozicia.equals("boss")) {
                         try {

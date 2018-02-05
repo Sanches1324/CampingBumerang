@@ -26,6 +26,7 @@ public class PouzivatelFxModel {
     private StringProperty adresa;
     private StringProperty tel_cislo;
     private StringProperty e_mail;
+    private StringProperty povoleny;
     private ObservableList<PouzivatelFxModel> pouzivatelia;
     private StringProperty heslo;
 
@@ -38,6 +39,7 @@ public class PouzivatelFxModel {
         this.adresa = new SimpleStringProperty();
         this.tel_cislo = new SimpleStringProperty();
         this.e_mail = new SimpleStringProperty();
+        this.povoleny = new SimpleStringProperty();
         this.pouzivatelia = FXCollections.observableArrayList();
         this.heslo = new SimpleStringProperty();
 
@@ -137,6 +139,18 @@ public class PouzivatelFxModel {
 
     public void setE_mail(String e_mail) {
         this.e_mail.set(e_mail);
+    }
+
+    public StringProperty povolenyProperty() {
+        return povoleny;
+    }
+
+    public String getPovoleny() {
+        return povoleny.get();
+    }
+
+    public void setPovoleny(String povoleny) {
+        this.povoleny.set(povoleny);
     }
 
     public ObservableList<PouzivatelFxModel> getPouzivatelov() {
