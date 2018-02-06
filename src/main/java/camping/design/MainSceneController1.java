@@ -99,7 +99,7 @@ public class MainSceneController1 {
 
             if (pouzivatel.size() > 0) {
                 pozicia = pouzivatel.get(0).getPozicia();
-                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo())) {
+                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo()) && pouzivatel.get(0).getPovoleny().equals("povolený")) {
                     pouzivatel.get(0).setPrihlasenie(true);
                     pouzivatelDao.updatePrihlasenie(pouzivatel.get(0));
                     if (pozicia.equals("boss")) {

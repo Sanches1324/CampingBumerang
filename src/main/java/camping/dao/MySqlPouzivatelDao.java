@@ -34,7 +34,7 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ?, povolenie = ?, prihlasenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
+        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ?, povolenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
         if (pouzivatel.getPovoleny().equals("povolený")) {
             jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), 1);
         } else {

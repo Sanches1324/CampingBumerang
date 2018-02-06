@@ -45,53 +45,35 @@ public class PridatZamestnancaSceneController {
 
     @FXML
     void pridat(ActionEvent event) {
-        PouzivatelFxModel novy = new PouzivatelFxModel();
-        novy.setMeno(menoTextField.getText());
-        novy.setPozicia("user");
-        novy.setPrihl_Meno(prihlMenoTextField.getText());
-        novy.setDatumNarodenia(datumNarDatePicker.getValue());
-        novy.setAdresa(adresaTextField.getText());
-        novy.setTel_cislo(telCisloTextField.getText());
-        novy.setE_mail(eMailTextField.getText());
-        novy.setHeslo(hesloPasswordField.getText());
-
-//        ptvHesloPasswordField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                System.out.println(keyEvent.getCharacter());
-//                if (!hesloPasswordField.getText().equals(ptvHesloPasswordField.getText())) {
-//                    keyEvent.consume();
-//                    ptvHesloPasswordField.setStyle("-fx-background-color: #ff6666;");
-//                } else {
-//                    ptvHesloPasswordField.setStyle("-fx-background-color: #66ff66;");
-//
-//                }
-//            }
-//        });
-//        ptvHesloPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
-//
-//            if (newValue.equals(hesloPasswordField.getText())) {
-//                ptvHesloPasswordField.setStyle("-fx-background-color: #66ff66;");
-//            } else {
-//                ptvHesloPasswordField.setStyle("-fx-background-color: #ff6666;");
-//
-//            }
-//
-//        });
-        PouzivatelDao dao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
-        int pocet = dao.getAll().size();
-        dao.createPouzivatela(novy);
-        int pocet2 = dao.getAll().size();
-        System.out.println(pocet + "         " + pocet2);
-        if (pocet2 == pocet + 1) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Registrácia prebehla úspešne", ButtonType.OK);
+        if (menoTextField.getText().equals("") || prihlMenoTextField.getText().equals("") || datumNarDatePicker.getValue() == null || adresaTextField.getText().equals("") || telCisloTextField.getText().equals("") || eMailTextField.getText().equals("") || hesloPasswordField.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Vyplňte všetky udaje", ButtonType.OK);
             Optional<ButtonType> result = alert.showAndWait();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Pri registácií sa vyskytla chyba", ButtonType.OK);
-            Optional<ButtonType> result = alert.showAndWait();
+            PouzivatelFxModel novy = new PouzivatelFxModel();
+            novy.setMeno(menoTextField.getText());
+            novy.setPozicia("user");
+            novy.setPrihl_Meno(prihlMenoTextField.getText());
+            novy.setDatumNarodenia(datumNarDatePicker.getValue());
+            novy.setAdresa(adresaTextField.getText());
+            novy.setTel_cislo(telCisloTextField.getText());
+            novy.setE_mail(eMailTextField.getText());
+            novy.setHeslo(hesloPasswordField.getText());
+
+            PouzivatelDao dao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
+            int pocet = dao.getAll().size();
+            dao.createPouzivatela(novy);
+            int pocet2 = dao.getAll().size();
+            System.out.println(pocet + "         " + pocet2);
+            if (pocet2 == pocet + 1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Registrácia prebehla úspešne", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Pri registácií sa vyskytla chyba", ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+            }
+            menoTextField.getScene().getWindow().hide();
         }
 
-        menoTextField.getScene().getWindow().hide();
     }
 
     @FXML
