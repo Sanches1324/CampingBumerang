@@ -21,10 +21,10 @@ public class PridatZamestnancaSceneController {
     private JFXTextField menoTextField;
 
     @FXML
-    private JFXTextField eMailTextField;
+    private JFXTextField prihlMenoTextField;
 
     @FXML
-    private JFXTextField prihlMenoTextField;
+    private JFXDatePicker datumNarDatePicker;
 
     @FXML
     private JFXTextField adresaTextField;
@@ -33,7 +33,7 @@ public class PridatZamestnancaSceneController {
     private JFXTextField telCisloTextField;
 
     @FXML
-    private JFXDatePicker datumNarDatePicker;
+    private JFXTextField eMailTextField;
 
     @FXML
     private JFXPasswordField hesloPasswordField;
@@ -83,7 +83,7 @@ public class PridatZamestnancaSceneController {
         dao.createPouzivatela(novy);
         int pocet2 = dao.getAll().size();
         System.out.println(pocet + "         " + pocet2);
-        if (pocet == pocet2 + 1) {
+        if (pocet2 == pocet + 1) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Registrácia prebehla úspešne", ButtonType.OK);
             Optional<ButtonType> result = alert.showAndWait();
         } else {

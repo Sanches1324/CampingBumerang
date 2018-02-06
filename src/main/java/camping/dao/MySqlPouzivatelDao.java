@@ -22,11 +22,7 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
         String pouzivatel_create = "INSERT INTO pouzivatel(meno, prihlasovacie_meno, pozicia, datum_narodenia, adresa, tel_cislo, e_mail, heslo, povolenie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String sol = BCrypt.gensalt();
         String hash = BCrypt.hashpw(pouzivatel.getHeslo(), sol);
-        if (pouzivatel.getPovoleny().equals("povolený")) {
-            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash, 1);
-        } else {
-            jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash, 0);
-        }
+        jdbcTemplate.update(pouzivatel_create, pouzivatel.getMeno(), pouzivatel.getPrihl_Meno(), pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), hash, 0);
 
     }
 

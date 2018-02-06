@@ -99,7 +99,7 @@ public class MainSceneController1 {
 
             if (pouzivatel.size() > 0) {
                 pozicia = pouzivatel.get(0).getPozicia();
-                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo())) {
+                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo()) ) {
                     if (pozicia.equals("boss")) {
                         try {
                             FXMLLoader loader = new FXMLLoader(
@@ -140,7 +140,7 @@ public class MainSceneController1 {
                         }
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Zlé zadané heslo!", ButtonType.OK);
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Chyba pri prihlasení, kontaktujte administrátora", ButtonType.OK);
                     Optional<ButtonType> result = alert.showAndWait();
                 }
             } else {

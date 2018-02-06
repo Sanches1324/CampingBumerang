@@ -10,11 +10,12 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="279.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.PridatZamestnancaSceneController">
    <children>
       <JFXTextField fx:id="menoTextField" layoutX="126.0" layoutY="6.0" />
-      <JFXTextField fx:id="eMailTextField" layoutX="126.0" layoutY="211.0" />
       <JFXTextField fx:id="prihlMenoTextField" layoutX="126.0" layoutY="45.0" />
+      <JFXDatePicker fx:id="datumNarDatePicker" layoutX="126.0" layoutY="97.0" prefHeight="25.0" prefWidth="135.0" />
       <JFXTextField fx:id="adresaTextField" layoutX="126.0" layoutY="135.0" />
       <JFXTextField fx:id="telCisloTextField" layoutX="126.0" layoutY="169.0" />
-      <JFXDatePicker fx:id="datumNarDatePicker" layoutX="126.0" layoutY="97.0" prefHeight="25.0" prefWidth="135.0" />
+      <JFXTextField fx:id="eMailTextField" layoutX="126.0" layoutY="211.0" />
+      <JFXPasswordField fx:id="hesloPasswordField" layoutX="126.0" layoutY="249.0" />
       <JFXButton fx:id="pridatButton" defaultButton="true" layoutX="115.0" layoutY="304.0" onAction="#pridat" styleClass="buttonStyle" text="Pridať" />
       <Label layoutX="47.0" layoutY="10.0" text="Meno:" />
       <Label layoutX="48.0" layoutY="215.0" text="E-mail:" />
@@ -23,6 +24,5 @@
       <Label layoutX="32.0" layoutY="49.0" text="Prihl. meno:" />
       <Label layoutX="46.0" layoutY="139.0" text="Adresa:" />
       <Label layoutX="47.0" layoutY="253.0" text="Heslo:" />
-      <JFXPasswordField fx:id="hesloPasswordField" layoutX="126.0" layoutY="249.0" />
    </children>
 </AnchorPane>
