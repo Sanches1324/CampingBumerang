@@ -45,7 +45,7 @@ public class MainSceneController1 {
     private JFXPasswordField hesloPouzivatelaPasswordField;
 
     @FXML
-    private Button OKButton;
+    private JFXButton OKButton;
 
     @FXML
     private Button customerButton;
@@ -54,7 +54,7 @@ public class MainSceneController1 {
     private Label typUseraLabel;
 
     @FXML
-    private Button zmenitHesloButton;
+    private JFXButton zmenitHesloButton;
 
     @FXML
     private JFXButton registraciaButton;
@@ -99,7 +99,9 @@ public class MainSceneController1 {
 
             if (pouzivatel.size() > 0) {
                 pozicia = pouzivatel.get(0).getPozicia();
-                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo()) ) {
+                if (BCrypt.checkpw(heslo, pouzivatel.get(0).getHeslo())) {
+                    pouzivatel.get(0).setPrihlasenie(true);
+                    pouzivatelDao.updatePrihlasenie(pouzivatel.get(0));
                     if (pozicia.equals("boss")) {
                         try {
                             FXMLLoader loader = new FXMLLoader(
@@ -114,6 +116,12 @@ public class MainSceneController1 {
                             stage.getIcons().add(logo);
                             stage.setMinHeight(450);
                             stage.setMinWidth(690);
+                            stage.setOnHidden(eha -> {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Použivateľ " + pouzivatel.get(0).getMeno() + " bol odhlasený so systému", ButtonType.OK);
+                                Optional<ButtonType> result = alert.showAndWait();
+                                pouzivatel.get(0).setPrihlasenie(false);
+                                pouzivatelDao.updatePrihlasenie(pouzivatel.get(0));
+                            });
                             customerButton.getScene().getWindow().hide();
                             stage.show();
                         } catch (Exception ex) {
@@ -129,10 +137,16 @@ public class MainSceneController1 {
                             Stage stage = new Stage();
                             Image logo = new Image("camping\\styles\\logo.png");
                             stage.setScene(scene);
-                            stage.setTitle("Admin");
+                            stage.setTitle("Zamestnanec");
                             stage.getIcons().add(logo);
                             stage.setMinHeight(450);
                             stage.setMinWidth(690);
+                            stage.setOnHidden(eha -> {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Použivateľ " + pouzivatel.get(0).getMeno() + " bol odhlasený so systému", ButtonType.OK);
+                                Optional<ButtonType> result = alert.showAndWait();
+                                pouzivatel.get(0).setPrihlasenie(false);
+                                pouzivatelDao.updatePrihlasenie(pouzivatel.get(0));
+                            });
                             customerButton.getScene().getWindow().hide();
                             stage.show();
                         } catch (Exception ex) {
@@ -142,10 +156,14 @@ public class MainSceneController1 {
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Chyba pri prihlasení, kontaktujte administrátora", ButtonType.OK);
                     Optional<ButtonType> result = alert.showAndWait();
+                    menoPouzivatelaTextField.setText("");
+                    hesloPouzivatelaPasswordField.setText("");
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Nenašiel sa použivateľ " + menoPouzivatelaTextField.getText(), ButtonType.OK);
                 Optional<ButtonType> result = alert.showAndWait();
+                menoPouzivatelaTextField.setText("");
+                hesloPouzivatelaPasswordField.setText("");
             }
         });
 

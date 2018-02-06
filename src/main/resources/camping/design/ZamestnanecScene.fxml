@@ -29,14 +29,14 @@
             <Image url="@../styles/logo-sitename.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="prepniUzivatelaButton" buttonType="RAISED" layoutX="-148.0" layoutY="18.0" onAction="#prepnutUzivatelaAction" prefHeight="34.0" prefWidth="147.0" text="Prepnuť použivateľa">
+      <JFXButton fx:id="prepniUzivatelaButton" buttonType="RAISED" layoutX="-148.0" layoutY="18.0" onAction="#prepnutUzivatelaAction" prefHeight="34.0" prefWidth="147.0" styleClass="buttonStyle" text="Prepnuť použivateľa">
          <effect>
             <Shadow />
          </effect>
       </JFXButton>
-      <JFXButton fx:id="spravujObjednavkyButton" buttonType="RAISED" layoutX="-147.0" layoutY="77.0" onAction="#otvoritObjednavky" prefHeight="34.0" prefWidth="135.0" text="Sprava objednavok" />
-      <JFXButton fx:id="pridatPouzivatelaButton" buttonType="RAISED" disable="true" layoutX="-147.0" layoutY="137.0" onAction="#pridatPouzivatela" prefHeight="34.0" prefWidth="135.0" text="Pridať použivateľa" />
-      <JFXButton fx:id="pridajPozemokButton" buttonType="RAISED" disable="true" layoutX="-147.0" layoutY="202.0" onAction="#pridatPozemokAction" prefHeight="34.0" prefWidth="135.0" text="Pridať pozemok" />
+      <JFXButton fx:id="spravujObjednavkyButton" buttonType="RAISED" layoutX="-147.0" layoutY="77.0" onAction="#otvoritObjednavky" prefHeight="34.0" prefWidth="135.0" styleClass="buttonStyle" text="Sprava objednavok" />
+      <JFXButton fx:id="pridatPouzivatelaButton" buttonType="RAISED" disable="true" layoutX="-147.0" layoutY="137.0" onAction="#pridatPouzivatela" prefHeight="34.0" prefWidth="135.0" styleClass="buttonStyle" text="Pridať použivateľa" />
+      <JFXButton fx:id="pridajPozemokButton" buttonType="RAISED" disable="true" layoutX="-147.0" layoutY="202.0" onAction="#pridatPozemokAction" prefHeight="34.0" prefWidth="135.0" styleClass="buttonStyle" text="Pridať pozemok" />
       <JFXHamburger fx:id="adminHamburger" layoutX="637.0" layoutY="5.0" prefHeight="34.0" prefWidth="40.0" />
       <VBox fx:id="allVBox" alignment="CENTER" layoutX="9.0" layoutY="39.0" prefHeight="413.0" prefWidth="666.0" spacing="10.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="39.0">
          <children>

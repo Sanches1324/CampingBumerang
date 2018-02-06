@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="846.0" style="-fx-background-color: #e0ebeb;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camping.design.ObjednavkaEditSceneController">
     <children>
@@ -21,7 +22,11 @@
                         <Label text="Pozemok:" />
                         <ComboBox fx:id="pozemkyComboBox" prefHeight="25.0" prefWidth="70.0" />
                         <Label text="Použivateľ:" />
-                        <ComboBox fx:id="pouzivatelComboBox" prefHeight="25.0" prefWidth="139.0" />
+                  <Label fx:id="menoLabel" prefHeight="17.0" prefWidth="190.0" textFill="#004cd0">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="786.0" spacing="20.0" VBox.vgrow="NEVER">

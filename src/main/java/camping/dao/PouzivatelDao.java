@@ -12,6 +12,8 @@ public interface PouzivatelDao {
 
     public void updatePouzivatela(PouzivatelFxModel pouzivatel);
 
+    public void updatePrihlasenie(PouzivatelFxModel pouzivatel);
+
     public boolean deletePouzivatela(Long id);
 
     public List<PouzivatelFxModel> findById(Long id);
@@ -21,5 +23,7 @@ public interface PouzivatelDao {
     public List<PouzivatelFxModel> findByMeno(String meno);
 
     public List<PouzivatelFxModel> findByMeno2(String meno);
+
+    public List<PouzivatelFxModel> findByPrihlasenie(boolean prihlasenie);
 
 }

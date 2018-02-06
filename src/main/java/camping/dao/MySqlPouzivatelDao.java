@@ -34,11 +34,21 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
 
     @Override
     public void updatePouzivatela(PouzivatelFxModel pouzivatel) {
-        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ?, povolenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
+        String pouzivatel_update = "UPDATE pouzivatel SET pozicia = ?, datum_narodenia = ?, adresa = ?, tel_cislo = ?, e_mail = ?, povolenie = ?, prihlasenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
         if (pouzivatel.getPovoleny().equals("povolený")) {
             jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), 1);
         } else {
             jdbcTemplate.update(pouzivatel_update, pouzivatel.getPozicia(), pouzivatel.getDatumNarodenia(), pouzivatel.getAdresa(), pouzivatel.getTel_cislo(), pouzivatel.getE_mail(), 0);
+        }
+    }
+
+    @Override
+    public void updatePrihlasenie(PouzivatelFxModel pouzivatel) {
+        String pouzivatel_update = "UPDATE pouzivatel SET prihlasenie = ? WHERE meno = " + "'" + pouzivatel.getMeno() + "'";
+        if (pouzivatel.getPrihlasenie()) {
+            jdbcTemplate.update(pouzivatel_update, 1);
+        } else {
+            jdbcTemplate.update(pouzivatel_update, 0);
         }
     }
 
@@ -77,6 +87,19 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
         return jdbcTemplate.query(pouzivatel_findByPozicia, new PouzivatelRowMapper());
     }
 
+    @Override
+    public List<PouzivatelFxModel> findByPrihlasenie(boolean prihlasenie) {
+        String pouzivatel_findByPozicia = "";
+        if (prihlasenie) {
+            pouzivatel_findByPozicia = "SELECT * FROM pouzivatel "
+                    + "WHERE prihlasenie = " + 1;
+        } else {
+            pouzivatel_findByPozicia = "SELECT * FROM pouzivatel "
+                    + "WHERE prihlasenie = " + 0;
+        }
+        return jdbcTemplate.query(pouzivatel_findByPozicia, new PouzivatelRowMapper());
+    }
+
     private class PouzivatelRowMapper implements RowMapper<PouzivatelFxModel> {
 
         @Override
@@ -95,6 +118,11 @@ public class MySqlPouzivatelDao implements PouzivatelDao {
                 p.setPovoleny("nepovolený");
             } else {
                 p.setPovoleny("povolený");
+            }
+            if (rs.getInt(11) == 0) {
+                p.setPrihlasenie(false);
+            } else {
+                p.setPrihlasenie(true);
             }
             return p;
         }

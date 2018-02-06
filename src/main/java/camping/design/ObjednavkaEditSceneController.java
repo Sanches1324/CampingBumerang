@@ -2,6 +2,7 @@ package camping.design;
 
 import camping.dao.CampingDaoFactory;
 import camping.dao.ObjednavkaDao;
+import camping.dao.PouzivatelDao;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +27,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,10 +38,7 @@ import javax.swing.JOptionPane;
 public class ObjednavkaEditSceneController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    private Label menoLabel;
 
     @FXML
     private TableView<ObjednavkaFxModel> objednavkyTableView;
@@ -78,9 +77,6 @@ public class ObjednavkaEditSceneController {
     private ComboBox<Long> pozemkyComboBox;
 
     @FXML
-    private ComboBox<String> pouzivatelComboBox;
-
-    @FXML
     private TextField pocetDniTextField;
 
     @FXML
@@ -116,11 +112,14 @@ public class ObjednavkaEditSceneController {
     private ObservableList<ObjednavkaFxModel> objednavky = objednavkaModel.getObjednavky();
     private ObservableList<PozemokFxModel> pozemky = pozemokModel.getPozemky();
     private ObservableList<PouzivatelFxModel> pouzivatelia = pouzivatelModel.getPouzivatelov();
+    private ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
+    private PouzivatelDao pouzivatelDao = CampingDaoFactory.INSTANCE.getMySqlPouzivatelDao();
+    private ObservableList<PouzivatelFxModel> prihlasenyPouzivatel = FXCollections.observableArrayList(pouzivatelDao.findByPrihlasenie(true));
 
     @FXML
     void pridatObjednavku(ActionEvent event) {
         boolean pozemokID = false;
-        boolean pouzivatel = false;
+//        boolean pouzivatel = false;
         boolean datumOdchodu = false;
         boolean datumPrichodu = false;
         boolean pocetDni = false;
@@ -134,12 +133,8 @@ public class ObjednavkaEditSceneController {
             objednavka.setPozemokId(pozemkyComboBox.getValue());
             pozemokID = true;
         }
-        if (pouzivatelComboBox.getValue() == null) {
-            pouzivatelComboBox.setStyle("-fx-background-color: #FF0000;");
-        } else {
-            objednavka.setPouzivatelId((long) pouzivatelComboBox.getSelectionModel().getSelectedIndex() + 1);
-            pouzivatel = true;
-        }
+        objednavka.setPouzivatelId(prihlasenyPouzivatel.get(0).getId());
+
         objednavka.setDatumObjednavky(LocalDate.now());
         if (datumOdchoduDatePicker.getValue() == null) {
             datumOdchoduDatePicker.setStyle("-fx-background-color: #FF0000;");
@@ -179,9 +174,8 @@ public class ObjednavkaEditSceneController {
             objednavka.setTelCisloZakaznika(telCisloTextField.getText());
             telZak = true;
         }
-        if (pozemokID && pouzivatel && datumOdchodu && datumPrichodu && pocetDni && menoZak && telZak) {
+        if (pozemokID && datumOdchodu && datumPrichodu && pocetDni && menoZak && telZak) {
             pozemkyComboBox.setStyle("");
-            pouzivatelComboBox.setStyle("");
             datumOdchoduDatePicker.setStyle("");
             datumPrichoduDatePicker.setStyle("");
             pocetDniTextField.setStyle("");
@@ -189,14 +183,13 @@ public class ObjednavkaEditSceneController {
             telCisloTextField.setStyle("");
 
             pozemkyComboBox.getSelectionModel().clearSelection();
-            pouzivatelComboBox.getSelectionModel().clearSelection();
             datumOdchoduDatePicker.setValue(null);
             datumPrichoduDatePicker.setValue(null);
             pocetDniTextField.setText("");
             menoZakaznikaTextField.setText("");
             telCisloTextField.setText("");
 
-            ObjednavkaDao objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
+            objednavkaDao = CampingDaoFactory.INSTANCE.getMySqlObjednavkaDao();
             objednavkaDao.createObjednavku(objednavka);
             ObservableList<ObjednavkaFxModel> noveObjednavky = FXCollections.observableArrayList(objednavkaDao.getAll());
             Collections.sort(noveObjednavky, new Comparator<ObjednavkaFxModel>() {
@@ -295,6 +288,8 @@ public class ObjednavkaEditSceneController {
         datumOdchoduTableColumn.setCellValueFactory(cellData -> cellData.getValue().datumOdchoduProperty());
         pocetDniTableColumn.setCellValueFactory(cellData -> cellData.getValue().pocetDniProperty().asObject());
         platbaTableColumn.setCellValueFactory(cellData -> cellData.getValue().platbaStringProperty());
+
+        menoLabel.setText(prihlasenyPouzivatel.get(0).getMeno());
         Collections.sort(objednavky, new Comparator<ObjednavkaFxModel>() {
             @Override
             public int compare(ObjednavkaFxModel lp, ObjednavkaFxModel rp) {
@@ -333,11 +328,11 @@ public class ObjednavkaEditSceneController {
         Collections.sort(idcka);
         pozemkyComboBox.setItems(idcka);
 
-        ObservableList<String> menoPouzivatelov = FXCollections.observableArrayList();
-        for (PouzivatelFxModel pouzivatelFxModel : pouzivatelia) {
-            menoPouzivatelov.add(pouzivatelFxModel.getMeno());
-        }
-        pouzivatelComboBox.setItems(menoPouzivatelov);
+//        ObservableList<String> menoPouzivatelov = FXCollections.observableArrayList();
+//        for (PouzivatelFxModel pouzivatelFxModel : pouzivatelia) {
+//            menoPouzivatelov.add(pouzivatelFxModel.getMeno());
+//        }
+//        pouzivatelComboBox.setItems(menoPouzivatelov);
         pocetDniTextField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

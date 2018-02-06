@@ -58,9 +58,9 @@
                         <JFXPasswordField fx:id="hesloPouzivatelaPasswordField" focusColor="#7b9af8" unFocusColor="WHITE" />
                      </children>
                   </HBox>
-                  <Button fx:id="OKButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Prihlasiť sa" />
-                  <JFXButton fx:id="registraciaButton" buttonType="RAISED" onAction="#registrovat" text="Registrácia" />
-                  <Button fx:id="zmenitHesloButton" blendMode="MULTIPLY" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../../java/camping/styles/Styles.css" text="Zmeniť heslo" />
+                  <JFXButton fx:id="OKButton" buttonType="RAISED" styleClass="buttonStyle" text="Prihlasiť sa" />
+                  <JFXButton fx:id="registraciaButton" buttonType="RAISED" onAction="#registrovat" styleClass="buttonStyle" text="Registrácia" />
+                  <JFXButton fx:id="zmenitHesloButton" buttonType="RAISED" styleClass="buttonStyle" text="Zmeniť heslo" />
                </children>
             </VBox>
          </children>

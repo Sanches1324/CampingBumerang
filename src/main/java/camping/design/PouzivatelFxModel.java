@@ -5,9 +5,11 @@ import camping.dao.PouzivatelDao;
 import camping.entities.Pouzivatel;
 import java.time.LocalDate;
 import java.util.List;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,6 +31,7 @@ public class PouzivatelFxModel {
     private StringProperty povoleny;
     private ObservableList<PouzivatelFxModel> pouzivatelia;
     private StringProperty heslo;
+    private BooleanProperty prihlasenie;
 
     public PouzivatelFxModel() {
         this.id = new SimpleLongProperty();
@@ -42,7 +45,7 @@ public class PouzivatelFxModel {
         this.povoleny = new SimpleStringProperty();
         this.pouzivatelia = FXCollections.observableArrayList();
         this.heslo = new SimpleStringProperty();
-
+        this.prihlasenie = new SimpleBooleanProperty();
     }
 
     public LongProperty idProperty() {
@@ -172,6 +175,18 @@ public class PouzivatelFxModel {
 
     public void setHeslo(String heslo) {
         this.heslo.set(heslo);
+    }
+
+    public BooleanProperty prihlasenieProperty() {
+        return prihlasenie;
+    }
+
+    public Boolean getPrihlasenie() {
+        return prihlasenie.get();
+    }
+
+    public void setPrihlasenie(Boolean prihlasenie) {
+        this.prihlasenie.set(prihlasenie);
     }
 
     private void readAll() {
